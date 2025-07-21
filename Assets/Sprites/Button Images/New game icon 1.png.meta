@@ -1,0 +1,1703 @@
+fileFormatVersion: 2
+guid: 4f539441605447548be9d1f6ed941331
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 2508645642222350815
+    second: New game icon 1_0
+  - first:
+      213: -6558981116783492755
+    second: New game icon 1_1
+  - first:
+      213: 1692113260334352846
+    second: New game icon 1_2
+  - first:
+      213: -7302856999980186007
+    second: New game icon 1_3
+  - first:
+      213: 6268982918182748650
+    second: New game icon 1_4
+  - first:
+      213: -4882419494760941225
+    second: New game icon 1_5
+  - first:
+      213: 5248330607392626851
+    second: New game icon 1_6
+  - first:
+      213: -290456294626566120
+    second: New game icon 1_7
+  - first:
+      213: -8828013711015202078
+    second: New game icon 1_8
+  - first:
+      213: -8444966148856723847
+    second: New game icon 1_9
+  - first:
+      213: -669003572989899929
+    second: New game icon 1_10
+  - first:
+      213: 5739881932782285260
+    second: New game icon 1_11
+  - first:
+      213: 8246585447030459625
+    second: New game icon 1_12
+  - first:
+      213: 6094073276432252609
+    second: New game icon 1_13
+  - first:
+      213: -6008190121897147404
+    second: New game icon 1_14
+  - first:
+      213: -7390524326656733559
+    second: New game icon 1_15
+  - first:
+      213: -5920164611955218658
+    second: New game icon 1_16
+  - first:
+      213: 650438675165111676
+    second: New game icon 1_17
+  - first:
+      213: -4427886236548753975
+    second: New game icon 1_18
+  - first:
+      213: 7707261504524237444
+    second: New game icon 1_19
+  - first:
+      213: 3597712476545527213
+    second: New game icon 1_20
+  - first:
+      213: -7112023143641125449
+    second: New game icon 1_21
+  - first:
+      213: -1993717381717397655
+    second: New game icon 1_22
+  - first:
+      213: 2921075125612786729
+    second: New game icon 1_23
+  - first:
+      213: -8429012025785808792
+    second: New game icon 1_24
+  - first:
+      213: -5003770335652853825
+    second: New game icon 1_25
+  - first:
+      213: -3333402476022597574
+    second: New game icon 1_26
+  - first:
+      213: -6165098343939029262
+    second: New game icon 1_27
+  - first:
+      213: 7154405538453345763
+    second: New game icon 1_28
+  - first:
+      213: 7584775892816834406
+    second: New game icon 1_29
+  - first:
+      213: 1842649597745711985
+    second: New game icon 1_30
+  - first:
+      213: -4410844221983935678
+    second: New game icon 1_31
+  - first:
+      213: -1536967544457910776
+    second: New game icon 1_32
+  - first:
+      213: 1811622880645968164
+    second: New game icon 1_33
+  - first:
+      213: -8864913450820851574
+    second: New game icon 1_34
+  - first:
+      213: -5754157139788802759
+    second: New game icon 1_35
+  - first:
+      213: -2398597392075416947
+    second: New game icon 1_36
+  - first:
+      213: -7665132840901463334
+    second: New game icon 1_37
+  - first:
+      213: 2495377048168416076
+    second: New game icon 1_38
+  - first:
+      213: -5375629492194424744
+    second: New game icon 1_39
+  - first:
+      213: 7112686148825830231
+    second: New game icon 1_40
+  - first:
+      213: 6728862194046621133
+    second: New game icon 1_41
+  - first:
+      213: 4249171139129482416
+    second: New game icon 1_42
+  - first:
+      213: 3223253089426506702
+    second: New game icon 1_43
+  - first:
+      213: -2801432618029367138
+    second: New game icon 1_44
+  - first:
+      213: -6098278678732327871
+    second: New game icon 1_45
+  - first:
+      213: -4669689284359790238
+    second: New game icon 1_46
+  - first:
+      213: -1565380335372150422
+    second: New game icon 1_47
+  - first:
+      213: -7845689762875964269
+    second: New game icon 1_48
+  - first:
+      213: 8936892298665605229
+    second: New game icon 1_49
+  - first:
+      213: -2961570222545361904
+    second: New game icon 1_50
+  - first:
+      213: -344151310859387251
+    second: New game icon 1_51
+  - first:
+      213: 6004269278361066574
+    second: New game icon 1_52
+  - first:
+      213: -293931761439787390
+    second: New game icon 1_53
+  - first:
+      213: 8143915798166155905
+    second: New game icon 1_54
+  - first:
+      213: 2104832440280067669
+    second: New game icon 1_55
+  - first:
+      213: -7552905875331776820
+    second: New game icon 1_56
+  - first:
+      213: -4745140406382548101
+    second: New game icon 1_57
+  - first:
+      213: 7441514599181064829
+    second: New game icon 1_58
+  - first:
+      213: -581462800699524761
+    second: New game icon 1_59
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 0
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: New game icon 1_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1536
+        height: 1024
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd1bef39bef70d220800000000000000
+      internalID: 2508645642222350815
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: New game icon 1_1
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 715
+        width: 8
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d6100addc61d9f4a0800000000000000
+      internalID: -6558981116783492755
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: New game icon 1_2
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 702
+        width: 8
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec905f98b089b7710800000000000000
+      internalID: 1692113260334352846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: New game icon 1_3
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 667
+        width: 7
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 966c4be204a07aa90800000000000000
+      internalID: -7302856999980186007
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: New game icon 1_4
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 629
+        width: 8
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ae14645efb6eff650800000000000000
+      internalID: 6268982918182748650
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: New game icon 1_5
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 543
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 759f45276592e3cb0800000000000000
+      internalID: -4882419494760941225
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: New game icon 1_6
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 518
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3a8927d61e0d5d840800000000000000
+      internalID: 5248330607392626851
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: New game icon 1_7
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 493
+        width: 8
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 810e108f98718fbf0800000000000000
+      internalID: -290456294626566120
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: New game icon 1_8
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 446
+        width: 8
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e239aa7d489c7580800000000000000
+      internalID: -8828013711015202078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: New game icon 1_9
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 406
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 976423de7047dca80800000000000000
+      internalID: -8444966148856723847
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: New game icon 1_10
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 395
+        width: 8
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 76b487e7bc837b6f0800000000000000
+      internalID: -669003572989899929
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: New game icon 1_11
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 390
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cc1bb28e43828af40800000000000000
+      internalID: 5739881932782285260
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: New game icon 1_12
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 382
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ec082495c1c17270800000000000000
+      internalID: 8246585447030459625
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: New game icon 1_13
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 326
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1cef1fc6b5f729450800000000000000
+      internalID: 6094073276432252609
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: New game icon 1_14
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 231
+        width: 8
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4f34f49baee9e9ca0800000000000000
+      internalID: -6008190121897147404
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: New game icon 1_15
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 943
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 98e0eb518459f6990800000000000000
+      internalID: -7390524326656733559
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: New game icon 1_16
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 928
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e17229cd6a957dda0800000000000000
+      internalID: -5920164611955218658
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: New game icon 1_17
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 792
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c7564656782d60900800000000000000
+      internalID: 650438675165111676
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: New game icon 1_18
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 734
+        width: 7
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c59ba48decfc82c0800000000000000
+      internalID: -4427886236548753975
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: New game icon 1_19
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 420
+        width: 7
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 48ab538e081b5fa60800000000000000
+      internalID: 7707261504524237444
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: New game icon 1_20
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 350
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dadac789f64ade130800000000000000
+      internalID: 3597712476545527213
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: New game icon 1_21
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 302
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7bde9e8c1a40d4d90800000000000000
+      internalID: -7112023143641125449
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: New game icon 1_22
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 286
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 96f6630ca94e454e0800000000000000
+      internalID: -1993717381717397655
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: New game icon 1_23
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 972
+        width: 6
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9243168a95eb98820800000000000000
+      internalID: 2921075125612786729
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: New game icon 1_24
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 870
+        width: 6
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8688a8ba832260b80800000000000000
+      internalID: -8429012025785808792
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: New game icon 1_25
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 846
+        width: 6
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb746cd04690f8ab0800000000000000
+      internalID: -5003770335652853825
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: New game icon 1_26
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 831
+        width: 6
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a38f343fb106db1d0800000000000000
+      internalID: -3333402476022597574
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: New game icon 1_27
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 694
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f64a2468bb217aa0800000000000000
+      internalID: -6165098343939029262
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: New game icon 1_28
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 678
+        width: 6
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3e5599a7eed894360800000000000000
+      internalID: 7154405538453345763
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: New game icon 1_29
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 662
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 66f2b481d79824960800000000000000
+      internalID: 7584775892816834406
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: New game icon 1_30
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 646
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 17b462fdb08629910800000000000000
+      internalID: 1842649597745711985
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: New game icon 1_31
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 622
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 243301dbc8889c2c0800000000000000
+      internalID: -4410844221983935678
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: New game icon 1_32
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 615
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 806284959289baae0800000000000000
+      internalID: -1536967544457910776
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: New game icon 1_33
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 566
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4217fdb596d242910800000000000000
+      internalID: 1811622880645968164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: New game icon 1_34
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 526
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a88ad3f4f2089f480800000000000000
+      internalID: -8864913450820851574
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: New game icon 1_35
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 510
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9355c1571902520b0800000000000000
+      internalID: -5754157139788802759
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: New game icon 1_36
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 486
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d8a9a26516876bed0800000000000000
+      internalID: -2398597392075416947
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: New game icon 1_37
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 438
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ad233e5fa4aff9590800000000000000
+      internalID: -7665132840901463334
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: New game icon 1_38
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 279
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c43cdb8443c51a220800000000000000
+      internalID: 2495377048168416076
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: New game icon 1_39
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 254
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 85843a9457de565b0800000000000000
+      internalID: -5375629492194424744
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: New game icon 1_40
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 222
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 753da932e5655b260800000000000000
+      internalID: 7112686148825830231
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: New game icon 1_41
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 15
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dc554b2b388b16d50800000000000000
+      internalID: 6728862194046621133
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: New game icon 1_42
+      rect:
+        serializedVersion: 2
+        x: 218
+        y: 295
+        width: 1097
+        height: 402
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0bc97a153a618fa30800000000000000
+      internalID: 4249171139129482416
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: New game icon 1_43
+      rect:
+        serializedVersion: 2
+        x: 993
+        y: 354
+        width: 8
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec382787b9b4bbc20800000000000000
+      internalID: 3223253089426506702
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: New game icon 1_44
+      rect:
+        serializedVersion: 2
+        x: 994
+        y: 864
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e90ca2460ef4f19d0800000000000000
+      internalID: -2801432618029367138
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: New game icon 1_45
+      rect:
+        serializedVersion: 2
+        x: 994
+        y: 200
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 14432dc0adf8e5ba0800000000000000
+      internalID: -6098278678732327871
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: New game icon 1_46
+      rect:
+        serializedVersion: 2
+        x: 995
+        y: 922
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2616942465ee13fb0800000000000000
+      internalID: -4669689284359790238
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: New game icon 1_47
+      rect:
+        serializedVersion: 2
+        x: 1041
+        y: 992
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a69d2c3f0e6a64ae0800000000000000
+      internalID: -1565380335372150422
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: New game icon 1_48
+      rect:
+        serializedVersion: 2
+        x: 1041
+        y: 975
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3940cd99ab28e1390800000000000000
+      internalID: -7845689762875964269
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: New game icon 1_49
+      rect:
+        serializedVersion: 2
+        x: 1041
+        y: 960
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d6833e92238360c70800000000000000
+      internalID: 8936892298665605229
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: New game icon 1_50
+      rect:
+        serializedVersion: 2
+        x: 1041
+        y: 863
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0142fcbd29366e6d0800000000000000
+      internalID: -2961570222545361904
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: New game icon 1_51
+      rect:
+        serializedVersion: 2
+        x: 1041
+        y: 815
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d8ebd37c434593bf0800000000000000
+      internalID: -344151310859387251
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: New game icon 1_52
+      rect:
+        serializedVersion: 2
+        x: 1041
+        y: 288
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e4c9080c813735350800000000000000
+      internalID: 6004269278361066574
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: New game icon 1_53
+      rect:
+        serializedVersion: 2
+        x: 1041
+        y: 223
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2863d2bce9ebbebf0800000000000000
+      internalID: -293931761439787390
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: New game icon 1_54
+      rect:
+        serializedVersion: 2
+        x: 1041
+        y: 160
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 182b2662540050170800000000000000
+      internalID: 8143915798166155905
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: New game icon 1_55
+      rect:
+        serializedVersion: 2
+        x: 1041
+        y: 95
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 55eac9ad3fdd53d10800000000000000
+      internalID: 2104832440280067669
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: New game icon 1_56
+      rect:
+        serializedVersion: 2
+        x: 1041
+        y: 40
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cce73e69f10be2790800000000000000
+      internalID: -7552905875331776820
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: New game icon 1_57
+      rect:
+        serializedVersion: 2
+        x: 1087
+        y: 82
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b7b2734f0ffd52eb0800000000000000
+      internalID: -4745140406382548101
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: New game icon 1_58
+      rect:
+        serializedVersion: 2
+        x: 1088
+        y: 986
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d7a1213e912954760800000000000000
+      internalID: 7441514599181064829
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: New game icon 1_59
+      rect:
+        serializedVersion: 2
+        x: 1089
+        y: 971
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 769733ad9aa3ee7f0800000000000000
+      internalID: -581462800699524761
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      New game icon 1_0: 2508645642222350815
+      New game icon 1_1: -6558981116783492755
+      New game icon 1_10: -669003572989899929
+      New game icon 1_11: 5739881932782285260
+      New game icon 1_12: 8246585447030459625
+      New game icon 1_13: 6094073276432252609
+      New game icon 1_14: -6008190121897147404
+      New game icon 1_15: -7390524326656733559
+      New game icon 1_16: -5920164611955218658
+      New game icon 1_17: 650438675165111676
+      New game icon 1_18: -4427886236548753975
+      New game icon 1_19: 7707261504524237444
+      New game icon 1_2: 1692113260334352846
+      New game icon 1_20: 3597712476545527213
+      New game icon 1_21: -7112023143641125449
+      New game icon 1_22: -1993717381717397655
+      New game icon 1_23: 2921075125612786729
+      New game icon 1_24: -8429012025785808792
+      New game icon 1_25: -5003770335652853825
+      New game icon 1_26: -3333402476022597574
+      New game icon 1_27: -6165098343939029262
+      New game icon 1_28: 7154405538453345763
+      New game icon 1_29: 7584775892816834406
+      New game icon 1_3: -7302856999980186007
+      New game icon 1_30: 1842649597745711985
+      New game icon 1_31: -4410844221983935678
+      New game icon 1_32: -1536967544457910776
+      New game icon 1_33: 1811622880645968164
+      New game icon 1_34: -8864913450820851574
+      New game icon 1_35: -5754157139788802759
+      New game icon 1_36: -2398597392075416947
+      New game icon 1_37: -7665132840901463334
+      New game icon 1_38: 2495377048168416076
+      New game icon 1_39: -5375629492194424744
+      New game icon 1_4: 6268982918182748650
+      New game icon 1_40: 7112686148825830231
+      New game icon 1_41: 6728862194046621133
+      New game icon 1_42: 4249171139129482416
+      New game icon 1_43: 3223253089426506702
+      New game icon 1_44: -2801432618029367138
+      New game icon 1_45: -6098278678732327871
+      New game icon 1_46: -4669689284359790238
+      New game icon 1_47: -1565380335372150422
+      New game icon 1_48: -7845689762875964269
+      New game icon 1_49: 8936892298665605229
+      New game icon 1_5: -4882419494760941225
+      New game icon 1_50: -2961570222545361904
+      New game icon 1_51: -344151310859387251
+      New game icon 1_52: 6004269278361066574
+      New game icon 1_53: -293931761439787390
+      New game icon 1_54: 8143915798166155905
+      New game icon 1_55: 2104832440280067669
+      New game icon 1_56: -7552905875331776820
+      New game icon 1_57: -4745140406382548101
+      New game icon 1_58: 7441514599181064829
+      New game icon 1_59: -581462800699524761
+      New game icon 1_6: 5248330607392626851
+      New game icon 1_7: -290456294626566120
+      New game icon 1_8: -8828013711015202078
+      New game icon 1_9: -8444966148856723847
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
