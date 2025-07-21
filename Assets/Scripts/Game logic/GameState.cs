@@ -33,7 +33,6 @@ public class PlayerConfigs
     public int columns = 5;
     public int baseMulti = 1;
     public int basePoints = 5;
-    public int block
 
 
 }
