@@ -10,6 +10,8 @@ public class Tile : MonoBehaviour
 
     private Item _item;
 
+    public bool isAnimating = false;
+
     public Item item
     {
         get => _item; 
@@ -27,17 +29,13 @@ public class Tile : MonoBehaviour
 
     public Button button;
 
-    void Awake() => Debug.Log("Awake from " + gameObject.name);
-    void OnEnable() => Debug.Log("Enabled " + gameObject.name);
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        Debug.Log($"Tile Start - Button on {name}");
 
         button.onClick.AddListener(() =>
         {
-            Debug.Log("Click");
             Board.Instance.Select(this);
         });
     

@@ -5,6 +5,8 @@ using UnityEngine;
 public class Item : ScriptableObject
 {
     public Sprite sprite;
-    public int value;
+    public ItemType ItemType;
 
 }
+
+public enum ItemType { Bear, Sloth, Chicken, Duck, Hippo}

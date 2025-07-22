@@ -52,14 +52,9 @@ public class Board : MonoBehaviour
     {
         //if (!busy) 
 
-        Debug.Log("tiles selected!");
-
         if (!_selection.Contains(tile)) _selection.Add(tile);
 
         if (_selection.Count < 2) return;
-
-
-        Debug.Log("2 tiles selected!");
 
         await Swap(_selection[0], _selection[1]);
 
@@ -84,6 +79,7 @@ public class Board : MonoBehaviour
         isSwapping = true;
         var icon1 = tile1.icon;
         var icon2 = tile2.icon;
+      
         var icon1Transform = icon1.transform;
         var icon2Transform = icon2.transform;
 
@@ -146,6 +142,17 @@ public class Board : MonoBehaviour
                 {
                     deflateSequence.Join(connectedTile.icon.transform.DOScale(Vector3.zero, TweenDuration));
 
+                }
+                try
+                {
+                   
+                    if(ScoreManager.Instance != null) ScoreManager.Instance.HandleScoring(connectedTiles);
+                    else Debug.LogError("ScoreManager is null: " );
+
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError("Scoring Error: " + e);
                 }
                 await deflateSequence.Play().AsyncWaitForCompletion();
 

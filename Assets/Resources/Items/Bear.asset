@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Bear
   m_EditorClassIdentifier: 
   sprite: {fileID: 7935234321397735378, guid: 64215f32d8b946343af3b5c9890bd8a9, type: 3}
-  value: 5
+  ItemType: 0
