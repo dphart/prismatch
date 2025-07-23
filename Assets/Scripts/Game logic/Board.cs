@@ -1,77 +1,73 @@
-using DG.Tweening;
+﻿using DG.Tweening;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Rendering;
 
 public class Board : MonoBehaviour
 {
-
     public static Board Instance { get; private set; }
+
+    [Header("Prefabs & Settings")]
+    public GameObject rowPrefab;
+    public GameObject tilePrefab;
+    public int numRows = 8;
+    public int numCols = 8;
+
+    public GameController gameController;
 
     public bool isSwapping = false;
 
-    private void Awake() => Instance = this;
-
-    private List<Row> rows = new List<Row>();
-
     public Tile[,] Tiles { get; private set; }
+    public int Width => numCols;
+    public int Height => numRows;
 
-    public int Width { get; private set; }
-    public int Height { get; private set; }
+    private readonly List<Tile> _selection = new();
+    private const float TweenDuration = 0.2f;
 
-    private readonly List<Tile> _selection = new List<Tile>();
-
-    private const float TweenDuration = .2f;
-
-
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void Awake()
     {
-        Debug.Log("[Board] Initializing board...");
-
-        rows = GetComponentsInChildren<Row>().ToList();
-        Height = rows.Count;
-
-        if (Height == 0)
+        if (Instance != null && Instance != this)
         {
-            Debug.LogError("[Board] No rows found!");
+            Destroy(gameObject);
             return;
         }
+        Instance = this;
+    }
 
-        var firstRowTiles = rows[0].GetComponentsInChildren<Tile>(false);
-        Width = firstRowTiles.Length;
+    private void Start()
+    {
+        GenerateBoard();
+    }
 
-        if (Width == 0)
+    public void GenerateBoard()
+    {
+        Debug.Log("[Board] Generating board...");
+
+        // Clear old board
+        foreach (Transform child in transform)
         {
-            Debug.LogError("[Board] First row has no tiles!");
-            return;
+            Destroy(child.gameObject);
         }
-
-        Debug.Log($"[Board] Expected board dimensions: {Width} x {Height}");
 
         Tiles = new Tile[Width, Height];
 
         for (int y = 0; y < Height; y++)
         {
-            var row = rows[y];
-            var tilesInRow = row.GetComponentsInChildren<Tile>(false);
-
-            if (tilesInRow.Length != Width)
-            {
-                Debug.LogError($"[Board] Row {y} has {tilesInRow.Length} tiles but expected {Width}. Aborting.");
-                return;
-            }
+            GameObject rowObj = Instantiate(rowPrefab, transform);
+            rowObj.name = $"Row_{y + 1}";
 
             for (int x = 0; x < Width; x++)
             {
-                var tile = tilesInRow[x];
+                GameObject tileObj = Instantiate(tilePrefab, rowObj.transform);
+                tileObj.name = $"Tile_{x + 1}";
+
+                Tile tile = tileObj.GetComponent<Tile>();
                 tile.x = x;
                 tile.y = y;
+
                 Tiles[x, y] = tile;
 
                 if (ItemDatabase.items != null && ItemDatabase.items.Length > 0)
@@ -92,31 +88,52 @@ public class Board : MonoBehaviour
             }
         }
 
-        Debug.Log("[Board] Tile grid setup complete.");
+        Debug.Log("[Board] Board generation complete.");
     }
 
+    public void ResetBoard()
+    {
+        if (Tiles == null)
+        {
+            Debug.LogError("[Board] Can't reset: Tiles not initialized.");
+            return;
+        }
 
+        Debug.Log("[Board] Resetting tile contents...");
 
+        for (int y = 0; y < Height; y++)
+        {
+            for (int x = 0; x < Width; x++)
+            {
+                var tile = Tiles[x, y];
 
+                if (ItemDatabase.items != null && ItemDatabase.items.Length > 0)
+                {
+                    tile.item = ItemDatabase.items[UnityEngine.Random.Range(0, ItemDatabase.items.Length)];
 
+                    if (tile.icon != null && tile.item.sprite != null)
+                    {
+                        tile.icon.sprite = tile.item.sprite;
+                    }
 
+                    Debug.Log($"[Board] Tile ({x},{y}) re-initialized with item: {tile.item.name}");
+                }
+            }
+        }
 
-
-
+        Debug.Log("[Board] Board reset complete.");
+    }
 
     public async void Select(Tile tile)
     {
-        //if (!busy) 
-
         if (!_selection.Contains(tile)) _selection.Add(tile);
-
         if (_selection.Count < 2) return;
 
         await Swap(_selection[0], _selection[1]);
 
         if (CanPop())
         {
-            Pop();
+            await Pop();
         }
         else
         {
@@ -124,25 +141,22 @@ public class Board : MonoBehaviour
         }
 
         _selection.Clear();
-    
-        
-
     }
 
     public async Task Swap(Tile tile1, Tile tile2)
     {
         if (isSwapping) return;
         isSwapping = true;
+
         var icon1 = tile1.icon;
         var icon2 = tile2.icon;
-      
+
         var icon1Transform = icon1.transform;
         var icon2Transform = icon2.transform;
 
         var sequence = DOTween.Sequence();
-
-        sequence.Join(icon1Transform.DOMove(icon2Transform.position, TweenDuration)).Join(icon2Transform.DOMove(icon1Transform.position, TweenDuration));
-
+        sequence.Join(icon1Transform.DOMove(icon2Transform.position, TweenDuration))
+                .Join(icon2Transform.DOMove(icon1Transform.position, TweenDuration));
 
         await sequence.Play().AsyncWaitForCompletion();
 
@@ -152,15 +166,13 @@ public class Board : MonoBehaviour
         tile1.icon = icon2;
         tile2.icon = icon1;
 
-        var tile1Item = tile1.item;
+        var tempItem = tile1.item;
         tile1.item = tile2.item;
-        tile2.item = tile1Item;
+        tile2.item = tempItem;
+
         isSwapping = false;
-
-
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (!Keyboard.current.aKey.wasPressedThisFrame) return;
@@ -193,23 +205,22 @@ public class Board : MonoBehaviour
                 var tile = Tiles[x, y];
                 var connectedTiles = tile.GetConnectedTiles();
                 if (connectedTiles.Skip(1).Count() < 2) continue;
+
                 var deflateSequence = DOTween.Sequence();
                 foreach (var connectedTile in connectedTiles)
                 {
                     deflateSequence.Join(connectedTile.icon.transform.DOScale(Vector3.zero, TweenDuration));
-
                 }
+
                 try
                 {
-                   
-                    if(ScoreManager.Instance != null) ScoreManager.Instance.HandleScoring(connectedTiles);
-                    else Debug.LogError("ScoreManager is null: " );
-
+                    gameController?.HandleTileMatch(connectedTiles);
                 }
                 catch (Exception e)
                 {
                     Debug.LogError("Scoring Error: " + e);
                 }
+
                 await deflateSequence.Play().AsyncWaitForCompletion();
 
                 var inflateSequence = DOTween.Sequence();
@@ -217,10 +228,11 @@ public class Board : MonoBehaviour
                 {
                     connectedTile.item = ItemDatabase.items[UnityEngine.Random.Range(0, ItemDatabase.items.Length)];
                     inflateSequence.Join(connectedTile.icon.transform.DOScale(Vector3.one, TweenDuration));
-
                 }
 
                 await inflateSequence.Play().AsyncWaitForCompletion();
+
+                // Restart pop detection
                 x = 0;
                 y = 0;
             }

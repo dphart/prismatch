@@ -1,14 +1,31 @@
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
     [SerializeField] private float levelDurationSeconds = 60f;
     [SerializeField] private int baseTargetScore = 50;
-
     [SerializeField] private PowerUpSelector powerUpSelector;
+
+    private int score;
+    private int targetScore;
+    private float timeRemaining;
+    private bool timerRunning = false;
     private bool isPowerUpScreenActive = false;
 
-    private float timer;
+    private PowerManager powerManager;
+    private ScoreManager scoreManager;
+
+    public event Action<int> OnScoreChanged;
+    public event Action<int> OnTargetChanged;
+    public event Action<float> OnTimeChanged;
+
+    private void Awake()
+    {
+        powerManager = new PowerManager();
+        scoreManager = new ScoreManager(GameState.Instance.PlayerConfigs, powerManager);
+    }
 
     private void Start()
     {
@@ -17,59 +34,90 @@ public class GameController : MonoBehaviour
 
     private void Update()
     {
-        
-        if (GameState.Instance == null || !GameState.Instance.TimerIsRunning) return;
+        if (!timerRunning) return;
 
-        timer += Time.deltaTime;
+        timeRemaining -= Time.deltaTime;
+        OnTimeChanged?.Invoke(timeRemaining);
 
-        // Check if the timer for this level has expired
-        if (timer >= levelDurationSeconds)
+        if (timeRemaining <= 0f)
         {
-            timer = 0;
+            timeRemaining = 0f;
+            timerRunning = false;
             IncreaseTarget();
         }
 
-        // Check if player has beaten the level
-        if (GameState.Instance.Score >= GameState.Instance.TargetScore && !isPowerUpScreenActive)
+        if (score >= targetScore && !isPowerUpScreenActive)
         {
-            Debug.Log("Level Complete!");
-            timer = 0;
-            GameState.Instance.TimerIsRunning = false;
-            isPowerUpScreenActive = true;
-            powerUpSelector.ShowChoices(); // <- show the power-up picker        
+            CompleteLevel();
         }
     }
 
-    private void StartLevel(int targetScore, bool newGame)
+    public void StartLevel(int newTarget, bool isNewGame)
     {
-        if (newGame)
-        {
-            GameState.Instance.ResetGame();
-            GameState.Instance.RegisterPowerUp(new BasePowerUp());
+        if (isNewGame) ResetGame();
 
-        }
-        GameState.Instance.SetTargetScore(targetScore);
-        GameState.Instance.StartTimer(levelDurationSeconds);
+        targetScore = newTarget;
+        timeRemaining = levelDurationSeconds;
+        timerRunning = true;
+        isPowerUpScreenActive = false;
+
+        score = 0;
+        OnScoreChanged?.Invoke(score);
+        OnTargetChanged?.Invoke(targetScore);
+        OnTimeChanged?.Invoke(timeRemaining);
+
+        powerManager.ClearPowers();
+        powerManager.RegisterPower(new BasePowerUp());
+
+        scoreManager = new ScoreManager(GameState.Instance.PlayerConfigs, powerManager);
+    }
+
+    public void HandleTileMatch(List<Tile> tiles)
+    {
+        int scoreToAdd = scoreManager.CalculateScore(tiles);
+        score += scoreToAdd;
+        OnScoreChanged?.Invoke(score);
+    }
+
+    private void CompleteLevel()
+    {
+        timerRunning = false;
+        isPowerUpScreenActive = true;
+        powerUpSelector.ShowChoices();
     }
 
     private void IncreaseTarget()
     {
-        int newTarget = GameState.Instance.TargetScore + 200; // You can scale this however you'd like
-        Debug.Log($"Time�s up! Increasing target to {newTarget}");
+        int newTarget = targetScore + 200;
+        Debug.Log($"🕒 Time's up! Increasing target to {newTarget}");
         StartLevel(newTarget, false);
-    }
-
-    private void DoubleTarget()
-    {
-        int doubledTarget = GameState.Instance.TargetScore * 3;
-        Debug.Log($"Target met! New target is {doubledTarget}");
-        StartLevel(doubledTarget, false);
     }
 
     public void OnPowerUpSelected()
     {
         isPowerUpScreenActive = false;
-        DoubleTarget(); // or StartLevel(), depending on your flow
+        StartLevel(targetScore * 2, false);
     }
 
+    public void NewGameButton()
+    {
+        Debug.Log("🆕 Starting new game...");
+        StartLevel(baseTargetScore, true);
+    }
+
+    public void ResetGame()
+    {
+        score = 0;
+        OnScoreChanged?.Invoke(score);
+        powerManager.ClearPowers();
+        Debug.Log("♻️ Game state has been reset.");
+    }
+
+    public IReadOnlyList<PowerUp> GetActivePowers() => powerManager.ActivePowers;
+
+    public void RegisterSelectedPower(PowerUp powerUp)
+    {
+        powerManager.RegisterPower(powerUp);
+        Debug.Log($"🔌 Registered new power-up: {powerUp.Name}");
+    }
 }

@@ -7,16 +7,24 @@ public class GameUIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI targetText;
     [SerializeField] private TextMeshProUGUI timerText;
 
+    [SerializeField] private GameController gameController; // Assign via inspector
+
     private void Start()
     {
-        GameState.Instance.OnScoreChanged += UpdateScore;
-        GameState.Instance.OnTargetChanged += UpdateTarget;
-        GameState.Instance.OnTimeChanged += UpdateTimer;
+        if (gameController == null)
+        {
+            Debug.LogError("[GameUIManager] GameController reference is missing.");
+            return;
+        }
 
-        // Set initial values
-        UpdateScore(GameState.Instance.Score);
-        UpdateTarget(GameState.Instance.TargetScore);
-        UpdateTimer(GameState.Instance.TimeRemaining);
+        gameController.OnScoreChanged += UpdateScore;
+        gameController.OnTargetChanged += UpdateTarget;
+        gameController.OnTimeChanged += UpdateTimer;
+
+        // Optional: force UI sync in case events haven't fired yet
+        UpdateScore(0); // You can expose gameController.Score if needed
+        UpdateTarget(0);
+        UpdateTimer(0f);
     }
 
     private void UpdateScore(int score) => scoreText.text = $"Score: {score}";
@@ -30,9 +38,9 @@ public class GameUIManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (GameState.Instance == null) return;
-        GameState.Instance.OnScoreChanged -= UpdateScore;
-        GameState.Instance.OnTargetChanged -= UpdateTarget;
-        GameState.Instance.OnTimeChanged -= UpdateTimer;
+        if (gameController == null) return;
+        gameController.OnScoreChanged -= UpdateScore;
+        gameController.OnTargetChanged -= UpdateTarget;
+        gameController.OnTimeChanged -= UpdateTimer;
     }
 }
