@@ -16,7 +16,16 @@ public abstract class PowerUp
     public virtual void Tick(GameState state) { }
 
     // Optional score hook — can override this
-    public virtual int ModifyScore(List<Tile> tiles, int current) => current;
+    public virtual int AdditiveBaseMod(List<Tile> tiles) => 0;
+
+    // Optional score hook — can override this
+    public virtual int MultiplicativeBaseMod(List<Tile> tiles) => 1;
+
+    // Optional score hook — can override this
+    public virtual int AdditiveMultiplierMod(List<Tile> tiles) => 0;
+
+    // Optional score hook — can override this
+    public virtual int MultiplicativeMultiMod(List<Tile> tiles) => 1;
 }
 
 public class FlexibleMatchPower : PowerUp
@@ -29,12 +38,15 @@ public class FlexibleMatchPower : PowerUp
         Description = $"Receive +{amount} per tile";
         increase = amount;
     }
+    public override int AdditiveBaseMod(List<Tile> tiles)
+    {
+        return tiles.Count * 2;
+    }
 
     public override void Apply(GameState state)
     {
-        state.PlayerConfigs.basePoints = state.PlayerConfigs.basePoints + 2;
+        //throw new System.NotImplementedException();
     }
-
 }
 
 public class AddDiagonalScoring : PowerUp
@@ -65,7 +77,7 @@ public class BasePowerUp : PowerUp
         // No special logic, just base scoring
     }
 
-    public override int ModifyScore(List<Tile> tiles, int current)
+    public override int AdditiveBaseMod(List<Tile> tiles)
     {
         int basePoints = GameState.Instance.PlayerConfigs.basePoints;
         return tiles.Count * basePoints;
@@ -77,9 +89,10 @@ public static class PowerUpLibrary
 {
     public static List<PowerUp> All = new List<PowerUp>()
     {
-        new AddDiagonalScoring(),
         new FlexibleMatchPower(2),
-        new BasePowerUp(),
+        new FlexibleMatchPower(3),
+        new FlexibleMatchPower(4),
+
         // Add more here
     };
 }

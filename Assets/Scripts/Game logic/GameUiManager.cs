@@ -19,13 +19,13 @@ public class GameUIManager : MonoBehaviour
         UpdateTimer(GameState.Instance.TimeRemaining);
     }
 
-    private void UpdateScore(int score) => scoreText.text = $"{score}";
-    private void UpdateTarget(int target) => targetText.text = $"{target}";
+    private void UpdateScore(int score) => scoreText.text = $"Score: {score}";
+    private void UpdateTarget(int target) => targetText.text = $"Target: {target}";
     private void UpdateTimer(float time)
     {
         int minutes = Mathf.FloorToInt(time / 60);
         int seconds = Mathf.FloorToInt(time % 60);
-        timerText.text = $"{minutes:00}:{seconds:00}";
+        timerText.text = $"Timer: {minutes:00}:{seconds:00}";
     }
 
     private void OnDestroy()

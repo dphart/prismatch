@@ -16,13 +16,12 @@ public class Board : MonoBehaviour
 
     private void Awake() => Instance = this;
 
-    public Row[] rows;
+    private List<Row> rows = new List<Row>();
 
     public Tile[,] Tiles { get; private set; }
 
-    public int Width => Tiles.GetLength(0);
-
-    public int Height => Tiles.GetLength(1);
+    public int Width { get; private set; }
+    public int Height { get; private set; }
 
     private readonly List<Tile> _selection = new List<Tile>();
 
@@ -33,20 +32,77 @@ public class Board : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        Tiles = new Tile[rows.Max(row => row.tiles.Length), rows.Length];
+        Debug.Log("[Board] Initializing board...");
+
+        rows = GetComponentsInChildren<Row>().ToList();
+        Height = rows.Count;
+
+        if (Height == 0)
+        {
+            Debug.LogError("[Board] No rows found!");
+            return;
+        }
+
+        var firstRowTiles = rows[0].GetComponentsInChildren<Tile>(false);
+        Width = firstRowTiles.Length;
+
+        if (Width == 0)
+        {
+            Debug.LogError("[Board] First row has no tiles!");
+            return;
+        }
+
+        Debug.Log($"[Board] Expected board dimensions: {Width} x {Height}");
+
+        Tiles = new Tile[Width, Height];
+
         for (int y = 0; y < Height; y++)
         {
+            var row = rows[y];
+            var tilesInRow = row.GetComponentsInChildren<Tile>(false);
+
+            if (tilesInRow.Length != Width)
+            {
+                Debug.LogError($"[Board] Row {y} has {tilesInRow.Length} tiles but expected {Width}. Aborting.");
+                return;
+            }
+
             for (int x = 0; x < Width; x++)
             {
-                var tile = rows[y].tiles[x];
+                var tile = tilesInRow[x];
                 tile.x = x;
                 tile.y = y;
                 Tiles[x, y] = tile;
 
-                tile.item = ItemDatabase.items[UnityEngine.Random.Range(0, ItemDatabase.items.Length)];
+                if (ItemDatabase.items != null && ItemDatabase.items.Length > 0)
+                {
+                    tile.item = ItemDatabase.items[UnityEngine.Random.Range(0, ItemDatabase.items.Length)];
+
+                    if (tile.icon != null && tile.item.sprite != null)
+                    {
+                        tile.icon.sprite = tile.item.sprite;
+                    }
+
+                    Debug.Log($"[Board] Tile ({x},{y}) initialized with item: {tile.item.name}");
+                }
+                else
+                {
+                    Debug.LogError("[Board] ItemDatabase is null or empty!");
+                }
             }
         }
+
+        Debug.Log("[Board] Tile grid setup complete.");
     }
+
+
+
+
+
+
+
+
+
 
     public async void Select(Tile tile)
     {

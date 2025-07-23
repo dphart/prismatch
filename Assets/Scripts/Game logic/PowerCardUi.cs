@@ -16,7 +16,6 @@ public class PowerCardUI : MonoBehaviour
     // Call this from PowerUpSelector to initialize this card
     public void Setup(PowerUp power, PowerUpSelector selectorContext)
     {
-        Debug.Log("Power Card ui setup");
 
         powerUp = power;
         selector = selectorContext;
@@ -28,12 +27,10 @@ public class PowerCardUI : MonoBehaviour
         // Enable or disable icon display
         icon.gameObject.SetActive(powerUp.Icon != null);
 
-        Debug.Log("power card listeners being set");
 
         // Hook up button (optional — or wire through inspector)
         selectButton.onClick.RemoveAllListeners();
         selectButton.onClick.AddListener(OnSelect);
-        Debug.Log("power Card listener set");
     }
 
     private void OnSelect()
@@ -43,6 +40,8 @@ public class PowerCardUI : MonoBehaviour
         GameState.Instance.RegisterPowerUp(powerUp);
 
         Debug.Log($"Selected power-up: {powerUp.Name}");
+        Debug.Log($"You now have {GameState.Instance.ActivePowers.Count} active powers");
+
 
         // Notify GameController to start next level
         selector.Hide();

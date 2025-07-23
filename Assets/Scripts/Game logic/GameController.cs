@@ -12,12 +12,13 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
-        StartLevel(baseTargetScore);
+        StartLevel(baseTargetScore, true);
     }
 
     private void Update()
     {
-        if (!GameState.Instance.TimerIsRunning) return;
+        
+        if (GameState.Instance == null || !GameState.Instance.TimerIsRunning) return;
 
         timer += Time.deltaTime;
 
@@ -39,10 +40,14 @@ public class GameController : MonoBehaviour
         }
     }
 
-    private void StartLevel(int targetScore)
+    private void StartLevel(int targetScore, bool newGame)
     {
-        GameState.Instance.ResetGame();
-        GameState.Instance.RegisterPowerUp(new BasePowerUp());
+        if (newGame)
+        {
+            GameState.Instance.ResetGame();
+            GameState.Instance.RegisterPowerUp(new BasePowerUp());
+
+        }
         GameState.Instance.SetTargetScore(targetScore);
         GameState.Instance.StartTimer(levelDurationSeconds);
     }
@@ -51,14 +56,14 @@ public class GameController : MonoBehaviour
     {
         int newTarget = GameState.Instance.TargetScore + 200; // You can scale this however you'd like
         Debug.Log($"Time’s up! Increasing target to {newTarget}");
-        StartLevel(newTarget);
+        StartLevel(newTarget, false);
     }
 
     private void DoubleTarget()
     {
-        int doubledTarget = GameState.Instance.TargetScore * 2;
+        int doubledTarget = GameState.Instance.TargetScore * 3;
         Debug.Log($"Target met! New target is {doubledTarget}");
-        StartLevel(doubledTarget);
+        StartLevel(doubledTarget, false);
     }
 
     public void OnPowerUpSelected()
