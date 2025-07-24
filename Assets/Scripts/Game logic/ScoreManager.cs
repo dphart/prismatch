@@ -20,9 +20,14 @@ public class ScoreManager
             Debug.LogWarning("HandleScoring called with empty or null tile list.");
             return 0;
         }
-
-        int basePerTile = playerConfigs.basePoints;
-        int basePoints = tiles.Count * basePerTile;
+        foreach (var power in powerManager.ActivePowers)
+        {
+            if (!power.IsScoreValid(tiles))
+            {
+                Debug.Log($"⛔️ Score invalidated by {power.Name}");
+                return 0;
+            }
+        }
 
         int additiveBase = 0;
         int baseMultiplier = 1;
@@ -30,14 +35,16 @@ public class ScoreManager
         int multMultiplier = 1;
 
         var breakdown = new StringBuilder();
-
         var powers = powerManager.ActivePowers;
+
+        bool hasScoringPower = false;
 
         foreach (var power in powers)
         {
             int add = power.AdditiveBaseMod(tiles);
             if (add != 0) breakdown.AppendLine($"➕ {power.Name} adds {add} to base");
             additiveBase += add;
+            if (add != 0) hasScoringPower = true;
         }
 
         foreach (var power in powers)
@@ -45,6 +52,7 @@ public class ScoreManager
             int mult = power.MultiplicativeBaseMod(tiles);
             if (mult != 1) breakdown.AppendLine($"✖️ {power.Name} multiplies base by {mult}");
             baseMultiplier *= mult;
+            if (mult != 1) hasScoringPower = true;
         }
 
         foreach (var power in powers)
@@ -52,6 +60,7 @@ public class ScoreManager
             int addMult = power.AdditiveMultiplierMod(tiles);
             if (addMult != 0) breakdown.AppendLine($"➕ {power.Name} adds {addMult}x to multiplier");
             additiveMultiplier += addMult;
+            if (addMult != 0) hasScoringPower = true;
         }
 
         foreach (var power in powers)
@@ -59,9 +68,17 @@ public class ScoreManager
             int mulMult = power.MultiplicativeMultiMod(tiles);
             if (mulMult != 1) breakdown.AppendLine($"✖️ {power.Name} multiplies multiplier by {mulMult}");
             multMultiplier *= mulMult;
+            if (mulMult != 1) hasScoringPower = true;
         }
 
-        int finalBase = (basePoints + additiveBase) * baseMultiplier;
+        // NEW: If no power is modifying anything, return 0
+        if (!hasScoringPower)
+        {
+            Debug.Log("⚠️ No scoring powers active — 0 points awarded.");
+            return 0;
+        }
+
+        int finalBase = (additiveBase) * baseMultiplier;
         float finalMultiplier = (1 + additiveMultiplier) * multMultiplier;
         int finalScore = Mathf.RoundToInt(finalBase * finalMultiplier);
 
@@ -70,7 +87,6 @@ public class ScoreManager
         fullLog.AppendLine($"✅ Final Score: {finalBase} × {finalMultiplier} = {finalScore}");
         fullLog.AppendLine();
         fullLog.AppendLine($"You have {powers.Count} active powers");
-        fullLog.AppendLine($"📦 Base points: {basePoints} ({tiles.Count} × {basePerTile})");
         fullLog.AppendLine($"🔹 Additive base: {additiveBase}");
         fullLog.AppendLine($"🔸 Base multiplier: ×{baseMultiplier}");
         fullLog.AppendLine($"💠 Final base: {finalBase}");
@@ -84,4 +100,5 @@ public class ScoreManager
 
         return finalScore;
     }
+
 }

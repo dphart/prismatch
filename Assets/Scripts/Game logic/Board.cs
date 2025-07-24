@@ -10,19 +10,19 @@ public class Board : MonoBehaviour
 {
     public static Board Instance { get; private set; }
 
-    [Header("Prefabs & Settings")]
     public GameObject rowPrefab;
     public GameObject tilePrefab;
-    public int numRows = 8;
-    public int numCols = 8;
+
+    private int maxItemTypes = 8;
+
 
     public GameController gameController;
 
     public bool isSwapping = false;
 
     public Tile[,] Tiles { get; private set; }
-    public int Width => numCols;
-    public int Height => numRows;
+    public int Width => GameState.Instance.PlayerConfigs.rows;
+    public int Height => GameState.Instance.PlayerConfigs.columns;
 
     private readonly List<Tile> _selection = new();
     private const float TweenDuration = 0.2f;
@@ -44,7 +44,8 @@ public class Board : MonoBehaviour
 
     public void GenerateBoard()
     {
-        Debug.Log("[Board] Generating board...");
+        gameController.GenerateItemPool(maxItemTypes);
+        Debug.Log($"[Board] Generating board with {maxItemTypes} types");
 
         // Clear old board
         foreach (Transform child in transform)
@@ -72,7 +73,8 @@ public class Board : MonoBehaviour
 
                 if (ItemDatabase.items != null && ItemDatabase.items.Length > 0)
                 {
-                    tile.item = ItemDatabase.items[UnityEngine.Random.Range(0, ItemDatabase.items.Length)];
+                    tile.item = gameController.limitedItemPool[UnityEngine.Random.Range(0, gameController.limitedItemPool.Count())];
+                   
 
                     if (tile.icon != null && tile.item.sprite != null)
                     {
@@ -107,9 +109,8 @@ public class Board : MonoBehaviour
             {
                 var tile = Tiles[x, y];
 
-                if (ItemDatabase.items != null && ItemDatabase.items.Length > 0)
-                {
-                    tile.item = ItemDatabase.items[UnityEngine.Random.Range(0, ItemDatabase.items.Length)];
+                
+                    tile.item = gameController.limitedItemPool[UnityEngine.Random.Range(0, gameController.limitedItemPool.Count)];
 
                     if (tile.icon != null && tile.item.sprite != null)
                     {
@@ -117,12 +118,13 @@ public class Board : MonoBehaviour
                     }
 
                     Debug.Log($"[Board] Tile ({x},{y}) re-initialized with item: {tile.item.name}");
-                }
+               
             }
         }
 
         Debug.Log("[Board] Board reset complete.");
     }
+
 
     public async void Select(Tile tile)
     {
@@ -226,7 +228,7 @@ public class Board : MonoBehaviour
                 var inflateSequence = DOTween.Sequence();
                 foreach (var connectedTile in connectedTiles)
                 {
-                    connectedTile.item = ItemDatabase.items[UnityEngine.Random.Range(0, ItemDatabase.items.Length)];
+                    connectedTile.item = gameController.limitedItemPool[UnityEngine.Random.Range(0, gameController.limitedItemPool.Count)];
                     inflateSequence.Join(connectedTile.icon.transform.DOScale(Vector3.one, TweenDuration));
                 }
 

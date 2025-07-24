@@ -9,4 +9,4 @@ public class Item : ScriptableObject
 
 }
 
-public enum ItemType { Bear, Sloth, Chicken, Duck, Hippo, Giraffe, Walrus}
+public enum ItemType { Bear, Sloth, Chicken, Duck, Hippo, Gir}

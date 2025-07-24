@@ -1,29 +1,26 @@
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PowerUpSelector : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private GameObject panel; // The UI container (like the black box)
-    [SerializeField] private PowerCardUI[] cardSlots; // PowerCard_1, 2, 3
-    [SerializeField] public GameController gameController; // Drag your GameController here
-
-    [Header("Power-Up Pool")]
-    public List<PowerUp> allAvailablePowers = new(); // Optional if not using static library
+    [SerializeField] private GameObject panel;
+    [SerializeField] private PowerCardUI[] cardSlots;
+    [SerializeField] public GameController gameController;
 
     public void ShowChoices()
     {
-        // Choose 3 random power-ups
         List<PowerUp> choices = GetRandomPowerUps(3);
+        Debug.Log($"We have {choices.Count} powers returned");
 
-        Debug.Log($"Setup for X cards {cardSlots.Length}" );
-
+        Debug.Log($"Setting up {cardSlots.Length} card slots...");
 
         for (int i = 0; i < cardSlots.Length; i++)
         {
             cardSlots[i].gameObject.SetActive(true);
-            Debug.Log("Setup for card" +  i);
+            Debug.Log($"Setting up card {i}");
             cardSlots[i].Setup(choices[i], this);
         }
 
@@ -35,28 +32,30 @@ public class PowerUpSelector : MonoBehaviour
         panel.SetActive(false);
     }
 
-
     private List<PowerUp> GetRandomPowerUps(int count)
     {
-        // Use a static library if desired
-        List<PowerUp> source = allAvailablePowers.Count > 0 ? allAvailablePowers : PowerUpLibrary.All;
+        List<PowerUp> source = PowerUpLibrary.All;
+
+        //var valid = new List<PowerUp>();
+        ////var iconTypes = ((LevelInfoProvider)gameController).IconList.Select(i => i.ItemType);
+        ////iconTypes = System.Linq.Enumerable.ToHashSet(iconTypes);
+                                                                    
+
+        //foreach (var iconType in source)
+        //{
+        //    var match = source.FirstOrDefault(p => p is IconBonusPower bonus && bonus.IconType == iconType);
+        //    if (match != null) valid.Add(match);
+        //}
 
         return source
             .OrderBy(_ => Random.value)
             .Take(count)
-            .Select(p => ClonePowerUp(p))
+            .Select(ClonePowerUp)
             .ToList();
     }
 
     private PowerUp ClonePowerUp(PowerUp original)
     {
-        // Factory-style recreation to avoid instance reuse side effects
-        if (original is AddDiagonalScoring) return new AddDiagonalScoring();
-        if (original is FlexibleMatchPower f) return new FlexibleMatchPower(f.increase);
-        if (original is BasePowerUp) return new BasePowerUp();
-        // Add new types here
-
-        Debug.LogWarning($"Unknown power-up type: {original.GetType()}");
-        return null;
+        return original?.Clone();
     }
 }

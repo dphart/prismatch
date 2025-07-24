@@ -11,6 +11,8 @@ public class GameState : MonoBehaviour
     public PlayerConfigs PlayerConfigs { get; private set; } = new();
     public Scorables Scorables { get; private set; } = new();
 
+    public LevelConfig CurrentLevel { get; private set; } = new Level1();
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -30,7 +32,6 @@ public class PlayerConfigs
     public int columns = 5;
     public int baseMulti = 1;
     public int basePoints = 5;
-
 
 }
 
