@@ -16,13 +16,18 @@ class FirstItemsGivesNoPoints : BossPowers
     public FirstItemsGivesNoPoints()
     {
         Name = "First In None Out";
-        Description = $"Your first match type gives no points for the remaining rounds";
+        PowerUpDescription = $"Your first match type gives no points for the remaining rounds";
     }
     public override void Apply(GameState state) {}
     
     public override PowerUp Clone()
     {
         return new FirstItemsGivesNoPoints();
+    }
+
+    public override string GetCurrentPowerDescription()
+    {
+        return "";
     }
 
     public override bool IsScoreValid(List<Tile> tiles)

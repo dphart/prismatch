@@ -19,7 +19,7 @@ public class PowerCardUI : MonoBehaviour
         selector = selectorContext;
 
         //nameText.text = powerUp.Name;
-        descriptionText.text = powerUp.Description;
+        descriptionText.text = powerUp.PowerUpDescription;
         icon.sprite = powerUp.Icon;
         icon.gameObject.SetActive(powerUp.Icon != null);
 

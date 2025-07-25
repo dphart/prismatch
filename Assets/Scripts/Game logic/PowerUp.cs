@@ -8,8 +8,11 @@ public abstract class PowerUp
     public LevelInfoProvider LevelInfoProvider;
     public ItemInfoProvider ItemInfoProvider;
     public string Name { get; protected set; }
-    public string Description { get; protected set; }
+    public string PowerUpDescription { get; protected set; }
     public Sprite Icon { get; protected set; }
+
+    // ✅ Each subclass must return a description (static or dynamic)
+    public abstract string GetCurrentPowerDescription();
 
     public abstract void Apply(GameState state);
     public virtual void Tick(GameState state) { }
@@ -19,9 +22,10 @@ public abstract class PowerUp
     public virtual int MultiplicativeMultiMod(List<Tile> tiles) => 1;
     public virtual bool IsScoreValid(List<Tile> tiles) => true;
 
-
     public abstract PowerUp Clone();
 }
+
+// ----------------- INDIVIDUAL POWER-UPS -----------------
 
 public class FlexibleMatchPower : PowerUp
 {
@@ -30,9 +34,11 @@ public class FlexibleMatchPower : PowerUp
     public FlexibleMatchPower(int amount)
     {
         Name = "More Power!";
-        Description = $"Receive +{amount} per tile";
+        PowerUpDescription = $"Receive +{amount} per tile";
         Increase = amount;
     }
+
+    public override string GetCurrentPowerDescription() => PowerUpDescription;
 
     public override int AdditiveBaseMod(List<Tile> tiles) => tiles.Count * Increase;
     public override void Apply(GameState state) { }
@@ -44,8 +50,10 @@ public class BasePowerUp : PowerUp
     public BasePowerUp()
     {
         Name = "Base Scoring";
-        Description = "Each tile match gives base points.";
+        PowerUpDescription = "Each tile match gives base points.";
     }
+
+    public override string GetCurrentPowerDescription() => PowerUpDescription;
 
     public override int AdditiveBaseMod(List<Tile> tiles) => tiles.Count * GameState.Instance.PlayerConfigs.basePoints;
     public override void Apply(GameState state) { }
@@ -61,14 +69,16 @@ public class ComboCrazePower : PowerUp
     public ComboCrazePower()
     {
         Name = "Combo Craze";
-        Description = $"{plusMulti} multiplier every {successfulCombosRequired} successful combos";
+        PowerUpDescription = $"{plusMulti} multiplier every {successfulCombosRequired} successful combos.";
     }
+
+    public override string GetCurrentPowerDescription() =>
+        $"{plusMulti} multiplier every {successfulCombosRequired} combos. Current: {comboCount}/{successfulCombosRequired} combos.";
 
     public override int AdditiveMultiplierMod(List<Tile> tiles)
     {
         comboCount++;
-        return comboCount / 5;
-        
+        return comboCount / successfulCombosRequired;
     }
 
     public override void Apply(GameState state) => comboCount = 0;
@@ -78,13 +88,16 @@ public class ComboCrazePower : PowerUp
 public class BasePerTile : PowerUp
 {
     private double turnMatches = 0;
-    private double basePointModifier = .1;
+    private double basePointModifier = 0.1;
 
     public BasePerTile()
     {
         Name = "Momentum Bonus";
-        Description = $"+{basePointModifier} Base per tile matched";
+        PowerUpDescription = $"+{basePointModifier} base per tile matched.";
     }
+
+    public override string GetCurrentPowerDescription() =>
+        $"{PowerUpDescription} Current bonus: +{turnMatches:F1} per tile.";
 
     public override int AdditiveBaseMod(List<Tile> tiles)
     {
@@ -100,13 +113,18 @@ public class BaseForExactlyThree : PowerUp
 {
     private int exactMatchNumber = 3;
     private int basePointsAdded = 5;
+
     public BaseForExactlyThree()
     {
         Name = "Precision Points";
-        Description = $"{basePointsAdded} base points if match is exactly {exactMatchNumber}";
+        PowerUpDescription = $"{basePointsAdded} base points if match is exactly {exactMatchNumber}.";
     }
 
-    public override int AdditiveBaseMod(List<Tile> tiles) => tiles.Count == exactMatchNumber ? basePointsAdded * tiles.Count : 0;
+    public override string GetCurrentPowerDescription() => PowerUpDescription;
+
+    public override int AdditiveBaseMod(List<Tile> tiles) =>
+        tiles.Count == exactMatchNumber ? basePointsAdded * tiles.Count : 0;
+
     public override void Apply(GameState state) { }
     public override PowerUp Clone() => new BaseForExactlyThree();
 }
@@ -118,11 +136,15 @@ public class FourExactlyPower : PowerUp
 
     public FourExactlyPower()
     {
-        Name = "Four is good";
-        Description = $"x{basePointsMulti} Base points for {exactMatchNumber} in a row";
+        Name = "Four is Good";
+        PowerUpDescription = $"x{basePointsMulti} base points for {exactMatchNumber} in a row.";
     }
 
-    public override int MultiplicativeBaseMod(List<Tile> tiles) => tiles.Count == exactMatchNumber ? basePointsMulti : 1;
+    public override string GetCurrentPowerDescription() => PowerUpDescription;
+
+    public override int MultiplicativeBaseMod(List<Tile> tiles) =>
+        tiles.Count == exactMatchNumber ? basePointsMulti : 1;
+
     public override void Apply(GameState state) { }
     public override PowerUp Clone() => new FourExactlyPower();
 }
@@ -135,10 +157,14 @@ public class HighStakesPower : PowerUp
     public HighStakesPower()
     {
         Name = "High Stakes";
-        Description = $"+{bonusPoints} points if match has {atLeastXTiles} or more tiles.";
+        PowerUpDescription = $"+{bonusPoints} points if match has {atLeastXTiles} or more tiles.";
     }
 
-    public override int AdditiveBaseMod(List<Tile> tiles) => tiles.Count >= atLeastXTiles ? bonusPoints : 0;
+    public override string GetCurrentPowerDescription() => PowerUpDescription;
+
+    public override int AdditiveBaseMod(List<Tile> tiles) =>
+        tiles.Count >= atLeastXTiles ? bonusPoints : 0;
+
     public override void Apply(GameState state) { }
     public override PowerUp Clone() => new HighStakesPower();
 }
@@ -147,16 +173,18 @@ public class UnderdogPower : PowerUp
 {
     private int plusMulti = 2;
     private int maxTiles = 3;
+
     public UnderdogPower()
     {
-        Name = "Smaller is better";
-        Description = $"+{plusMulti} Multi if match is {maxTiles} or fewer tiles.";
+        Name = "Smaller is Better";
+        PowerUpDescription = $"+{plusMulti} Multi if match is {maxTiles} or fewer tiles.";
     }
 
-    public override int AdditiveMultiplierMod(List<Tile> tiles)
-    {
-        return tiles.Count <= maxTiles ? plusMulti : 0;
-    }
+    public override string GetCurrentPowerDescription() => PowerUpDescription;
+
+    public override int AdditiveMultiplierMod(List<Tile> tiles) =>
+        tiles.Count <= maxTiles ? plusMulti : 0;
+
     public override void Apply(GameState state) { }
     public override PowerUp Clone() => new UnderdogPower();
 }
@@ -165,13 +193,18 @@ public class StackedOddsPower : PowerUp
 {
     private int baseMulti = 2;
     private int requiredTiles = 4;
+
     public StackedOddsPower()
     {
         Name = "Stacked Odds";
-        Description = $"x{baseMulti} base for {requiredTiles}+ in a row.";
+        PowerUpDescription = $"x{baseMulti} base for {requiredTiles}+ in a row.";
     }
 
-    public override int MultiplicativeBaseMod(List<Tile> tiles) => tiles.Count >= requiredTiles ? baseMulti : 1;
+    public override string GetCurrentPowerDescription() => PowerUpDescription;
+
+    public override int MultiplicativeBaseMod(List<Tile> tiles) =>
+        tiles.Count >= requiredTiles ? baseMulti : 1;
+
     public override void Apply(GameState state) { }
     public override PowerUp Clone() => new StackedOddsPower();
 }
@@ -181,11 +214,15 @@ public class ConsistencyIsKey : PowerUp
     private int additiveMulti = 1;
     public int numberOfTilesPreviouslyMatched = 0;
     public int numberOfMatchesInARow = 0;
+
     public ConsistencyIsKey()
     {
-        Name = "ConsistencyIsKey";
-        Description = $"Each match of the same length as one previous gains a stacking +{additiveMulti} Multi";
+        Name = "Consistency Is Key";
+        PowerUpDescription = $"Each match of the same length as one previous gains a stacking +{additiveMulti} Multi.";
     }
+
+    public override string GetCurrentPowerDescription() =>
+        $"Matches of same length add +{additiveMulti} Multi. Current streak: {numberOfMatchesInARow} in a row.";
 
     public override int MultiplicativeBaseMod(List<Tile> tiles)
     {
@@ -193,15 +230,17 @@ public class ConsistencyIsKey : PowerUp
         {
             numberOfMatchesInARow++;
             return numberOfTilesPreviouslyMatched * additiveMulti;
-        } else
+        }
+        else
         {
             numberOfMatchesInARow = 0;
             numberOfTilesPreviouslyMatched = tiles.Count;
             return 1;
         }
     }
+
     public override void Apply(GameState state) { }
-    public override PowerUp Clone() => new StackedOddsPower();
+    public override PowerUp Clone() => new ConsistencyIsKey(); // ✅ fixed bug here
 }
 
 public class SnowballPower : PowerUp
@@ -213,8 +252,11 @@ public class SnowballPower : PowerUp
     public SnowballPower()
     {
         Name = "Snowball";
-        Description = $"+{baseMultiIncrease} multiplier per {perXMatches} matches";
+        PowerUpDescription = $"+{baseMultiIncrease} multiplier per {perXMatches} matches.";
     }
+
+    public override string GetCurrentPowerDescription() =>
+        $"{PowerUpDescription} Current bonus: +{(matchCount / perXMatches) * baseMultiIncrease} Multi from {matchCount} matches.";
 
     public override int AdditiveMultiplierMod(List<Tile> tiles)
     {
@@ -225,11 +267,16 @@ public class SnowballPower : PowerUp
     public override void Apply(GameState state) { }
     public override PowerUp Clone() => new SnowballPower();
 }
+
+// ---------- Icon Bonus Powers (extendable base class) ----------
+
 public abstract class IconBonusPower : PowerUp
 {
     public ItemType ItemType { get; private set; }
+    // Subclasses will implement behavior for specific icons
 }
 
+// ---------- PowerUp Library ----------
 
 public static class PowerUpLibrary
 {
