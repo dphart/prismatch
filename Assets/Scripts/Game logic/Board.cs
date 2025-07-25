@@ -13,7 +13,7 @@ public class Board : MonoBehaviour
     public GameObject rowPrefab;
     public GameObject tilePrefab;
 
-    private int maxItemTypes = 8;
+    private int maxItemTypes = 8; // TODO - move to level
 
 
     public GameController gameController;
@@ -81,7 +81,6 @@ public class Board : MonoBehaviour
                         tile.icon.sprite = tile.item.sprite;
                     }
 
-                    Debug.Log($"[Board] Tile ({x},{y}) initialized with item: {tile.item.name}");
                 }
                 else
                 {
@@ -117,7 +116,6 @@ public class Board : MonoBehaviour
                         tile.icon.sprite = tile.item.sprite;
                     }
 
-                    Debug.Log($"[Board] Tile ({x},{y}) re-initialized with item: {tile.item.name}");
                
             }
         }

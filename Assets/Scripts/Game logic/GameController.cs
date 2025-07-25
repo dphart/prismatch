@@ -48,6 +48,8 @@ public class GameController : MonoBehaviour, TimeProvider, LevelInfoProvider, It
 
     public List<Item> GetActiveItems => IconList;
 
+
+
     private void Awake()
     {
         powerManager = new PowerManager(this, this, this);
@@ -56,7 +58,7 @@ public class GameController : MonoBehaviour, TimeProvider, LevelInfoProvider, It
 
     private void Start()
     {
-        StartLevel(GameState.Instance.CurrentLevel.GetTargetScore(1), true);
+        StartLevel(true, true);
     }
 
     public List<Item> limitedItemPool;
@@ -84,7 +86,7 @@ public class GameController : MonoBehaviour, TimeProvider, LevelInfoProvider, It
         Debug.Log($"🔄 Restarting round (used {roundRestartsUsed}/{maxRoundRestarts})");
 
         // Reset round but don't reset full game
-        StartLevel(targetScore, false);
+        StartLevel(false, false);
         Board.Instance.ResetBoard();
         gameOverPanel.SetActive(false);
     }
@@ -150,12 +152,12 @@ public class GameController : MonoBehaviour, TimeProvider, LevelInfoProvider, It
     }
 
 
-    public void StartLevel(int newTarget, bool isNewGame)
+    public void StartLevel(bool advanceRound, bool isNewGame)
     {
         if (isNewGame) ResetGame();
         Debug.Log($"Starting Level with previous round being {CurrentRound}");
 
-        OnNextRound(CurrentRound, newTarget);
+        OnNextRound(CurrentRound, advanceRound);
         timerRunning = true;
         isPowerUpScreenActive = false;
 
@@ -167,9 +169,10 @@ public class GameController : MonoBehaviour, TimeProvider, LevelInfoProvider, It
         scoreManager = new ScoreManager(GameState.Instance.PlayerConfigs, powerManager);
     }
 
-    private void OnNextRound(int completedRoundNumber, int newTarget)
+    private void OnNextRound(int completedRoundNumber, bool advanceRound)
     {
-        CurrentRound = CurrentRound + 1;
+        
+        if(advanceRound) CurrentRound = CurrentRound + 1;
         powerManager.ClearBossPowers();
         foreach (BossPowers bp in GameState.Instance.CurrentLevel.GetBossEffectsByRound(CurrentRound))
         {
@@ -178,7 +181,7 @@ public class GameController : MonoBehaviour, TimeProvider, LevelInfoProvider, It
         Debug.Log($"Current Round being set to {CurrentRound}");
         OnRoundChanged?.Invoke(CurrentRound);
         score = 0;
-        targetScore = newTarget;
+        targetScore = GameState.Instance.CurrentLevel.GetTargetScore(CurrentRound);
         timeRemaining = GameState.Instance.CurrentLevel.GetTotalTime;
     }
 
@@ -200,7 +203,7 @@ public class GameController : MonoBehaviour, TimeProvider, LevelInfoProvider, It
     public void OnPowerUpSelected()
     {
         isPowerUpScreenActive = false;
-        StartLevel(targetScore * 2, false);
+        StartLevel(true, false);
     }
 
     public void NewGameButton()
@@ -208,7 +211,7 @@ public class GameController : MonoBehaviour, TimeProvider, LevelInfoProvider, It
         Debug.Log("🆕 Starting new game...");
 
         // Reset core game logic
-        StartLevel(GameState.Instance.CurrentLevel.GetTargetScore(1), true);
+        StartLevel(true, true);
 
         // Reset board
         Board.Instance.GenerateBoard();

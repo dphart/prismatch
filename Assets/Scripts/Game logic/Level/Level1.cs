@@ -10,7 +10,7 @@ public class Level1 : LevelConfig
 
     public int GetLevelNumber => 1;
 
-    public int GetHeight(int round) => 6;
+    public int GetHeight(int round) =>7 ;
 
 
     public List<PowerUp> GetPowerUpsForRound(int round)
@@ -20,15 +20,16 @@ public class Level1 : LevelConfig
 
     public int GetTargetScore(int round)
     {
-        var baseScore = 200;
-        return baseScore * round; 
+        int baseScore = 200;
+        float multiplier = Mathf.Pow(2, round - 1); // round 1 = x1, round 2 = x2, round 3 = x4...
+        return Mathf.RoundToInt(baseScore * multiplier);
     }
 
-    public int GetWidth(int round) => 6;
+    public int GetWidth(int round) => 7;
 
     List<BossPowers> LevelConfig.GetBossEffectsByRound(int round)
     {
-        if(round == 2)
+        if(round == 10)
         {
             return new List<BossPowers> { new FirstItemsGivesNoPoints() };
         }

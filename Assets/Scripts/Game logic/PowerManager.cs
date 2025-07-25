@@ -44,9 +44,8 @@ public class PowerManager
 
     public void ClearBossPowers()
     {
-        UnityEngine.Debug.Log($"Cleared {_activePowers.Count} powers");
+        UnityEngine.Debug.Log($"Cleared {_activeBossPowers.Count} powers");
         _activeBossPowers.Clear();
-        RegisterPower(new BasePowerUp());
     }
 
     public IReadOnlyList<PowerUp> ActivePowers => _activePowers.AsReadOnly();
