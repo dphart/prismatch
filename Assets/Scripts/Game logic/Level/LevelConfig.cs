@@ -3,7 +3,8 @@ using UnityEngine;
 
 public interface LevelConfig 
 {
-    public List<PowerUp> GetPotentialPowerUps(int round);
+    public List<PowerUp> GetPowerUpsForRound(int round);
+
     public int GetTotalTime { get; }
     public int GetHeight(int round);
 
@@ -13,5 +14,7 @@ public interface LevelConfig
     public int GetTotalRounds { get; }
 
     public int GetLevelNumber { get; }
+
+    public List<BossPowers> GetBossEffectsByRound(int round);
 
 }

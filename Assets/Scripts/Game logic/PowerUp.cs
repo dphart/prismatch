@@ -6,6 +6,7 @@ public abstract class PowerUp
 {
     public TimeProvider TimeProvider;
     public LevelInfoProvider LevelInfoProvider;
+    public ItemInfoProvider ItemInfoProvider;
     public string Name { get; protected set; }
     public string Description { get; protected set; }
     public Sprite Icon { get; protected set; }
@@ -105,7 +106,7 @@ public class BaseForExactlyThree : PowerUp
         Description = $"{basePointsAdded} base points if match is exactly {exactMatchNumber}";
     }
 
-    public override int AdditiveBaseMod(List<Tile> tiles) => tiles.Count == exactMatchNumber ? basePointsAdded : 0;
+    public override int AdditiveBaseMod(List<Tile> tiles) => tiles.Count == exactMatchNumber ? basePointsAdded * tiles.Count : 0;
     public override void Apply(GameState state) { }
     public override PowerUp Clone() => new BaseForExactlyThree();
 }
@@ -224,30 +225,9 @@ public class SnowballPower : PowerUp
     public override void Apply(GameState state) { }
     public override PowerUp Clone() => new SnowballPower();
 }
-public class IconBonusPower : PowerUp
+public abstract class IconBonusPower : PowerUp
 {
-    public ItemType IconType { get; private set; }
-    public int BonusPoints { get; private set; }
-
-    public IconBonusPower(ItemType iconType, int bonusPoints)
-    {
-        IconType = iconType;
-        BonusPoints = bonusPoints;
-        Name = $"{iconType} Bonus";
-        Description = $"Gain +{bonusPoints} points for each {iconType} matched.";
-    }
-
-    public override int AdditiveBaseMod(List<Tile> tiles)
-    {
-        return tiles.Count(t => t.item.ItemType == IconType) * BonusPoints;
-    }
-
-    public override void Apply(GameState state) { }
-
-    public override PowerUp Clone()
-    {
-        return new IconBonusPower(IconType, BonusPoints);
-    }
+    public ItemType ItemType { get; private set; }
 }
 
 
@@ -260,7 +240,6 @@ public static class PowerUpLibrary
         new BaseForExactlyThree(),
         new BasePerTile(),
         new ComboCrazePower(),
-        new BasePowerUp(),
         new HighStakesPower(),
         new UnderdogPower(),
         new StackedOddsPower(),

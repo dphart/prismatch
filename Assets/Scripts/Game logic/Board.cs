@@ -21,8 +21,8 @@ public class Board : MonoBehaviour
     public bool isSwapping = false;
 
     public Tile[,] Tiles { get; private set; }
-    public int Width => GameState.Instance.PlayerConfigs.rows;
-    public int Height => GameState.Instance.PlayerConfigs.columns;
+    public int Width => GameState.Instance.CurrentLevel.GetWidth(gameController.CurrentRound);
+    public int Height => GameState.Instance.CurrentLevel.GetHeight(gameController.CurrentRound);
 
     private readonly List<Tile> _selection = new();
     private const float TweenDuration = 0.2f;

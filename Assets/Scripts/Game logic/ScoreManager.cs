@@ -28,6 +28,16 @@ public class ScoreManager
                 return 0;
             }
         }
+        foreach (var power in powerManager.BossPowers)
+        {
+            if (!power.IsScoreValid(tiles))
+            {
+                Debug.Log($"⛔️ Score invalidated by Boss Power {power.Name}");
+                return 0;
+            }
+        }
+
+
 
         int additiveBase = 0;
         int baseMultiplier = 1;

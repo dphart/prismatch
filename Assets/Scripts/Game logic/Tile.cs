@@ -8,7 +8,7 @@ public class Tile : MonoBehaviour
 
     public int x, y;
 
-    private Item _item;
+    public Item _item;
 
     public bool isAnimating = false;
 

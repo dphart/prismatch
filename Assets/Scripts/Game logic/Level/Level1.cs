@@ -12,7 +12,8 @@ public class Level1 : LevelConfig
 
     public int GetHeight(int round) => 6;
 
-    public List<PowerUp> GetPotentialPowerUps(int round)
+
+    public List<PowerUp> GetPowerUpsForRound(int round)
     {
         return PowerUpLibrary.All.ToList();
     }
@@ -24,5 +25,16 @@ public class Level1 : LevelConfig
     }
 
     public int GetWidth(int round) => 6;
-    
+
+    List<BossPowers> LevelConfig.GetBossEffectsByRound(int round)
+    {
+        if(round == 2)
+        {
+            return new List<BossPowers> { new FirstItemsGivesNoPoints() };
+        }
+        else
+        {
+            return new List<BossPowers>();
+        }
+    }
 }

@@ -9,5 +9,4 @@ public interface LevelInfoProvider
     public int maxRounds {  get; }
     public List<Item> IconList { get; }
 
-    public void AddOrRemoveItem(Item item, bool add);
 }

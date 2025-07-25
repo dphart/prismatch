@@ -36,16 +36,26 @@ public class PowerUpSelector : MonoBehaviour
     {
         List<PowerUp> source = PowerUpLibrary.All;
 
-        //var valid = new List<PowerUp>();
-        ////var iconTypes = ((LevelInfoProvider)gameController).IconList.Select(i => i.ItemType);
-        ////iconTypes = System.Linq.Enumerable.ToHashSet(iconTypes);
-                                                                    
+        var valid = new List<PowerUp>();
+
 
         //foreach (var iconType in source)
-        //{
-        //    var match = source.FirstOrDefault(p => p is IconBonusPower bonus && bonus.IconType == iconType);
-        //    if (match != null) valid.Add(match);
-        //}
+        {
+            var listOfItemTypes = ItemUtils.GetItemTypes(gameController.IconList);
+            foreach (PowerUp p in source)
+            {
+                if(p is IconBonusPower)
+                {
+                    if (listOfItemTypes.Contains(((IconBonusPower)(p)).ItemType))
+                    {
+                        valid.Add(p);
+                    }
+                } else 
+                {
+                    valid.Add(p);
+                }
+            }
+        }
 
         return source
             .OrderBy(_ => Random.value)
@@ -58,4 +68,6 @@ public class PowerUpSelector : MonoBehaviour
     {
         return original?.Clone();
     }
+
+   
 }
