@@ -126,22 +126,35 @@ public class Board : MonoBehaviour
 
     public async void Select(Tile tile)
     {
-        if (!_selection.Contains(tile)) _selection.Add(tile);
+        // Add tile if it’s not already in selection
+        if (!_selection.Contains(tile))
+            _selection.Add(tile);
+
+        // Need 2 tiles to attempt a swap
         if (_selection.Count < 2) return;
 
-        await Swap(_selection[0], _selection[1]);
+        // Store a local copy of selection to prevent index issues if _selection changes mid-task
+        Tile firstTile = _selection[0];
+        Tile secondTile = _selection[1];
 
+        // Clear selection early so clicks during the swap don’t break things
+        _selection.Clear();
+
+        // Perform swap safely
+        await Swap(firstTile, secondTile);
+
+        // Now check for matches
         if (CanPop())
         {
             await Pop();
         }
         else
         {
-            await Swap(_selection[0], _selection[1]);
+            // No match → swap back
+            await Swap(firstTile, secondTile);
         }
-
-        _selection.Clear();
     }
+
 
     public async Task Swap(Tile tile1, Tile tile2)
     {
@@ -204,12 +217,15 @@ public class Board : MonoBehaviour
             {
                 var tile = Tiles[x, y];
                 var connectedTiles = tile.GetConnectedTiles();
+
                 if (connectedTiles.Skip(1).Count() < 2) continue;
 
-                var deflateSequence = DOTween.Sequence();
+                // 🔽 1) Fade out animation (instead of instant scale to zero)
+                var fadeOut = DOTween.Sequence();
                 foreach (var connectedTile in connectedTiles)
                 {
-                    deflateSequence.Join(connectedTile.icon.transform.DOScale(Vector3.zero, TweenDuration));
+                    fadeOut.Join(connectedTile.icon.DOFade(0f, TweenDuration));
+                    fadeOut.Join(connectedTile.icon.transform.DOScale(Vector3.zero, TweenDuration));
                 }
 
                 try
@@ -221,21 +237,40 @@ public class Board : MonoBehaviour
                     Debug.LogError("Scoring Error: " + e);
                 }
 
-                await deflateSequence.Play().AsyncWaitForCompletion();
+                await fadeOut.Play().AsyncWaitForCompletion();
 
-                var inflateSequence = DOTween.Sequence();
+                // 🔄 2) Assign new items AFTER fade out is complete
                 foreach (var connectedTile in connectedTiles)
                 {
-                    connectedTile.item = gameController.limitedItemPool[UnityEngine.Random.Range(0, gameController.limitedItemPool.Count)];
-                    inflateSequence.Join(connectedTile.icon.transform.DOScale(Vector3.one, TweenDuration));
+                    var newItem = gameController.limitedItemPool[UnityEngine.Random.Range(0, gameController.limitedItemPool.Count)];
+                    connectedTile.item = newItem;
+
+                    // Safety check
+                    if (connectedTile.icon != null && connectedTile.item != null && connectedTile.item.sprite != null)
+                    {
+                        connectedTile.icon.sprite = connectedTile.item.sprite;
+                    }
+                    else
+                    {
+                        Debug.LogWarning($"[Board] Missing sprite assignment for tile {connectedTile.name}");
+                    }
                 }
 
-                await inflateSequence.Play().AsyncWaitForCompletion();
+                // 🔼 3) Fade in new sprites
+                var fadeIn = DOTween.Sequence();
+                foreach (var connectedTile in connectedTiles)
+                {
+                    fadeIn.Join(connectedTile.icon.DOFade(1f, TweenDuration));
+                    fadeIn.Join(connectedTile.icon.transform.DOScale(Vector3.one, TweenDuration));
+                }
 
-                // Restart pop detection
+                await fadeIn.Play().AsyncWaitForCompletion();
+
+                // ✅ Restart detection from top-left in case new matches formed
                 x = 0;
                 y = 0;
             }
         }
     }
+
 }

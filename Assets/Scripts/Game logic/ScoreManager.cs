@@ -20,7 +20,7 @@ public class ScoreManager
             Debug.LogWarning("HandleScoring called with empty or null tile list.");
             return 0;
         }
-        foreach (var power in powerManager.ActivePowers)
+        foreach (var power in powerManager.ActivePowers())
         {
             if (!power.IsScoreValid(tiles))
             {
@@ -28,7 +28,7 @@ public class ScoreManager
                 return 0;
             }
         }
-        foreach (var power in powerManager.BossPowers)
+        foreach (var power in powerManager.ActiveBossPowers())
         {
             if (!power.IsScoreValid(tiles))
             {
@@ -45,7 +45,7 @@ public class ScoreManager
         int multMultiplier = 1;
 
         var breakdown = new StringBuilder();
-        var powers = powerManager.ActivePowers;
+        var powers = powerManager.ActivePowers();
 
         bool hasScoringPower = false;
 

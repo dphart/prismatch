@@ -19,6 +19,9 @@ public class GameController : MonoBehaviour, TimeProvider, LevelInfoProvider, It
     private bool isPowerUpScreenActive = false;
     private bool isPaused = false;
 
+    public ActivePowerUpsUI activePowerUpsUI;
+
+
 
     private PowerManager powerManager;
     private ScoreManager scoreManager;
@@ -217,7 +220,7 @@ public class GameController : MonoBehaviour, TimeProvider, LevelInfoProvider, It
         Board.Instance.GenerateBoard();
 
         // Optionally clear active powerups
-        powerManager.ClearPowers();
+        RemoveAllPowers();
 
         // Reset UI via event
         OnScoreChanged?.Invoke(score);
@@ -231,7 +234,7 @@ public class GameController : MonoBehaviour, TimeProvider, LevelInfoProvider, It
     {
         score = 0;
         OnScoreChanged?.Invoke(score);
-        powerManager.ClearPowers();
+        RemoveAllPowers();
         CurrentRound = 0;
         Debug.Log("♻️ Game state has been reset.");
     }
@@ -239,7 +242,14 @@ public class GameController : MonoBehaviour, TimeProvider, LevelInfoProvider, It
     public void RegisterSelectedPower(PowerUp powerUp)
     {
         powerManager.RegisterPower(powerUp);
+        activePowerUpsUI?.AddCard(powerUp);   // 🔥 Update the UI directly
         Debug.Log($"🔌 Registered new power-up: {powerUp.Name}");
+    }
+
+    public void RemoveAllPowers()
+    {
+        powerManager.ClearPowers();
+        activePowerUpsUI?.ClearAllCards();
     }
 
     public void TogglePause()

@@ -24,13 +24,13 @@ public class FloatingText : MonoBehaviour
         rectTransform.localScale = Vector3.one;
 
         Vector2 startPos = rectTransform.anchoredPosition;
-        Vector2 targetOffset = burstDirection.normalized * Random.Range(80f, 100f);
+        Vector2 targetOffset = burstDirection.normalized * Random.Range(80f, 50f);
         Vector2 endPos = startPos + targetOffset;
 
         Sequence seq = DOTween.Sequence();
-        seq.Append(rectTransform.DOAnchorPos(endPos, 0.7f).SetEase(Ease.OutCubic));
+        seq.Append(rectTransform.DOAnchorPos(endPos, 1f).SetEase(Ease.OutCubic));
         seq.Join(rectTransform.DOScale(1.2f, 0.25f).SetLoops(2, LoopType.Yoyo));
-        seq.Join(canvasGroup.DOFade(0f, 0.7f));
+        seq.Join(canvasGroup.DOFade(0f, 01f));
         seq.OnComplete(() => Destroy(gameObject));
         seq.Play();
     }

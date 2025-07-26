@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public abstract class PowerUp
 {
+    public Guid Id { get; private set; } = Guid.NewGuid();
+
     public TimeProvider TimeProvider;
     public LevelInfoProvider LevelInfoProvider;
     public ItemInfoProvider ItemInfoProvider;
