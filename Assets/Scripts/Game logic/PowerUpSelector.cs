@@ -1,63 +1,108 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PowerUpSelector : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private GameObject panel;
-    [SerializeField] private PowerCardUI[] cardSlots;
+    [SerializeField] private GameObject panel;                // Panel that displays power-up choices
+    [SerializeField] private GameObject shortPowerCardPrefab; // Prefab for ShortPowerCardUI
+    [SerializeField] private Transform cardParent;            // ScrollView Content object
     [SerializeField] public GameController gameController;
 
+    /// <summary>
+    /// Displays random power-ups for selection.
+    /// </summary>
     public void ShowChoices()
     {
-        List<PowerUp> choices = GetRandomPowerUps(3);
-        Debug.Log($"We have {choices.Count} powers returned");
-
-        Debug.Log($"Setting up {cardSlots.Length} card slots...");
-
-        for (int i = 0; i < cardSlots.Length; i++)
+        // 🔹 Clear old cards before spawning new ones
+        foreach (Transform child in cardParent)
         {
-            cardSlots[i].gameObject.SetActive(true);
-            Debug.Log($"Setting up card {i}");
-            cardSlots[i].Setup(choices[i], this);
+            Destroy(child.gameObject);
         }
 
+        // 🔹 Get 3 random powerups
+        List<PowerUp> choices = GetRandomPowerUps(3);
+        Debug.Log($"🎴 We have {choices.Count} power-ups to show");
+
+        // 🔹 Spawn new ShortPowerCards into the scroll content
+        foreach (PowerUp power in choices)
+        {
+            GameObject cardObj = Instantiate(shortPowerCardPrefab, cardParent);
+            ShortPowerCardUI cardUI = cardObj.GetComponent<ShortPowerCardUI>();
+
+            if (cardUI != null)
+            {
+                // ✅ Pass power + click callback
+                cardUI.Setup(power, OnPowerUpSelected);
+            }
+            else
+            {
+                Debug.LogWarning("⚠️ ShortPowerCard prefab is missing ShortPowerCardUI!");
+            }
+        }
+
+        // 🔹 Show the panel
         panel.SetActive(true);
+        Debug.Log($"✅ PowerUpSelector panel shown.");
     }
 
+    /// <summary>
+    /// Hides the panel and clears the power-up cards.
+    /// </summary>
     public void Hide()
     {
         panel.SetActive(false);
+
+        // Optional: clear the cards when hiding
+        foreach (Transform child in cardParent)
+        {
+            Destroy(child.gameObject);
+        }
     }
 
+    /// <summary>
+    /// Handles when a power-up card is clicked.
+    /// </summary>
+    private void OnPowerUpSelected(PowerUp selectedPower)
+    {
+        Debug.Log($"🖱 Selected power-up: {selectedPower.Name}");
+
+        // ✅ Add the chosen power to the player
+        gameController.RegisterSelectedPower(selectedPower);
+        gameController.OnPowerUpSelected();
+
+        // ✅ Hide the selector after a choice is made
+        Hide();
+    }
+
+    /// <summary>
+    /// Picks random power-ups from the library (clones to avoid shared state).
+    /// </summary>
     private List<PowerUp> GetRandomPowerUps(int count)
     {
         List<PowerUp> source = PowerUpLibrary.All;
-
         var valid = new List<PowerUp>();
 
-
-        //foreach (var iconType in source)
+        // ✅ Filter for only powers valid for current icon list
+        var listOfItemTypes = ItemUtils.GetItemTypes(gameController.IconList);
+        foreach (PowerUp p in source)
         {
-            var listOfItemTypes = ItemUtils.GetItemTypes(gameController.IconList);
-            foreach (PowerUp p in source)
+            if (p is IconBonusPower iconBonus)
             {
-                if(p is IconBonusPower)
-                {
-                    if (listOfItemTypes.Contains(((IconBonusPower)(p)).ItemType))
-                    {
-                        valid.Add(p);
-                    }
-                } else 
+                if (listOfItemTypes.Contains(iconBonus.ItemType))
                 {
                     valid.Add(p);
                 }
             }
+            else
+            {
+                valid.Add(p);
+            }
         }
 
-        return source
+        // ✅ Shuffle + clone so each card gets a unique instance
+        return valid
             .OrderBy(_ => Random.value)
             .Take(count)
             .Select(ClonePowerUp)
@@ -68,6 +113,4 @@ public class PowerUpSelector : MonoBehaviour
     {
         return original?.Clone();
     }
-
-   
 }

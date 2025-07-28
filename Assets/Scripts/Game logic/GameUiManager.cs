@@ -12,33 +12,13 @@ public class GameUIManager : MonoBehaviour
     [SerializeField] private RectTransform scoreAnchorTransform;
     [SerializeField] private RectTransform canvasTransform;
 
-    private GameController gameController;
     private int previousScore = 0;
+    private int latestTarget = 0;
 
-    private void Start()
+
+    public void UpdateScore(int score)
     {
-        gameController = Object.FindFirstObjectByType<GameController>();
-
-        if (gameController == null)
-        {
-            Debug.LogError("GameController not found in scene.");
-            return;
-        }
-
-        gameController.OnScoreChanged += UpdateScore;
-        gameController.OnTargetChanged += UpdateTarget;
-        gameController.OnTimeChanged += UpdateTimer;
-        gameController.OnRoundChanged += UpdateRound;
-
-        UpdateScore(gameController.CurrentScore);
-        UpdateTarget(gameController.CurrentTarget);
-        UpdateTimer(gameController.CurrentTime);
-        UpdateRound(gameController.CurrentRound);
-    }
-
-    private void UpdateScore(int score)
-    {
-        scoreText.text = $"Score: {score}";
+        scoreText.text = $"Score:\n {score}";
 
         int delta = score - previousScore;
         if (delta > 0)
@@ -49,30 +29,23 @@ public class GameUIManager : MonoBehaviour
         previousScore = score;
     }
 
-    private void UpdateTarget(int target) => targetText.text = $"Target: {target}";
+    public void UpdateTarget(int target) {
+        latestTarget = target;
+        targetText.text = $"Target: \n {target}";
+        }
 
-    private void UpdateTimer(float time)
+    public void UpdateTimer(float time)
     {
         int minutes = Mathf.FloorToInt(time / 60);
         int seconds = Mathf.FloorToInt(time % 60);
-        timerText.text = $"Timer: {minutes:00}:{seconds:00}";
+        timerText.text = $"Timer: \n {minutes:0}:{seconds:00}";
     }
 
-    private void UpdateRound(int round)
+    public void UpdateRound(int round)
     {
         Debug.Log($"Round being set to {round}");
         int level = GameState.Instance.CurrentLevel.GetLevelNumber;
         roundText.text = $"Level: {level}.{round}";
-    }
-
-    private void OnDestroy()
-    {
-        if (gameController == null) return;
-
-        gameController.OnScoreChanged -= UpdateScore;
-        gameController.OnTargetChanged -= UpdateTarget;
-        gameController.OnTimeChanged -= UpdateTimer;
-        gameController.OnRoundChanged -= UpdateRound;
     }
 
     public void ShowFloatingScore(int amount)
@@ -106,7 +79,7 @@ public class GameUIManager : MonoBehaviour
         Vector2 direction = new Vector2(Random.Range(-0.5f, 0.5f), Random.Range(0.8f, 1.2f)).normalized;
 
         // Determine color and size
-        float percent = (float)amount / gameController.CurrentTarget;
+        float percent = (float)amount / latestTarget;
 
         Color color = Color.white;
         float size = 36f;

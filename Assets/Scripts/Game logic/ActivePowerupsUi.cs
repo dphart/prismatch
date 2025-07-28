@@ -1,75 +1,77 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
 public class ActivePowerUpsUI : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private GameObject powerUpCardPrefab;   // Prefab for each power card
-    [SerializeField] private Transform contentParent;        // ScrollView Content
-
-    // ✅ Now we track cards by the GUID Id on each PowerUp
-    private readonly Dictionary<Guid, GameObject> activeCards = new Dictionary<Guid, GameObject>();
+    [SerializeField] private GameObject powerUpCardPrefab;   // ✅ Prefab with ShortPowerCardUI attached
+    [SerializeField] private Transform contentParent;        // ✅ ScrollView Content object
+    [SerializeField] private GameObject powerUpPanel;        // ✅ The full panel container
+    [SerializeField] private GameController controller;      // ✅ Source of truth for active powers
 
     /// <summary>
-    /// Creates a card for the given power-up and tracks it by its Id.
+    /// Toggle the panel on/off and refresh when opened.
     /// </summary>
-    public void AddCard(PowerUp power)
+    public void TogglePanel()
     {
-        if (activeCards.ContainsKey(power.Id))
+        if (powerUpPanel == null) return;
+
+        bool isActive = !powerUpPanel.activeSelf;
+        powerUpPanel.SetActive(isActive);
+
+        if (isActive)
+            RefreshUI();
+    }
+
+    /// <summary>
+    /// Clears old cards and repopulates from PowerManager.
+    /// </summary>
+    private void RefreshUI()
+    {
+        // ✅ Remove old cards
+        foreach (Transform child in contentParent)
         {
-            Debug.LogWarning($"⚠️ Tried to add duplicate card for power-up with ID {power.Id}");
+            Destroy(child.gameObject);
+        }
+
+        // ✅ Repopulate cards
+        if (controller.PowerManager == null)
+        {
+            Debug.LogWarning("⚠️ No PowerManager linked to ActivePowerUpsUI!");
             return;
         }
 
-        GameObject card = Instantiate(powerUpCardPrefab, contentParent);
-        activeCards[power.Id] = card;
-
-        UpdateCardUI(card, power);
-        Debug.Log($"🃏 Added Power Card for {power.Name} (ID: {power.Id}) for {activeCards.Count}");
-    }
-
-    /// <summary>
-    /// Removes a card for the given power-up.
-    /// </summary>
-    public void RemoveCard(PowerUp power)
-    {
-        if (activeCards.TryGetValue(power.Id, out GameObject card))
+        foreach (PowerUp power in controller.PowerManager.ActivePowers())
         {
-            Destroy(card);
-            activeCards.Remove(power.Id);
-            Debug.Log($"❌ Removed Power Card for {power.Name} (ID: {power.Id})");
-        }
-        else
-        {
-            Debug.LogWarning($"⚠️ Tried to remove a card for {power.Name} but no card was found.");
+            AddCard(power);
         }
     }
 
     /// <summary>
-    /// Clears all cards from the UI.
+    /// Instantiates a card prefab and hooks up the click behavior.
     /// </summary>
-    public void ClearAllCards()
+    private void AddCard(PowerUp power)
     {
-        foreach (GameObject card in activeCards.Values)
+        GameObject cardGO = Instantiate(powerUpCardPrefab, contentParent);
+        ShortPowerCardUI cardUI = cardGO.GetComponent<ShortPowerCardUI>();
+
+        if (cardUI == null)
         {
-            Destroy(card);
+            Debug.LogError("❌ The prefab is missing ShortPowerCardUI!");
+            return;
         }
 
-        activeCards.Clear();
-        Debug.Log("🧹 Cleared all active power-up cards.");
+        // ✅ Setup card with click callback
+        cardUI.Setup(power, OnCardClicked);
     }
 
     /// <summary>
-    /// Updates the UI card fields for a given power-up.
+    /// Handles clicks on cards.
     /// </summary>
-    private void UpdateCardUI(GameObject card, PowerUp power)
+    private void OnCardClicked(PowerUp power)
     {
-        TextMeshProUGUI nameText = card.transform.Find("Name").GetComponent<TextMeshProUGUI>();
-        TextMeshProUGUI descriptionText = card.transform.Find("Description").GetComponent<TextMeshProUGUI>();
-
-        nameText.text = power.Name;
-        descriptionText.text = power.GetCurrentPowerDescription();
+        Debug.Log($"🖱 Clicked on power-up: {power.Name}");
+        // TODO: Implement what should happen (show details, activate, etc.)
     }
 }

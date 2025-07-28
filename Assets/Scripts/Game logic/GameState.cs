@@ -11,7 +11,7 @@ public class GameState : MonoBehaviour
     public PlayerConfigs PlayerConfigs { get; private set; } = new();
     public Scorables Scorables { get; private set; } = new();
 
-    public LevelConfig CurrentLevel { get; private set; } = new Level1();
+    public LevelConfig CurrentLevel { get; set; } = new Level1();
 
     private void Awake()
     {

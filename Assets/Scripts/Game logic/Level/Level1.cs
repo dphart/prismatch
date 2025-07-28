@@ -38,4 +38,11 @@ public class Level1 : LevelConfig
             return new List<BossPowers>();
         }
     }
+
+    public string GetLevelDescription()
+    {
+        return "Beat the target score for all 10 rounds to win!";
+    }
+
+    
 }

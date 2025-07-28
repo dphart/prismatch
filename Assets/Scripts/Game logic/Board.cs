@@ -74,7 +74,7 @@ public class Board : MonoBehaviour
                 if (ItemDatabase.items != null && ItemDatabase.items.Length > 0)
                 {
                     tile.item = gameController.limitedItemPool[UnityEngine.Random.Range(0, gameController.limitedItemPool.Count())];
-                   
+
 
                     if (tile.icon != null && tile.item.sprite != null)
                     {
@@ -108,15 +108,15 @@ public class Board : MonoBehaviour
             {
                 var tile = Tiles[x, y];
 
-                
-                    tile.item = gameController.limitedItemPool[UnityEngine.Random.Range(0, gameController.limitedItemPool.Count)];
 
-                    if (tile.icon != null && tile.item.sprite != null)
-                    {
-                        tile.icon.sprite = tile.item.sprite;
-                    }
+                tile.item = gameController.limitedItemPool[UnityEngine.Random.Range(0, gameController.limitedItemPool.Count)];
 
-               
+                if (tile.icon != null && tile.item.sprite != null)
+                {
+                    tile.icon.sprite = tile.item.sprite;
+                }
+
+
             }
         }
 

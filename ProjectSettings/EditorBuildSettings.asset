@@ -14,6 +14,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/prismatch.unity
     guid: d0c0f05919152d84da9f7e951c6fe1f0
+  - enabled: 1
+    path: Assets/Scenes/Level Select.unity
+    guid: 45784d0317c05c840a0d0d38c4d19113
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

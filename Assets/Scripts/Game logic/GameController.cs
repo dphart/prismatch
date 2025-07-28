@@ -20,22 +20,21 @@ public class GameController : MonoBehaviour, TimeProvider, LevelInfoProvider, It
     private bool isPaused = false;
 
     public ActivePowerUpsUI activePowerUpsUI;
+    public GameUIManager GameUIManager;
 
 
 
     private PowerManager powerManager;
     private ScoreManager scoreManager;
 
-    public event Action<int> OnScoreChanged;
-    public event Action<int> OnTargetChanged;
-    public event Action<float> OnTimeChanged;
-    public event Action<int> OnRoundChanged;
     [HideInInspector]
     public int CurrentRound = 0;
 
     public int CurrentScore => score;
     public int CurrentTarget => targetScore;
     public float CurrentTime => timeRemaining;
+
+    public PowerManager PowerManager => powerManager;
 
     public int TimeRemaining => (int)timeRemaining;
 
@@ -55,12 +54,21 @@ public class GameController : MonoBehaviour, TimeProvider, LevelInfoProvider, It
 
     private void Awake()
     {
+        Debug.Log("✅ GameController.Awake() fired");
+
         powerManager = new PowerManager(this, this, this);
         scoreManager = new ScoreManager(GameState.Instance.PlayerConfigs, powerManager);
     }
 
+    private void OnEnable()
+    {
+        Debug.Log("✅ GameController.OnEnable() fired");
+    }
+
+
     private void Start()
     {
+        Debug.Log("Game Controller On Start");
         StartLevel(true, true);
     }
 
@@ -138,12 +146,18 @@ public class GameController : MonoBehaviour, TimeProvider, LevelInfoProvider, It
 
         if (!timerRunning) return;
 
+        // ✅ Subtract from the real timer
         timeRemaining -= Time.deltaTime;
-        OnTimeChanged?.Invoke(timeRemaining);
+
+        // ✅ Clamp so it doesn’t go negative
+        if (timeRemaining < 0f)
+            timeRemaining = 0f;
+
+        // ✅ Push updated timer value to UI
+        UpdateTimeRemaining(TimeRemaining);
 
         if (timeRemaining <= 0f)
         {
-            timeRemaining = 0f;
             timerRunning = false;
             TriggerGameOver();
         }
@@ -152,6 +166,12 @@ public class GameController : MonoBehaviour, TimeProvider, LevelInfoProvider, It
         {
             CompleteLevel();
         }
+    }
+
+
+    private void UpdateTimeRemaining(float timeRemaining)
+    {
+        GameUIManager.UpdateTimer(timeRemaining);
     }
 
 
@@ -164,13 +184,15 @@ public class GameController : MonoBehaviour, TimeProvider, LevelInfoProvider, It
         timerRunning = true;
         isPowerUpScreenActive = false;
 
-        OnScoreChanged?.Invoke(score);
-        OnTargetChanged?.Invoke(targetScore);     // ✅ Add this
-        OnTimeChanged?.Invoke(timeRemaining);     // ✅ Add this
+        handleScoreChange(score);
+        HandleTargetChanged(targetScore);     // ✅ Add this
+        UpdateTimeRemaining(0);     // ✅ Add this
 
 
         scoreManager = new ScoreManager(GameState.Instance.PlayerConfigs, powerManager);
     }
+
+    
 
     private void OnNextRound(int completedRoundNumber, bool advanceRound)
     {
@@ -182,7 +204,7 @@ public class GameController : MonoBehaviour, TimeProvider, LevelInfoProvider, It
             powerManager.RegisterBossPower(bp);
         }
         Debug.Log($"Current Round being set to {CurrentRound}");
-        OnRoundChanged?.Invoke(CurrentRound);
+        GameUIManager.UpdateRound(CurrentRound);
         score = 0;
         targetScore = GameState.Instance.CurrentLevel.GetTargetScore(CurrentRound);
         timeRemaining = GameState.Instance.CurrentLevel.GetTotalTime;
@@ -193,7 +215,12 @@ public class GameController : MonoBehaviour, TimeProvider, LevelInfoProvider, It
     {
         int scoreToAdd = scoreManager.CalculateScore(tiles);
         score += scoreToAdd;
-        OnScoreChanged?.Invoke(score);
+        handleScoreChange(score);
+    }
+
+    private void handleScoreChange(int newScore)
+    {
+        GameUIManager.UpdateScore(newScore);
     }
 
     private void CompleteLevel()
@@ -223,17 +250,26 @@ public class GameController : MonoBehaviour, TimeProvider, LevelInfoProvider, It
         RemoveAllPowers();
 
         // Reset UI via event
-        OnScoreChanged?.Invoke(score);
-        OnTargetChanged?.Invoke(targetScore);
-        OnTimeChanged?.Invoke(timeRemaining);
-        OnRoundChanged?.Invoke(CurrentRound);
+        handleScoreChange(score);
+        HandleTargetChanged(targetScore);
+        UpdateTimeRemaining(CurrentTime);
+        handleRoundChanged(currentRound);
+    }
+    private void HandleTargetChanged(int _newTarget)
+    {
+        GameUIManager.UpdateTarget(_newTarget);
+    }
+
+    private void handleRoundChanged(int _round)
+    {
+        GameUIManager.UpdateRound(_round);
     }
 
 
     public void ResetGame()
     {
         score = 0;
-        OnScoreChanged?.Invoke(score);
+        handleScoreChange(score);
         RemoveAllPowers();
         CurrentRound = 0;
         Debug.Log("♻️ Game state has been reset.");
@@ -242,14 +278,12 @@ public class GameController : MonoBehaviour, TimeProvider, LevelInfoProvider, It
     public void RegisterSelectedPower(PowerUp powerUp)
     {
         powerManager.RegisterPower(powerUp);
-        activePowerUpsUI?.AddCard(powerUp);   // 🔥 Update the UI directly
         Debug.Log($"🔌 Registered new power-up: {powerUp.Name}");
     }
 
     public void RemoveAllPowers()
     {
         powerManager.ClearPowers();
-        activePowerUpsUI?.ClearAllCards();
     }
 
     public void TogglePause()

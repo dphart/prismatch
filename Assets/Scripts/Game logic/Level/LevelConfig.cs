@@ -17,4 +17,7 @@ public interface LevelConfig
 
     public List<BossPowers> GetBossEffectsByRound(int round);
 
+    public string GetLevelDescription();
+
+
 }
