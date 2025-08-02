@@ -13,6 +13,8 @@ public class ScoreManager
         this.powerManager = powerManager;
     }
 
+    public int nextMatchMulti = 1;
+
     public int CalculateScore(List<Tile> tiles)
     {
         if (tiles == null || tiles.Count == 0)
@@ -42,7 +44,8 @@ public class ScoreManager
         int additiveBase = 0;
         int baseMultiplier = 1;
         int additiveMultiplier = 0;
-        int multMultiplier = 1;
+        int multMultiplier = nextMatchMulti;
+        nextMatchMulti = 1;
 
         var breakdown = new StringBuilder();
         var powers = powerManager.ActivePowers();
@@ -57,14 +60,7 @@ public class ScoreManager
             if (add != 0) hasScoringPower = true;
         }
 
-        foreach (var power in powers)
-        {
-            int mult = power.MultiplicativeBaseMod(tiles);
-            if (mult != 1) breakdown.AppendLine($"✖️ {power.Name} multiplies base by {mult}");
-            baseMultiplier *= mult;
-            if (mult != 1) hasScoringPower = true;
-        }
-
+    
         foreach (var power in powers)
         {
             int addMult = power.AdditiveMultiplierMod(tiles);
@@ -75,9 +71,9 @@ public class ScoreManager
 
         foreach (var power in powers)
         {
-            int mulMult = power.MultiplicativeMultiMod(tiles);
-            if (mulMult != 1) breakdown.AppendLine($"✖️ {power.Name} multiplies multiplier by {mulMult}");
-            multMultiplier *= mulMult;
+            int mulMult = power.NextMatchMulti(tiles);
+            breakdown.AppendLine($"✖️ {power.Name} multiplies next match by by {mulMult}, was User initiated: {power.MatchInfo.wasUserInitiatedMatch()}");
+            nextMatchMulti *= mulMult;
             if (mulMult != 1) hasScoringPower = true;
         }
 

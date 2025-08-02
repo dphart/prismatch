@@ -6,6 +6,7 @@ public class PowerManager
     private readonly TimeProvider _timeProvider;
     private readonly LevelInfoProvider _LevelInfoProvider;
     private readonly ItemInfoProvider _ItemInfoProvider;
+    private readonly MatchInfo _MatchInfo;
 
     private readonly List<PowerUp> _activePowers = new();
     private readonly List<BossPowers> _activeBossPowers = new();
@@ -31,6 +32,7 @@ public class PowerManager
         power.ItemInfoProvider = _ItemInfoProvider;
         power.LevelInfoProvider = _LevelInfoProvider;
         power.TimeProvider = _timeProvider;
+        power.MatchInfo = Board.Instance;
 
         _activePowers.Add(power);
 

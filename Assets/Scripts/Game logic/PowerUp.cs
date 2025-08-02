@@ -10,6 +10,7 @@ public abstract class PowerUp
     public TimeProvider TimeProvider;
     public LevelInfoProvider LevelInfoProvider;
     public ItemInfoProvider ItemInfoProvider;
+    public MatchInfo MatchInfo;
     public string Name { get; protected set; }
     public string PowerUpDescription { get; protected set; }
     public Sprite Icon { get; protected set; }
@@ -20,9 +21,8 @@ public abstract class PowerUp
     public abstract void Apply(GameState state);
     public virtual void Tick(GameState state) { }
     public virtual int AdditiveBaseMod(List<Tile> tiles) => 0;
-    public virtual int MultiplicativeBaseMod(List<Tile> tiles) => 1;
     public virtual int AdditiveMultiplierMod(List<Tile> tiles) => 0;
-    public virtual int MultiplicativeMultiMod(List<Tile> tiles) => 1;
+    public virtual int NextMatchMulti(List<Tile> tiles) => 1;
     public virtual bool IsScoreValid(List<Tile> tiles) => true;
 
     public abstract PowerUp Clone();
@@ -140,13 +140,16 @@ public class FourExactlyPower : PowerUp
     public FourExactlyPower()
     {
         Name = "Four is Good";
-        PowerUpDescription = $"x{basePointsMulti} base points for {exactMatchNumber} in a row.";
+        PowerUpDescription = $"x{basePointsMulti} base multi for {exactMatchNumber} in a row.";
     }
 
     public override string GetCurrentPowerDescription() => PowerUpDescription;
 
-    public override int MultiplicativeBaseMod(List<Tile> tiles) =>
-        tiles.Count == exactMatchNumber ? basePointsMulti : 1;
+    public override int AdditiveBaseMod(List<Tile> tiles)
+    {
+        return tiles.Count == exactMatchNumber ? basePointsMulti : 0;
+    }
+        
 
     public override void Apply(GameState state) { }
     public override PowerUp Clone() => new FourExactlyPower();
@@ -205,8 +208,12 @@ public class StackedOddsPower : PowerUp
 
     public override string GetCurrentPowerDescription() => PowerUpDescription;
 
-    public override int MultiplicativeBaseMod(List<Tile> tiles) =>
-        tiles.Count >= requiredTiles ? baseMulti : 1;
+    public override int AdditiveBaseMod(List<Tile> tiles)
+    {
+        return tiles.Count >= requiredTiles ? baseMulti : 0;
+    }
+
+
 
     public override void Apply(GameState state) { }
     public override PowerUp Clone() => new StackedOddsPower();
@@ -227,7 +234,7 @@ public class ConsistencyIsKey : PowerUp
     public override string GetCurrentPowerDescription() =>
         $"Matches of same length add +{additiveMulti} Multi. Current streak: {numberOfMatchesInARow} in a row.";
 
-    public override int MultiplicativeBaseMod(List<Tile> tiles)
+    public override int AdditiveBaseMod(List<Tile> tiles)
     {
         if (tiles.Count == numberOfTilesPreviouslyMatched)
         {
@@ -279,6 +286,226 @@ public abstract class IconBonusPower : PowerUp
     // Subclasses will implement behavior for specific icons
 }
 
+public class PrecisionStrikePower : PowerUp
+{
+    private bool streakActive = false;
+    private int streakCount = 0;
+    private int multi = 1;
+
+    public PrecisionStrikePower()
+    {
+        Name = "Precision Strike";
+        PowerUpDescription = "Match exactly 3 twice to activate x4. Keeps working until you match a different number.";
+    }
+
+    public override string GetCurrentPowerDescription()
+    {
+        return streakActive
+            ? "Precision Strike active: matching 3 tiles keeps x4 going!"
+            : PowerUpDescription;
+    }
+
+    public override int NextMatchMulti(List<Tile> tiles)
+    {
+        if (MatchInfo.wasUserInitiatedMatch())
+        {
+            if (tiles.Count == 3)
+            {
+                streakCount++;
+
+                if (streakCount >= 2)
+                {
+                    streakActive = true;
+                    multi = 4 ; // Boost next match
+                }
+            }
+            else
+            {
+                // Streak breaks on any non-3 match
+                streakActive = false;
+                streakCount = 0;
+                multi = 1 ;
+            }
+            Debug.Log($"Precision Strike: Streak: {streakCount}");
+        }
+        return multi;
+    }
+
+    public override void Apply(GameState state) { }
+    public override PowerUp Clone() => new PrecisionStrikePower();
+}
+
+/// <summary>
+/// Match 4 tiles to trigger x3. Keeps working until you match a different number.
+/// </summary>
+public class FourFuryPower : PowerUp
+{
+    private bool streakActive = false;
+    private int multi = 1;
+
+    public FourFuryPower()
+    {
+        Name = "Four Fury";
+        PowerUpDescription = "Match 4 tiles to trigger x3 on your next match. Keeps working until you match a different number.";
+    }
+
+    public override string GetCurrentPowerDescription()
+    {
+        return streakActive
+            ? "Four Fury active: matching 4 tiles keeps x3 going!"
+            : PowerUpDescription;
+    }
+
+    public override int NextMatchMulti(List<Tile> tiles)
+    {
+        if (MatchInfo.wasUserInitiatedMatch())
+        {
+            if (tiles.Count == 4)
+            {
+                streakActive = true;
+                multi = 3;
+            }
+            else
+            {
+                streakActive = false;
+                multi = 1;
+            }
+        }
+        return multi;
+       
+    }
+
+    public override void Apply(GameState state) { }
+    public override PowerUp Clone() => new FourFuryPower();
+}
+
+/// <summary>
+/// Match 5 or more tiles to trigger x5. Keeps working until you match fewer than 5.
+/// </summary>
+public class JackpotFivePower : PowerUp
+{
+    private bool streakActive = false;
+    private int multi = 1; 
+
+    public JackpotFivePower()
+    {
+        Name = "Jackpot Five";
+        PowerUpDescription = "Match 5 or more tiles to trigger x5. Keeps working until you match fewer than 5.";
+    }
+
+    public override string GetCurrentPowerDescription()
+    {
+        return streakActive
+            ? "Jackpot Five active: keep hitting 5+ for x5!"
+            : PowerUpDescription;
+    }
+
+    public override int NextMatchMulti(List<Tile> tiles)
+    {
+        if (MatchInfo.wasUserInitiatedMatch())
+        {
+            if (tiles.Count >= 5)
+            {
+                streakActive = true;
+                multi = 5;
+            }
+            else
+            {
+                streakActive = false;
+                multi = 1;
+            }
+        }
+        return multi;
+        
+    }
+
+    public override void Apply(GameState state) { }
+    public override PowerUp Clone() => new JackpotFivePower();
+}
+
+/// <summary>
+/// If you match exactly 3 tiles, your next match scores double if it’s the same color.
+/// </summary>
+public class ColorFocusPower : PowerUp
+{
+    private ItemType lastMatchType;
+    private int multi = 1;
+
+    public ColorFocusPower()
+    {
+        Name = "Color Focus";
+        PowerUpDescription = "Your next match gives you 2x points if you match the same block type";
+    }
+
+    public override string GetCurrentPowerDescription()
+    {
+        return PowerUpDescription;
+    }
+
+    public override int NextMatchMulti(List<Tile> tiles)
+    {
+        // If we had a queued color and the match is that color → bonus applies
+        if (MatchInfo.wasUserInitiatedMatch())
+        {
+            ItemType itemType = tiles.First().item.ItemType;
+            if (lastMatchType == itemType)
+            {
+
+                multi = 2;
+            } else
+            {
+                multi = 1;
+            }
+           
+        }
+        return multi;
+      
+    }
+
+    public override void Apply(GameState state) { }
+    public override PowerUp Clone() => new ColorFocusPower();
+}
+
+/// <summary>
+/// Match 4 tiles and your next match counts twice for combo bonuses (requires combo logic in ScoreManager).
+/// </summary>
+public class TwinShotPower : PowerUp
+{
+    private int multi = 1;
+
+    public TwinShotPower()
+    {
+        Name = "Twin Shot";
+        PowerUpDescription = "Match 4 tiles, and your next match counts twice for 2x";
+    }
+
+    public override string GetCurrentPowerDescription()
+    {
+        return "Twin Shot ready: next match counts double for combo bonuses!";
+
+    }
+
+    public override int NextMatchMulti(List<Tile> tiles)
+    {
+        if (MatchInfo.wasUserInitiatedMatch())
+        {
+            if (tiles.Count == 4)
+            {
+                multi = 2; // Queue effect for next match
+            } else
+            {
+                multi = 1;
+            }
+        }
+
+
+        return multi; // No scoring change by itself
+    }
+
+    public override void Apply(GameState state) { }
+    public override PowerUp Clone() => new TwinShotPower();
+
+}
 // ---------- PowerUp Library ----------
 
 public static class PowerUpLibrary
@@ -294,6 +521,11 @@ public static class PowerUpLibrary
         new UnderdogPower(),
         new StackedOddsPower(),
         new SnowballPower(),
-        new ConsistencyIsKey()
+        new ConsistencyIsKey(),
+        new TwinShotPower(),
+        new ColorFocusPower(),
+        new JackpotFivePower(),
+        new FourFuryPower(),
+        new PrecisionStrikePower()
     };
 }

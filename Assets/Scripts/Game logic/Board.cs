@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Board : MonoBehaviour
+public class Board : MonoBehaviour, MatchInfo
 {
     public static Board Instance { get; private set; }
 
@@ -15,10 +15,12 @@ public class Board : MonoBehaviour
 
     private int maxItemTypes = 8; // TODO - move to level
 
-
     public GameController gameController;
 
     public bool isSwapping = false;
+
+    // ✅ Used by PowerUps to know if last match was caused by player action
+    public bool wasLastMatchUserInitiated = false;
 
     public Tile[,] Tiles { get; private set; }
     public int Width => GameState.Instance.CurrentLevel.GetWidth(gameController.CurrentRound);
@@ -73,14 +75,14 @@ public class Board : MonoBehaviour
 
                 if (ItemDatabase.items != null && ItemDatabase.items.Length > 0)
                 {
-                    tile.item = gameController.limitedItemPool[UnityEngine.Random.Range(0, gameController.limitedItemPool.Count())];
-
+                    tile.item = gameController.limitedItemPool[
+                        UnityEngine.Random.Range(0, gameController.limitedItemPool.Count())
+                    ];
 
                     if (tile.icon != null && tile.item.sprite != null)
                     {
                         tile.icon.sprite = tile.item.sprite;
                     }
-
                 }
                 else
                 {
@@ -108,58 +110,59 @@ public class Board : MonoBehaviour
             {
                 var tile = Tiles[x, y];
 
-
-                tile.item = gameController.limitedItemPool[UnityEngine.Random.Range(0, gameController.limitedItemPool.Count)];
+                tile.item = gameController.limitedItemPool[
+                    UnityEngine.Random.Range(0, gameController.limitedItemPool.Count)
+                ];
 
                 if (tile.icon != null && tile.item.sprite != null)
                 {
                     tile.icon.sprite = tile.item.sprite;
                 }
-
-
             }
         }
 
         Debug.Log("[Board] Board reset complete.");
     }
 
-
     public async void Select(Tile tile)
     {
-        // Add tile if it’s not already in selection
+        // Add/remove tile from selection
         if (!_selection.Contains(tile))
+        {
             _selection.Add(tile);
+        }
+        else
+        {
+            _selection.Remove(tile);
+        }
 
         // Need 2 tiles to attempt a swap
         if (_selection.Count < 2) return;
 
-        // Store a local copy of selection to prevent index issues if _selection changes mid-task
         Tile firstTile = _selection[0];
         Tile secondTile = _selection[1];
-
-        // Clear selection early so clicks during the swap don’t break things
         _selection.Clear();
 
-        // Perform swap safely
         await Swap(firstTile, secondTile);
 
-        // Now check for matches
         if (CanPop())
         {
-            await Pop();
+            // ✅ Pass the swapped tiles so their match is checked first
+            await Pop(firstTile, secondTile);
         }
         else
         {
-            // No match → swap back
-            await Swap(firstTile, secondTile);
+            await Swap(firstTile, secondTile); // swap back if no match
         }
     }
-
 
     public async Task Swap(Tile tile1, Tile tile2)
     {
         if (isSwapping) return;
         isSwapping = true;
+
+        // ✅ The swap action means the first match could be user-initiated
+        wasLastMatchUserInitiated = true;
 
         var icon1 = tile1.icon;
         var icon2 = tile2.icon;
@@ -209,68 +212,102 @@ public class Board : MonoBehaviour
         return false;
     }
 
-    private async Task Pop()
+    /// <summary>
+    /// Checks the swapped tiles first (user-initiated match), then cascades.
+    /// </summary>
+    private async Task Pop(Tile firstTile, Tile secondTile)
     {
-        for (var y = 0; y < Height; ++y)
+        // ✅ First, check the swapped tiles for a match (user initiated)
+        await CheckTile(firstTile.x, firstTile.y, true);
+        await CheckTile(secondTile.x, secondTile.y, true);
+
+        // ✅ Then loop until no more matches (these are cascades, NOT user-initiated)
+        bool matchFound;
+        do
         {
-            for (var x = 0; x < Width; ++x)
+            matchFound = false;
+
+            for (var y = 0; y < Height; ++y)
             {
-                var tile = Tiles[x, y];
-                var connectedTiles = tile.GetConnectedTiles();
-
-                if (connectedTiles.Skip(1).Count() < 2) continue;
-
-                // 🔽 1) Fade out animation (instead of instant scale to zero)
-                var fadeOut = DOTween.Sequence();
-                foreach (var connectedTile in connectedTiles)
+                for (var x = 0; x < Width; ++x)
                 {
-                    fadeOut.Join(connectedTile.icon.DOFade(0f, TweenDuration));
-                    fadeOut.Join(connectedTile.icon.transform.DOScale(Vector3.zero, TweenDuration));
-                }
-
-                try
-                {
-                    gameController?.HandleTileMatch(connectedTiles);
-                }
-                catch (Exception e)
-                {
-                    Debug.LogError("Scoring Error: " + e);
-                }
-
-                await fadeOut.Play().AsyncWaitForCompletion();
-
-                // 🔄 2) Assign new items AFTER fade out is complete
-                foreach (var connectedTile in connectedTiles)
-                {
-                    var newItem = gameController.limitedItemPool[UnityEngine.Random.Range(0, gameController.limitedItemPool.Count)];
-                    connectedTile.item = newItem;
-
-                    // Safety check
-                    if (connectedTile.icon != null && connectedTile.item != null && connectedTile.item.sprite != null)
+                    bool cleared = await CheckTile(x, y, false);
+                    if (cleared)
                     {
-                        connectedTile.icon.sprite = connectedTile.item.sprite;
-                    }
-                    else
-                    {
-                        Debug.LogWarning($"[Board] Missing sprite assignment for tile {connectedTile.name}");
+                        matchFound = true;
                     }
                 }
-
-                // 🔼 3) Fade in new sprites
-                var fadeIn = DOTween.Sequence();
-                foreach (var connectedTile in connectedTiles)
-                {
-                    fadeIn.Join(connectedTile.icon.DOFade(1f, TweenDuration));
-                    fadeIn.Join(connectedTile.icon.transform.DOScale(Vector3.one, TweenDuration));
-                }
-
-                await fadeIn.Play().AsyncWaitForCompletion();
-
-                // ✅ Restart detection from top-left in case new matches formed
-                x = 0;
-                y = 0;
             }
-        }
+        } while (matchFound);
     }
 
+    /// <summary>
+    /// Checks a single tile for a match and clears it if needed.
+    /// </summary>
+    private async Task<bool> CheckTile(int x, int y, bool userInitiated)
+    {
+        var tile = Tiles[x, y];
+        var connectedTiles = tile.GetConnectedTiles();
+
+        // Needs at least 3 tiles to clear
+        if (connectedTiles.Skip(1).Count() < 2)
+            return false;
+
+        // ✅ Mark this match for powers to read
+        wasLastMatchUserInitiated = userInitiated;
+
+        // 🔽 1) Fade out animation
+        var fadeOut = DOTween.Sequence();
+        foreach (var connectedTile in connectedTiles)
+        {
+            fadeOut.Join(connectedTile.icon.DOFade(0f, TweenDuration));
+            fadeOut.Join(connectedTile.icon.transform.DOScale(Vector3.zero, TweenDuration));
+        }
+
+        try
+        {
+            gameController?.HandleTileMatch(connectedTiles);
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("Scoring Error: " + e);
+        }
+
+        await fadeOut.Play().AsyncWaitForCompletion();
+
+        // 🔄 2) Assign new items AFTER fade out
+        foreach (var connectedTile in connectedTiles)
+        {
+            var newItem = gameController.limitedItemPool[
+                UnityEngine.Random.Range(0, gameController.limitedItemPool.Count)
+            ];
+            connectedTile.item = newItem;
+
+            if (connectedTile.icon != null && connectedTile.item != null && connectedTile.item.sprite != null)
+            {
+                connectedTile.icon.sprite = connectedTile.item.sprite;
+            }
+            else
+            {
+                Debug.LogWarning($"[Board] Missing sprite assignment for tile {connectedTile.name}");
+            }
+        }
+
+        // 🔼 3) Fade in new sprites
+        var fadeIn = DOTween.Sequence();
+        foreach (var connectedTile in connectedTiles)
+        {
+            fadeIn.Join(connectedTile.icon.DOFade(1f, TweenDuration));
+            fadeIn.Join(connectedTile.icon.transform.DOScale(Vector3.one, TweenDuration));
+        }
+
+        await fadeIn.Play().AsyncWaitForCompletion();
+
+        return true; // ✅ Tell Pop() that we cleared something
+    }
+
+    public bool wasUserInitiatedMatch()
+    {
+        return wasLastMatchUserInitiated;
+    }
 }
