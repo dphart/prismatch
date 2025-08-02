@@ -106,6 +106,7 @@ public class GameController : MonoBehaviour, TimeProvider, LevelInfoProvider, It
     {
         Debug.Log("🆕 Restarting entire game.");
         roundRestartsUsed = 0;
+        Board.Instance.ResetBoard();
         NewGameButton();
         gameOverPanel.SetActive(false);
     }

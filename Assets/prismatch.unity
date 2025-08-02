@@ -1240,6 +1240,7 @@ MonoBehaviour:
   tilePrefab: {fileID: 5982379863923367349, guid: 67788c58e3154d644b1e6457cec6a937, type: 3}
   gameController: {fileID: 867137375}
   isSwapping: 0
+  wasLastMatchUserInitiated: 0
 --- !u!114 &478113871
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2534,9 +2535,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 867137375}
         m_TargetAssemblyTypeName: GameController, Assembly-CSharp
-        m_MethodName: NewGameButton
+        m_MethodName: OnGameOverRestartGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

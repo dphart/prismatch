@@ -140,6 +140,7 @@ MonoBehaviour:
   y: 0
   _item: {fileID: 0}
   isAnimating: 0
+  background: {fileID: 361342793571266867}
   icon: {fileID: 468950458939510008}
   button: {fileID: 1717231944595443957}
 --- !u!114 &2677822126407712402

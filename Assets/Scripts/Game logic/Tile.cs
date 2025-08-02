@@ -1,3 +1,4 @@
+﻿using DG.Tweening;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -11,7 +12,7 @@ public class Tile : MonoBehaviour
     public Item _item;
 
     public bool isAnimating = false;
-
+    public Image background;
     public Item item
     {
         get => _item; 
@@ -70,6 +71,23 @@ public class Tile : MonoBehaviour
 
         return result;
 
+    }
+
+    public void SetSelected(bool isSelected)
+    {
+        if (icon == null) return;
+
+        if (isSelected)
+        {
+            // ✅ Highlight visually
+           background.color = Color.darkGray;
+            
+        }
+        else
+        {
+            // ✅ Reset to normal
+            background.color = Color.white;
+        }
     }
 
 

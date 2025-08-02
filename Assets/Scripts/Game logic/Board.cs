@@ -126,28 +126,35 @@ public class Board : MonoBehaviour, MatchInfo
 
     public async void Select(Tile tile)
     {
-        // Add/remove tile from selection
+        // ✅ Toggle selection
         if (!_selection.Contains(tile))
         {
             _selection.Add(tile);
+            tile.SetSelected(true);   // highlight clicked tile
         }
         else
         {
             _selection.Remove(tile);
+            tile.SetSelected(false);  // unhighlight if deselected
+            return;
         }
 
-        // Need 2 tiles to attempt a swap
+        // ✅ If we don’t have 2 tiles, stop here (just show highlight)
         if (_selection.Count < 2) return;
 
+        // ✅ We have 2 tiles — clear highlights right before swap
         Tile firstTile = _selection[0];
         Tile secondTile = _selection[1];
+
+        firstTile.SetSelected(false);
+        secondTile.SetSelected(false);
+
         _selection.Clear();
 
         await Swap(firstTile, secondTile);
 
         if (CanPop())
         {
-            // ✅ Pass the swapped tiles so their match is checked first
             await Pop(firstTile, secondTile);
         }
         else
@@ -310,4 +317,20 @@ public class Board : MonoBehaviour, MatchInfo
     {
         return wasLastMatchUserInitiated;
     }
+
+    public void ResetBoardState()
+    {
+        Debug.Log("[Board] Resetting full board state.");
+
+        wasLastMatchUserInitiated = false;
+        isSwapping = false;
+        _selection.Clear();
+
+        // ✅ Kill all tweens on the board (prevents stuck animations)
+        DOTween.KillAll();
+
+        // ✅ Wipe and regenerate the board
+        GenerateBoard();
+    }
+
 }
