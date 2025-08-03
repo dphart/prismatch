@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DG.Tweening;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -11,6 +12,8 @@ public class GameController : MonoBehaviour, TimeProvider, LevelInfoProvider, It
 {
    
     [SerializeField] private PowerUpSelector powerUpSelector;
+    [SerializeField] private GameObject bossBackground; // drag the BossBackground object here
+
 
     private int score;
     private int targetScore;
@@ -18,6 +21,8 @@ public class GameController : MonoBehaviour, TimeProvider, LevelInfoProvider, It
     private bool timerRunning = false;
     private bool isPowerUpScreenActive = false;
     private bool isPaused = false;
+    [SerializeField] private BossBattleUi bossBattleUI;   // 👈 Drag your Boss UI prefab/panel here in the Inspector
+
 
     public ActivePowerUpsUI activePowerUpsUI;
     public GameUIManager GameUIManager;
@@ -69,7 +74,7 @@ public class GameController : MonoBehaviour, TimeProvider, LevelInfoProvider, It
     private void Start()
     {
         Debug.Log("Game Controller On Start");
-        StartLevel(true, true);
+        StartLevel(false);
     }
 
     public List<Item> limitedItemPool;
@@ -96,11 +101,22 @@ public class GameController : MonoBehaviour, TimeProvider, LevelInfoProvider, It
         roundRestartsUsed++;
         Debug.Log($"🔄 Restarting round (used {roundRestartsUsed}/{maxRoundRestarts})");
 
-        // Reset round but don't reset full game
-        StartLevel(false, false);
+        // ✅ Hide Game Over panel
+        if (gameOverPanel != null)
+            gameOverPanel.SetActive(false);
+
+        // ✅ Reset round (but do NOT increment round number)
+        score = 0;
+        handleScoreChange(score);
+        powerManager.RemoveMostRecentPower();        // 🔥 Forces user to pick a new power again
+
+        // ✅ Reset the board visuals
         Board.Instance.ResetBoard();
-        gameOverPanel.SetActive(false);
+
+        // ✅ Replay the start-of-round flow (power picker, boss intro, etc.)
+        StartLevel(true);
     }
+
 
     public void OnGameOverRestartGame()
     {
@@ -109,6 +125,12 @@ public class GameController : MonoBehaviour, TimeProvider, LevelInfoProvider, It
         Board.Instance.ResetBoard();
         NewGameButton();
         gameOverPanel.SetActive(false);
+    }
+
+    public void ToggleActivePowerUpScreen()
+    {
+        TogglePause();
+        activePowerUpsUI.TogglePanel();
     }
 
 
@@ -176,29 +198,80 @@ public class GameController : MonoBehaviour, TimeProvider, LevelInfoProvider, It
     }
 
 
-    public void StartLevel(bool advanceRound, bool isNewGame)
+    public void StartLevel(bool isRestartRound)
     {
-        if (isNewGame) ResetGame();
-        Debug.Log($"Starting Level with previous round being {CurrentRound}");
+        Debug.Log($"▶️ Starting Level {CurrentRound + 1}");
 
-        OnNextRound(CurrentRound, advanceRound);
-        timerRunning = true;
-        isPowerUpScreenActive = false;
+        // ✅ Always hide Game Over when starting a new level
+        if (gameOverPanel != null)
+            gameOverPanel.SetActive(false);
 
+        // ✅ Increment round (or reset if needed)
+        if(!isRestartRound) CurrentRound++;
+
+        // ✅ Clear and register boss powers for this round
+        powerManager.ClearBossPowers();
+        var bossPowers = GameState.Instance.CurrentLevel.GetBossEffectsByRound(CurrentRound);
+        foreach (BossPowers bp in bossPowers)
+        {
+            powerManager.RegisterBossPower(bp);
+        }
+
+        // ✅ Reset scoring/timer for the round
+        score = 0;
+        targetScore = GameState.Instance.CurrentLevel.GetTargetScore(CurrentRound);
+        timeRemaining = GameState.Instance.CurrentLevel.GetTotalTime;
+        timerRunning = false;   // ❗ Don't start ticking until the player picks their power
+
+        // ✅ Update UI
+        GameUIManager.UpdateRound(CurrentRound);
         handleScoreChange(score);
-        HandleTargetChanged(targetScore);     // ✅ Add this
-        UpdateTimeRemaining(0);     // ✅ Add this
+        HandleTargetChanged(targetScore);
+        UpdateTimeRemaining(timeRemaining);
 
+        // ✅ Make sure board is generated fresh
+        foreach (Transform child in transform.parent) // Or a dedicated parent container for scores
+        {
+            if (child.name.Contains("FloatingScore"))
+            {
+                Destroy(child.gameObject);
+            }
+        }
+        Board.Instance.GenerateBoard();
 
-        scoreManager = new ScoreManager(GameState.Instance.PlayerConfigs, powerManager);
+        // ✅ Reset boss background visibility
+        bossBackground.SetActive(false);
+
+        // ✅ If there are boss powers, show the boss intro and background
+        if (bossPowers.Count > 0)
+        {
+            Debug.Log($"🔥 Boss Round detected: {bossPowers.Count} powers");
+            bossBackground.SetActive(true);
+            bossBattleUI.ShowBossIntro(bossPowers);
+        }
+        else
+        {
+            // ✅ Otherwise, go straight to power picker
+            powerUpSelector.ShowChoices();
+        }
     }
 
-    
+
+    public void ShowPowerPickerAfterBossIntro()
+    {
+        Debug.Log("✅ Boss intro finished → showing Power Picker");
+        powerUpSelector.ShowChoices();
+    }
+
+
+
+
+
 
     private void OnNextRound(int completedRoundNumber, bool advanceRound)
     {
-        
-        if(advanceRound) CurrentRound = CurrentRound + 1;
+        DOTween.KillAll();
+        if (advanceRound) CurrentRound = CurrentRound + 1;
         powerManager.ClearBossPowers();
         foreach (BossPowers bp in GameState.Instance.CurrentLevel.GetBossEffectsByRound(CurrentRound))
         {
@@ -228,34 +301,25 @@ public class GameController : MonoBehaviour, TimeProvider, LevelInfoProvider, It
     {
         timerRunning = false;
         isPowerUpScreenActive = true;
-        powerUpSelector.ShowChoices();
+        StartLevel(false);
     }
 
     public void OnPowerUpSelected()
     {
+        Debug.Log("✅ Power selected, starting timer.");
         isPowerUpScreenActive = false;
-        StartLevel(true, false);
+        timerRunning = true;    // ⬅ Timer starts now
     }
+
 
     public void NewGameButton()
     {
         Debug.Log("🆕 Starting new game...");
-
-        // Reset core game logic
-        StartLevel(true, true);
-
-        // Reset board
-        Board.Instance.GenerateBoard();
-
-        // Optionally clear active powerups
-        RemoveAllPowers();
-
-        // Reset UI via event
-        handleScoreChange(score);
-        HandleTargetChanged(targetScore);
-        UpdateTimeRemaining(CurrentTime);
-        handleRoundChanged(currentRound);
+        RemoveAllPowers();         // ✅ Clear old powers
+        CurrentRound = 0;          // ✅ Reset rounds
+        StartLevel(false);              // ✅ Fresh start
     }
+
     private void HandleTargetChanged(int _newTarget)
     {
         GameUIManager.UpdateTarget(_newTarget);
@@ -319,6 +383,34 @@ public class GameController : MonoBehaviour, TimeProvider, LevelInfoProvider, It
             ResumeGame(); // Optional: auto-resume or keep paused
         }
     }
+
+    public void PrepareLevel(bool advanceRound, bool isNewGame)
+    {
+        if (isNewGame) ResetGame();
+        Debug.Log($"🟢 Preparing Level {CurrentRound + (advanceRound ? 1 : 0)}");
+
+        // Advance round number before starting
+        OnNextRound(CurrentRound, advanceRound);
+
+        // Always reset background at level start
+        bossBackground.SetActive(false);
+
+        // Check if this round has boss powers
+        var bossPowers = GameState.Instance.CurrentLevel.GetBossEffectsByRound(CurrentRound);
+
+        if (bossPowers.Count > 0)
+        {
+            Debug.Log($"🔥 Boss Round detected with {bossPowers.Count} powers");
+            bossBackground.SetActive(true);
+            bossBattleUI.ShowBossIntro(bossPowers);  // Shows intro, then calls ShowPowerPickerAfterBossIntro()
+        }
+        else
+        {
+            // No boss → go straight to power picker
+            powerUpSelector.ShowChoices();
+        }
+    }
+
 
     public void AddOrRemoveItem(Item item, bool add)
     {

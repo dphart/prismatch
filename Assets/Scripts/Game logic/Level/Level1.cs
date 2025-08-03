@@ -15,6 +15,10 @@ public class Level1 : LevelConfig
 
     public List<PowerUp> GetPowerUpsForRound(int round)
     {
+        if(round == 1)
+        {
+            return new List<PowerUp> { new BasePowerUp(5), new BaseMultiPowerUp(1, 5), new BaseMultiPowerUp(2, 3) };
+        }
         return PowerUpLibrary.All.ToList();
     }
 
@@ -29,7 +33,7 @@ public class Level1 : LevelConfig
 
     List<BossPowers> LevelConfig.GetBossEffectsByRound(int round)
     {
-        if(round == 10)
+        if(round == 2)
         {
             return new List<BossPowers> { new FirstItemsGivesNoPoints() };
         }

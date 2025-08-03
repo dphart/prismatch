@@ -32,4 +32,12 @@ public class ShortPowerCardUI : MonoBehaviour
         button.onClick.RemoveAllListeners();
         button.onClick.AddListener(() => clickAction?.Invoke(currentPower));
     }
+    public void SetupBossPower(BossPowers bossPower)
+    {
+        nameText.text = bossPower.Name;
+        descriptionText.text = bossPower.PowerUpDescription;
+
+        if (bossPower.Icon != null)
+            icon.sprite = bossPower.Icon;
+    }
 }

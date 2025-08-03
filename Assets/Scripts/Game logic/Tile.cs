@@ -15,16 +15,21 @@ public class Tile : MonoBehaviour
     public Image background;
     public Item item
     {
-        get => _item; 
+        get => _item;
         set
         {
-            if( _item != value)
+            _item = value;
+
+            // ✅ Check before touching icon
+            if (icon == null) return;
+
+            if (_item != null && _item.sprite != null)
             {
-                _item = value;
                 icon.sprite = _item.sprite;
             }
         }
     }
+
 
     public Image icon;
 

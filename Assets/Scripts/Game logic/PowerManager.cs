@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PowerManager
@@ -51,6 +52,11 @@ public class PowerManager
         }
     }
 
+    public void RemoveMostRecentPower()
+    {
+        RemovePower(_activePowers.Last());
+    }
+
     /// <summary>
     /// Clears all powers and UI cards, then re-adds the base power.
     /// </summary>
@@ -59,7 +65,6 @@ public class PowerManager
         Debug.Log($"🧹 Cleared {_activePowers.Count} powers");
         _activePowers.Clear();
 
-        RegisterPower(new BasePowerUp());    // Ensure we always have a base power
     }
 
     // -------- Boss Powers (UI probably won’t show these, but could) --------
@@ -68,6 +73,7 @@ public class PowerManager
         power.ItemInfoProvider = _ItemInfoProvider;
         power.LevelInfoProvider = _LevelInfoProvider;
         power.TimeProvider = _timeProvider;
+        power.MatchInfo = Board.Instance;
         _activeBossPowers.Add(power);
     }
 

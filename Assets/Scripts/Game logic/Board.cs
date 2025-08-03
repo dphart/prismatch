@@ -46,6 +46,8 @@ public class Board : MonoBehaviour, MatchInfo
 
     public void GenerateBoard()
     {
+        DOTween.KillAll(); // When resetting the whole board
+
         gameController.GenerateItemPool(maxItemTypes);
         Debug.Log($"[Board] Generating board with {maxItemTypes} types");
 
@@ -86,16 +88,19 @@ public class Board : MonoBehaviour, MatchInfo
                 }
                 else
                 {
-                    Debug.LogError("[Board] ItemDatabase is null or empty!");
+                    Debug.Log("[Board] ItemDatabase is null or empty!");
                 }
             }
         }
 
         Debug.Log("[Board] Board generation complete.");
+
     }
 
     public void ResetBoard()
     {
+        DOTween.KillAll(); // When resetting the whole board
+
         if (Tiles == null)
         {
             Debug.LogError("[Board] Can't reset: Tiles not initialized.");
@@ -153,13 +158,20 @@ public class Board : MonoBehaviour, MatchInfo
 
         await Swap(firstTile, secondTile);
 
-        if (CanPop())
+        try
         {
-            await Pop(firstTile, secondTile);
+            if (CanPop())
+            {
+                await Pop(firstTile, secondTile);
+            }
+            else
+            {
+                await Swap(firstTile, secondTile); // swap back if no match
+            }
         }
-        else
+        catch (Exception ex)
         {
-            await Swap(firstTile, secondTile); // swap back if no match
+            Debug.Log(ex);
         }
     }
 
@@ -174,6 +186,12 @@ public class Board : MonoBehaviour, MatchInfo
         var icon1 = tile1.icon;
         var icon2 = tile2.icon;
 
+        if (icon1 == null || icon2 == null)
+        {
+            Debug.LogWarning("⚠️ Tried to swap a tile, but one of the icons was already destroyed.");
+            isSwapping = false;
+            return;
+        }
         var icon1Transform = icon1.transform;
         var icon2Transform = icon2.transform;
 
@@ -182,7 +200,7 @@ public class Board : MonoBehaviour, MatchInfo
                 .Join(icon2Transform.DOMove(icon1Transform.position, TweenDuration));
 
         await sequence.Play().AsyncWaitForCompletion();
-
+        
         icon1Transform.SetParent(tile2.transform);
         icon2Transform.SetParent(tile1.transform);
 
@@ -277,7 +295,7 @@ public class Board : MonoBehaviour, MatchInfo
         }
         catch (Exception e)
         {
-            Debug.LogError("Scoring Error: " + e);
+            Debug.Log("Scoring Error: " + e);
         }
 
         await fadeOut.Play().AsyncWaitForCompletion();

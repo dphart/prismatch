@@ -50,24 +50,61 @@ public class FlexibleMatchPower : PowerUp
 
 public class BasePowerUp : PowerUp
 {
-    public BasePowerUp()
+    private int pointsPerTile;
+
+    public BasePowerUp(int points)
     {
-        Name = "Base Scoring";
-        PowerUpDescription = "Each tile match gives base points.";
+        Name = "Getting Started";
+        pointsPerTile = points;
+        PowerUpDescription = $"+{pointsPerTile} points per tile";
     }
 
     public override string GetCurrentPowerDescription() => PowerUpDescription;
 
-    public override int AdditiveBaseMod(List<Tile> tiles) => tiles.Count * GameState.Instance.PlayerConfigs.basePoints;
+    // ✅ Adds exactly 5 points per tile
+    public override int AdditiveBaseMod(List<Tile> tiles) => tiles.Count * pointsPerTile;
+
     public override void Apply(GameState state) { }
-    public override PowerUp Clone() => new BasePowerUp();
+
+    public override PowerUp Clone() => new BasePowerUp(pointsPerTile);
 }
+
+public class BaseMultiPowerUp : PowerUp
+{
+    private int pointsPerTile;
+    private int baseMulti;
+
+    public BaseMultiPowerUp(int points, int baseMulti)
+    {
+        Name = "Getting Started";
+        pointsPerTile = points;
+        this.baseMulti = baseMulti;
+
+        PowerUpDescription = $"+{pointsPerTile} points per tile, x{baseMulti} multiplier";
+    }
+
+    public override string GetCurrentPowerDescription() => PowerUpDescription;
+
+    // ✅ Adds exactly 5 points per tile
+    public override int AdditiveBaseMod(List<Tile> tiles) => tiles.Count * pointsPerTile;
+
+    public override int AdditiveMultiplierMod(List<Tile> tiles)
+    {
+        return baseMulti;
+    }
+    public override void Apply(GameState state) { }
+
+    public override PowerUp Clone() => new BaseMultiPowerUp(pointsPerTile, baseMulti);
+}
+
+
+
 
 public class ComboCrazePower : PowerUp
 {
     private int comboCount = 0;
     private int plusMulti = 1;
-    private int successfulCombosRequired = 5;
+    private int successfulCombosRequired = 15;
 
     public ComboCrazePower()
     {
@@ -91,12 +128,12 @@ public class ComboCrazePower : PowerUp
 public class BasePerTile : PowerUp
 {
     private double turnMatches = 0;
-    private double basePointModifier = 0.1;
+    private double basePointModifier = 0.05;
 
     public BasePerTile()
     {
         Name = "Momentum Bonus";
-        PowerUpDescription = $"+{basePointModifier} base per tile matched.";
+        PowerUpDescription = $"+{basePointModifier} base tile points per match.";
     }
 
     public override string GetCurrentPowerDescription() =>
@@ -158,7 +195,7 @@ public class FourExactlyPower : PowerUp
 public class HighStakesPower : PowerUp
 {
     private int atLeastXTiles = 5;
-    private int bonusPoints = 20;
+    private int bonusPoints = 50;
 
     public HighStakesPower()
     {
@@ -257,7 +294,7 @@ public class SnowballPower : PowerUp
 {
     private int matchCount = 0;
     private int baseMultiIncrease = 1;
-    private int perXMatches = 2;
+    private int perXMatches = 10;
 
     public SnowballPower()
     {

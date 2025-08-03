@@ -32,12 +32,14 @@ class FirstItemsGivesNoPoints : BossPowers
 
     public override bool IsScoreValid(List<Tile> tiles)
     {
-        if(selectedItems.Count == 0)
+        Debug.Log($"You matched {tiles.First()._item.ItemType}");
+
+        if (selectedItems.Count == 0 && MatchInfo.wasUserInitiatedMatch())
         {
             foreach (ItemType item in tiles.Select(i => i._item.ItemType).Distinct())
             {
                 selectedItems.Add(item);
-                Debug.Log($"Adding Type {item.GetType().Name}");
+                Debug.Log($"Adding Type {item}");
             }
             return false;
         }
@@ -45,9 +47,11 @@ class FirstItemsGivesNoPoints : BossPowers
 
         foreach (ItemType item in tiles.Select(i => i._item.ItemType).Distinct())
         {
+            Debug.Log($"Checking {item}");
+
             if ((selectedItems).Contains(item))
             {
-                Debug.Log($"Invalidated due to {item.GetType().Name}");
+                Debug.Log($"Invalidated due to {item}");
                 return false;
             }
         }

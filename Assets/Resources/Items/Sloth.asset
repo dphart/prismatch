@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Sloth
   m_EditorClassIdentifier: 
   sprite: {fileID: -8480703472052858898, guid: a7eadb5eabcbead468952ff2efe18bb6, type: 3}
-  ItemType: 0
+  ItemType: 1

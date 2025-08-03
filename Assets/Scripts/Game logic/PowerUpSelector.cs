@@ -21,9 +21,9 @@ public class PowerUpSelector : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        // 🔹 Get 3 random powerups
+        // 🔹 Get 3 random powerups FROM THE LEVEL
         List<PowerUp> choices = GetRandomPowerUps(3);
-        Debug.Log($"🎴 We have {choices.Count} power-ups to show");
+        Debug.Log($"🎴 Showing {choices.Count} power-ups to the player");
 
         // 🔹 Spawn new ShortPowerCards into the scroll content
         foreach (PowerUp power in choices)
@@ -33,7 +33,7 @@ public class PowerUpSelector : MonoBehaviour
 
             if (cardUI != null)
             {
-                // ✅ Pass power + click callback
+                // ✅ Setup card with the power and a click callback
                 cardUI.Setup(power, OnPowerUpSelected);
             }
             else
@@ -77,11 +77,13 @@ public class PowerUpSelector : MonoBehaviour
     }
 
     /// <summary>
-    /// Picks random power-ups from the library (clones to avoid shared state).
+    /// Picks random power-ups from the CURRENT LEVEL (clones to avoid shared state).
     /// </summary>
     private List<PowerUp> GetRandomPowerUps(int count)
     {
-        List<PowerUp> source = PowerUpLibrary.All;
+        // 🔹 Pull available powers from the current level
+        List<PowerUp> source = GameState.Instance.CurrentLevel.GetPowerUpsForRound(gameController.CurrentRound);
+
         var valid = new List<PowerUp>();
 
         // ✅ Filter for only powers valid for current icon list
@@ -101,7 +103,7 @@ public class PowerUpSelector : MonoBehaviour
             }
         }
 
-        // ✅ Shuffle + clone so each card gets a unique instance
+        // ✅ Shuffle + clone so each card gets its own copy
         return valid
             .OrderBy(_ => Random.value)
             .Take(count)

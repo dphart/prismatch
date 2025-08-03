@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Duck
   m_EditorClassIdentifier: 
   sprite: {fileID: 8868729072188591806, guid: baad4b028813d23498d4de6c9efaa001, type: 3}
-  value: 3
+  ItemType: 3

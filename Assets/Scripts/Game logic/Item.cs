@@ -11,7 +11,7 @@ public class Item : ScriptableObject
 
 }
 
-public enum ItemType { Bear, Sloth, Chicken, Duck, Hippo, Gir}
+public enum ItemType { Bear, Sloth, Chicken, Duck, Hippo, Girraffe, Walrus}
 
 public static class ItemUtils
 {

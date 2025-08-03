@@ -22,22 +22,7 @@ public class ScoreManager
             Debug.LogWarning("HandleScoring called with empty or null tile list.");
             return 0;
         }
-        foreach (var power in powerManager.ActivePowers())
-        {
-            if (!power.IsScoreValid(tiles))
-            {
-                Debug.Log($"⛔️ Score invalidated by {power.Name}");
-                return 0;
-            }
-        }
-        foreach (var power in powerManager.ActiveBossPowers())
-        {
-            if (!power.IsScoreValid(tiles))
-            {
-                Debug.Log($"⛔️ Score invalidated by Boss Power {power.Name}");
-                return 0;
-            }
-        }
+      
 
 
 
@@ -75,6 +60,22 @@ public class ScoreManager
             breakdown.AppendLine($"✖️ {power.Name} multiplies next match by by {mulMult}, was User initiated: {power.MatchInfo.wasUserInitiatedMatch()}");
             nextMatchMulti *= mulMult;
             if (mulMult != 1) hasScoringPower = true;
+        }
+        foreach (var power in powerManager.ActivePowers())
+        {
+            if (!power.IsScoreValid(tiles))
+            {
+                Debug.Log($"⛔️ Score invalidated by {power.Name}");
+                return 0;
+            }
+        }
+        foreach (var power in powerManager.ActiveBossPowers())
+        {
+            if (!power.IsScoreValid(tiles))
+            {
+                Debug.Log($"⛔️ Score invalidated by Boss Power {power.Name}");
+                return 0;
+            }
         }
 
         // NEW: If no power is modifying anything, return 0
