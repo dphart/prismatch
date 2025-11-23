@@ -9,7 +9,7 @@ public abstract class BossPowers : IconBonusPower
   
 }
 
-class HalfPointsForFirstHalfOfLevel : BossPowers
+public class HalfPointsForFirstHalfOfLevel : BossPowers
 {
 
     public HalfPointsForFirstHalfOfLevel()
@@ -43,7 +43,7 @@ class HalfPointsForFirstHalfOfLevel : BossPowers
     }
 }
 
-class FirstItemsGivesNoPoints : BossPowers
+public class FirstItemsGivesNoPoints : BossPowers
 {
     List<ItemType> selectedItems = new List<ItemType>();
 
