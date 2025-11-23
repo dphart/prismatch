@@ -10,6 +10,9 @@ public class PowerUpSelector : MonoBehaviour
     [SerializeField] private Transform cardParent;            // ScrollView Content object
     [SerializeField] public GameController gameController;
 
+    private List<PowerUp> powerUps; 
+    private readonly HashSet<string> _offeredThisLevel = new HashSet<string>();
+
     /// <summary>
     /// Displays random power-ups for selection.
     /// </summary>
@@ -24,6 +27,12 @@ public class PowerUpSelector : MonoBehaviour
         // 🔹 Get 3 random powerups FROM THE LEVEL
         List<PowerUp> choices = GetRandomPowerUps(3);
         Debug.Log($"🎴 Showing {choices.Count} power-ups to the player");
+
+        // 🔹 Log these choices so they aren't offered again
+        foreach (var choice in choices)
+        {
+            _offeredThisLevel.Add(choice.Name);
+        }
 
         // 🔹 Spawn new ShortPowerCards into the scroll content
         foreach (PowerUp power in choices)
@@ -81,8 +90,10 @@ public class PowerUpSelector : MonoBehaviour
     /// </summary>
     private List<PowerUp> GetRandomPowerUps(int count)
     {
-        // 🔹 Pull available powers from the current level
-        List<PowerUp> source = GameState.Instance.CurrentLevel.GetPowerUpsForRound(gameController.CurrentRound);
+        // 🔹 Pull available powers from the current level, excluding ones already offered
+        List<PowerUp> source = GameState.Instance.CurrentLevel.GetPowerUpsForRound(gameController.CurrentRound)
+            .Where(p => !_offeredThisLevel.Contains(p.Name))
+            .ToList();
 
         var valid = new List<PowerUp>();
 
@@ -114,5 +125,19 @@ public class PowerUpSelector : MonoBehaviour
     private PowerUp ClonePowerUp(PowerUp original)
     {
         return original?.Clone();
+    }
+    
+    /// <summary>
+    /// Clears the set of power-ups that have been offered in this level.
+    /// </summary>
+    public void ResetOfferedList()
+    {
+        _offeredThisLevel.Clear();
+        Debug.Log("🔄 Power-up offer list has been reset.");
+    }
+
+    public void ResetPowerSelection()
+    {
+        powerUps =  PowerUpLibrary.GetAll();
     }
 }

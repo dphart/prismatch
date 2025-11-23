@@ -319,7 +319,7 @@ public class SnowballPower : PowerUp
 
 public abstract class IconBonusPower : PowerUp
 {
-    public ItemType ItemType { get; private set; }
+    public ItemType ItemType;
     // Subclasses will implement behavior for specific icons
 }
 
@@ -543,11 +543,167 @@ public class TwinShotPower : PowerUp
     public override PowerUp Clone() => new TwinShotPower();
 
 }
+
+public class IconTypeGivesMulti : IconBonusPower
+{
+    private int multi;
+
+    public IconTypeGivesMulti(ItemType type, int _multi)
+    {
+        Name = $"{type} {type} {type}";
+        PowerUpDescription = $"Get {_multi}x for matching {type}s";
+        multi = _multi;
+        ItemType = type;
+
+    }
+
+    public override string GetCurrentPowerDescription()
+    {
+        return PowerUpDescription;
+
+    }
+
+    public override int AdditiveMultiplierMod(List<Tile> tiles)
+    {
+        if (tiles.First().item.ItemType == ItemType)
+        {
+            return multi;
+        }
+        return 0; // No scoring change by itself
+    }
+
+    public override void Apply(GameState state) { }
+    public override PowerUp Clone() => new IconTypeGivesMulti(ItemType, multi);
+
+}
+
+public class IconTypeGivesBase : IconBonusPower
+{
+    private int BasePoints;
+
+    public IconTypeGivesBase(ItemType type, int basePoints)
+    {
+        Name = $"++{type}++";
+        PowerUpDescription = $"Get {basePoints} per tile for matching {type}s";
+        BasePoints = basePoints;
+        ItemType = type;
+
+    }
+
+    public override string GetCurrentPowerDescription()
+    {
+        return PowerUpDescription;
+
+    }
+
+    public override int AdditiveBaseMod(List<Tile> tiles)
+    {
+        if (tiles.First().item.ItemType == ItemType)
+        {
+            return base.AdditiveMultiplierMod(tiles);
+        }
+        return 0;
+    }
+
+    public override void Apply(GameState state) { }
+    public override PowerUp Clone() => new IconTypeGivesBase(ItemType, BasePoints);
+
+}
+
+public class IconTypeStreakGivesBasePointsOrMulti : IconBonusPower
+{
+    private int BasePoints;
+    private int NumRequired;
+    private int BaseMulti;
+    private int NumOfMatchesOfType = 0;
+
+    public IconTypeStreakGivesBasePointsOrMulti(ItemType type, int basePoints, int numRequired, int baseMulti)
+    {
+        var descString = $"When you match {numRequired} {type} tiles, permanently ";
+
+        if(basePoints > 0)
+        {
+            descString += $"get {basePoints} points per tile";
+        }
+        if (baseMulti > 0)
+        {
+            if(basePoints > 0)
+            {
+                descString += $" and ";
+            }
+            descString += $"get {baseMulti} multi";
+
+        }
+
+        Name = $"{type}s strong together";
+        PowerUpDescription = descString;
+        BasePoints = basePoints;
+        ItemType = type;
+        NumRequired = numRequired;
+        BaseMulti = baseMulti;
+
+
+    }
+
+    public override string GetCurrentPowerDescription()
+    {
+        var descString = $"{NumOfMatchesOfType} {ItemType} matches are granting ";
+
+        if (BasePoints > 0)
+        {
+            descString += $"{BasePoints} points per tile";
+        }
+        if (BaseMulti > 0)
+        {
+            if (BasePoints > 0)
+            {
+                descString += $" and ";
+            }
+            descString += $"get {BaseMulti} multi";
+
+        }
+
+        return PowerUpDescription + descString;
+
+    }
+
+    public override int AdditiveBaseMod(List<Tile> tiles)
+    {
+
+        foreach (var tile in tiles)
+        {
+            if (tile.item.ItemType == ItemType)
+            {
+                NumOfMatchesOfType++;
+            }
+        }
+      
+
+        if (BasePoints > 0)
+        {
+            return (NumOfMatchesOfType / NumRequired) * BasePoints * tiles.Count;
+        }
+        return 0;
+    }
+
+    public override int AdditiveMultiplierMod(List<Tile> tiles)
+    {
+        if( BaseMulti > 0 ) { return NumOfMatchesOfType / NumRequired; }
+        return 0;
+        
+    }
+
+    public override void Apply(GameState state) { }
+    public override PowerUp Clone() => new IconTypeStreakGivesBasePointsOrMulti(ItemType, BasePoints, NumRequired, 
+        BaseMulti);
+
+}
+
 // ---------- PowerUp Library ----------
 
 public static class PowerUpLibrary
 {
-    public static List<PowerUp> All = new List<PowerUp>()
+    public static List<PowerUp> GetAll() => new List<PowerUp>()
     {
         new FlexibleMatchPower(3),
         new FourExactlyPower(),
@@ -563,6 +719,36 @@ public static class PowerUpLibrary
         new ColorFocusPower(),
         new JackpotFivePower(),
         new FourFuryPower(),
-        new PrecisionStrikePower()
+        new PrecisionStrikePower(),
+        new IconTypeGivesMulti(ItemType.Sloth, 2),
+        new IconTypeGivesMulti(ItemType.Girraffe, 2),
+        new IconTypeGivesMulti(ItemType.Duck, 2),
+        new IconTypeGivesMulti(ItemType.Chicken, 2),
+        new IconTypeGivesMulti(ItemType.Hippo, 2),
+        new IconTypeGivesMulti(ItemType.Walrus, 2),
+        new IconTypeGivesMulti(ItemType.Bear, 2),
+        new IconTypeGivesBase(ItemType.Sloth, 5),
+        new IconTypeGivesBase(ItemType.Girraffe, 5),
+        new IconTypeGivesBase(ItemType.Duck, 5),
+        new IconTypeGivesBase(ItemType.Chicken, 5),
+        new IconTypeGivesBase(ItemType.Hippo, 5),
+        new IconTypeGivesBase(ItemType.Walrus, 5),
+        new IconTypeGivesBase(ItemType.Bear, 5),
+        new IconTypeStreakGivesBasePointsOrMulti(ItemType.Walrus, 2, 10, 0),
+        new IconTypeStreakGivesBasePointsOrMulti(ItemType.Sloth, 2, 10, 0),
+        new IconTypeStreakGivesBasePointsOrMulti(ItemType.Girraffe, 2, 10, 0),
+        new IconTypeStreakGivesBasePointsOrMulti(ItemType.Duck, 2, 10, 0),
+        new IconTypeStreakGivesBasePointsOrMulti(ItemType.Hippo, 2, 10, 0),
+        new IconTypeStreakGivesBasePointsOrMulti(ItemType.Bear, 2, 10, 0),
+        new IconTypeStreakGivesBasePointsOrMulti(ItemType.Walrus, 0, 10, 1),
+        new IconTypeStreakGivesBasePointsOrMulti(ItemType.Sloth, 0, 10, 1),
+        new IconTypeStreakGivesBasePointsOrMulti(ItemType.Girraffe, 0, 10, 1),
+        new IconTypeStreakGivesBasePointsOrMulti(ItemType.Duck, 0, 10, 1),
+        new IconTypeStreakGivesBasePointsOrMulti(ItemType.Hippo, 0, 10, 1),
+        new IconTypeStreakGivesBasePointsOrMulti(ItemType.Bear, 0, 10, 1),
     };
+
+    public static List<PowerUp> All = GetAll();
+
+
 }

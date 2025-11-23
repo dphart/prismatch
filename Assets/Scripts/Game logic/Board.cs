@@ -200,18 +200,25 @@ public class Board : MonoBehaviour, MatchInfo
                 .Join(icon2Transform.DOMove(icon1Transform.position, TweenDuration));
 
         await sequence.Play().AsyncWaitForCompletion();
-        
-        icon1Transform.SetParent(tile2.transform);
-        icon2Transform.SetParent(tile1.transform);
+        try
+        {
+            icon1Transform.SetParent(tile2.transform);
+            icon2Transform.SetParent(tile1.transform);
 
-        tile1.icon = icon2;
-        tile2.icon = icon1;
+            tile1.icon = icon2;
+            tile2.icon = icon1;
 
-        var tempItem = tile1.item;
-        tile1.item = tile2.item;
-        tile2.item = tempItem;
+            var tempItem = tile1.item;
+            tile1.item = tile2.item;
+            tile2.item = tempItem;
 
-        isSwapping = false;
+            isSwapping = false;
+        }
+        catch (Exception ex)
+        {
+            Debug.Log(ex);
+        }
+       
     }
 
     void Update()

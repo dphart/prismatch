@@ -88,6 +88,11 @@ public class ScoreManager
         int finalBase = (additiveBase) * baseMultiplier;
         float finalMultiplier = (1 + additiveMultiplier) * multMultiplier;
         int finalScore = Mathf.RoundToInt(finalBase * finalMultiplier);
+        foreach (var power in powerManager.ActiveBossPowers())
+        {
+            var initScore = finalScore;
+            finalScore = power.ModifyAndReturnScore(tiles, finalScore);
+        }
 
         // Logging breakdown
         var fullLog = new StringBuilder();

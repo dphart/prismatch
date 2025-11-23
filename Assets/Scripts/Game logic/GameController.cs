@@ -1,4 +1,4 @@
-﻿using DG.Tweening;
+using DG.Tweening;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +25,7 @@ public class GameController : MonoBehaviour, TimeProvider, LevelInfoProvider, It
 
 
     public ActivePowerUpsUI activePowerUpsUI;
+    public BossPowerDisplayUI bossPowerDisplayUI;
     public GameUIManager GameUIManager;
 
 
@@ -133,6 +134,75 @@ public class GameController : MonoBehaviour, TimeProvider, LevelInfoProvider, It
         activePowerUpsUI.TogglePanel();
     }
 
+    /// <summary>
+    /// Toggles the boss power display screen and pauses/unpauses the game
+    /// </summary>
+    public void ToggleBossPowerScreen()
+    {
+        TogglePause();
+        if (bossPowerDisplayUI != null)
+        {
+            bossPowerDisplayUI.TogglePanel();
+        }
+        else
+        {
+            Debug.LogWarning("⚠️ BossPowerDisplayUI not assigned to GameController!");
+        }
+    }
+
+    /// <summary>
+    /// Check if the current level has boss powers (used by BossIconUI)
+    /// </summary>
+    public bool DoesCurrentLevelHaveBossPowers()
+    {
+        var currentLevel = GameState.Instance?.CurrentLevel;
+        if (currentLevel == null) return false;
+
+        var bossPowerMap = currentLevel.GetBossPowersMap();
+        if (bossPowerMap == null) return false;
+
+        // Check if any round in this level has boss powers
+        for (int round = 1; round <= currentLevel.GetTotalRounds; round++)
+        {
+            var powersForRound = bossPowerMap.GetBossPowersForRound(round);
+            if (powersForRound != null && powersForRound.Count > 0)
+            {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+
+    /// <summary>
+    /// Get the total count of unique boss powers in the current level (used by BossIconUI)
+    /// </summary>
+    public int GetTotalBossPowersInCurrentLevel()
+    {
+        var currentLevel = GameState.Instance?.CurrentLevel;
+        if (currentLevel == null) return 0;
+
+        var bossPowerMap = currentLevel.GetBossPowersMap();
+        if (bossPowerMap == null) return 0;
+
+        // Use a HashSet to count unique boss powers across all rounds
+        var uniquePowers = new HashSet<string>();
+        
+        for (int round = 1; round <= currentLevel.GetTotalRounds; round++)
+        {
+            var powersForRound = bossPowerMap.GetBossPowersForRound(round);
+            if (powersForRound != null)
+            {
+                foreach (var power in powersForRound)
+                {
+                    uniquePowers.Add(power.Name);
+                }
+            }
+        }
+        
+        return uniquePowers.Count;
+    }
+
 
     public void TriggerGameOver()
     {
@@ -211,7 +281,7 @@ public class GameController : MonoBehaviour, TimeProvider, LevelInfoProvider, It
 
         // ✅ Clear and register boss powers for this round
         powerManager.ClearBossPowers();
-        var bossPowers = GameState.Instance.CurrentLevel.GetBossEffectsByRound(CurrentRound);
+        var bossPowers = GameState.Instance.CurrentLevel.GetBossPowersMap().GetBossPowersForRound(CurrentRound);
         foreach (BossPowers bp in bossPowers)
         {
             powerManager.RegisterBossPower(bp);
@@ -273,7 +343,7 @@ public class GameController : MonoBehaviour, TimeProvider, LevelInfoProvider, It
         DOTween.KillAll();
         if (advanceRound) CurrentRound = CurrentRound + 1;
         powerManager.ClearBossPowers();
-        foreach (BossPowers bp in GameState.Instance.CurrentLevel.GetBossEffectsByRound(CurrentRound))
+        foreach (BossPowers bp in GameState.Instance.CurrentLevel.GetBossPowersMap().GetBossPowersForRound(CurrentRound))
         {
             powerManager.RegisterBossPower(bp);
         }
@@ -316,6 +386,7 @@ public class GameController : MonoBehaviour, TimeProvider, LevelInfoProvider, It
     {
         Debug.Log("🆕 Starting new game...");
         RemoveAllPowers();         // ✅ Clear old powers
+        powerUpSelector.ResetOfferedList(); // ✅ Clear offered power-ups
         CurrentRound = 0;          // ✅ Reset rounds
         StartLevel(false);              // ✅ Fresh start
     }
@@ -396,7 +467,7 @@ public class GameController : MonoBehaviour, TimeProvider, LevelInfoProvider, It
         bossBackground.SetActive(false);
 
         // Check if this round has boss powers
-        var bossPowers = GameState.Instance.CurrentLevel.GetBossEffectsByRound(CurrentRound);
+        var bossPowers = GameState.Instance.CurrentLevel.GetBossPowersMap().GetBossPowersForRound(CurrentRound);
 
         if (bossPowers.Count > 0)
         {
@@ -426,5 +497,19 @@ public class GameController : MonoBehaviour, TimeProvider, LevelInfoProvider, It
                 if (limitedItemPool.Contains(item)) limitedItemPool.Remove(item);
             }
         }
+    }
+
+    public void ApplyTimePenalty(float penaltySeconds)
+    {
+        timeRemaining = Mathf.Max(0f, timeRemaining - penaltySeconds);
+        UpdateTimeRemaining(timeRemaining);
+        Debug.Log($"⏰ Applied {penaltySeconds}s time penalty. Remaining time: {timeRemaining:F1}s");
+    }
+
+    public void OnShuffleBoardClicked()
+    {
+
+        Board.Instance.ResetBoard();
+        ApplyTimePenalty(5f);
     }
 }

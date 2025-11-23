@@ -1,12 +1,46 @@
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public abstract class BossPowers : IconBonusPower
 {
-
+    public virtual int ModifyAndReturnScore(List<Tile> tiles, int score) {  return  score; }
+    
   
+}
+
+class HalfPointsForFirstHalfOfLevel : BossPowers
+{
+
+    public HalfPointsForFirstHalfOfLevel()
+    {
+        Name = "Slow Down Buddy";
+        PowerUpDescription = $"You receive half points for the first 30 seconds";
+    }
+    public override void Apply(GameState state){}
+
+    public override PowerUp Clone()
+    {
+        return new HalfPointsForFirstHalfOfLevel();
+    }
+
+    public override string GetCurrentPowerDescription()
+    {
+        return PowerUpDescription;
+    }
+
+    public override int ModifyAndReturnScore(List<Tile> tiles, int score)
+    {
+        if(TimeProvider.TimeRemaining >= 30)
+        {
+            Debug.Log($"Time remaining: {TimeProvider.TimeRemaining}, returning {score / 2}");
+
+            return (score / 2);
+        }
+        Debug.Log($"Time remaining: {TimeProvider.TimeRemaining}, Not modifying");
+
+        return score;
+    }
 }
 
 class FirstItemsGivesNoPoints : BossPowers
@@ -58,3 +92,9 @@ class FirstItemsGivesNoPoints : BossPowers
         return true;
     }
 }
+
+public static class BossLibrary
+{
+
+}
+

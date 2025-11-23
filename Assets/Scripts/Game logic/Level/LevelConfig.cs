@@ -1,9 +1,12 @@
 using System.Collections.Generic;
+using Unity.Collections;
 using UnityEngine;
 
 public interface LevelConfig 
 {
     public List<PowerUp> GetPowerUpsForRound(int round);
+
+    public BossPowerMap GetBossPowersMap();
 
     public int GetTotalTime { get; }
     public int GetHeight(int round);
@@ -15,9 +18,9 @@ public interface LevelConfig
 
     public int GetLevelNumber { get; }
 
-    public List<BossPowers> GetBossEffectsByRound(int round);
-
     public string GetLevelDescription();
+
+    public LevelConfig CloneNew();
 
 
 }

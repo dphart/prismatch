@@ -31,15 +31,23 @@ public class Level2 : LevelConfig
 
     public int GetWidth(int round) => 7;
 
-    List<BossPowers> LevelConfig.GetBossEffectsByRound(int round)
+
+    public Dictionary<int, List<BossPowers>> GetBossPowersMap()
     {
-        if (round == 10)
+        return new Dictionary<int, List<BossPowers>>
         {
-            return new List<BossPowers> { new FirstItemsGivesNoPoints() };
-        }
-        else
-        {
-            return new List<BossPowers>();
-        }
+            { 2, new List<BossPowers> {new FirstItemsGivesNoPoints() } },
+
+        };
+    }
+
+    BossPowerMap LevelConfig.GetBossPowersMap()
+    {
+        return new BossPowerMap();
+    }
+
+    public LevelConfig CloneNew()
+    {
+        return new Level2();
     }
 }
