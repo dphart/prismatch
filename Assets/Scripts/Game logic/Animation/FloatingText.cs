@@ -7,6 +7,7 @@ public class FloatingText : MonoBehaviour
     public TextMeshProUGUI text;
     private CanvasGroup canvasGroup;
     private RectTransform rectTransform;
+    private Sequence sequence;
 
     private void Awake()
     {
@@ -24,16 +25,19 @@ public class FloatingText : MonoBehaviour
         rectTransform.localScale = Vector3.one;
 
         Vector2 startPos = rectTransform.anchoredPosition;
-        Vector2 targetOffset = burstDirection.normalized * Random.Range(80f, 50f);
+        Vector2 targetOffset = burstDirection.normalized * Random.Range(50f, 80f);
         Vector2 endPos = startPos + targetOffset;
 
-        Sequence seq = DOTween.Sequence();
-        seq.Append(rectTransform.DOAnchorPos(endPos, 1f).SetEase(Ease.OutCubic));
-        seq.Join(rectTransform.DOScale(1.2f, 0.25f).SetLoops(2, LoopType.Yoyo));
-        seq.Join(canvasGroup.DOFade(0f, 01f));
-        seq.OnComplete(() => Destroy(gameObject));
-        seq.Play();
+        sequence?.Kill();
+        sequence = DOTween.Sequence().SetId(this);
+        sequence.Append(rectTransform.DOAnchorPos(endPos, 1f).SetEase(Ease.OutCubic));
+        sequence.Join(rectTransform.DOScale(1.2f, 0.25f).SetLoops(2, LoopType.Yoyo));
+        sequence.Join(canvasGroup.DOFade(0f, 1f));
+        sequence.OnComplete(() => Destroy(gameObject));
+        sequence.Play();
     }
+
+    private void OnDestroy() => DOTween.Kill(this);
 
 
 }

@@ -47,6 +47,25 @@ public class PowerUpBehaviorTests
     }
 
     [Test]
+    public void IconBasePower_AddsPointsForMatchingAnimal()
+    {
+        AddPower(new IconTypeGivesBase(ItemType.Bear, 5));
+        Assert.AreEqual(15, _scoreManager.CalculateScore(MakeTiles(ItemType.Bear, 3)));
+        Assert.AreEqual(0, _scoreManager.CalculateScore(MakeTiles(ItemType.Duck, 3)));
+    }
+
+    [Test]
+    public void ColorFocus_AppliesImmediateDoubleOnRepeatedAnimal()
+    {
+        AddPower(new BasePowerUp(1));
+        var focus = new ColorFocusPower { MatchInfo = new FakeMatchInfo(true) };
+        AddPower(focus);
+        var tiles = MakeTiles(ItemType.Bear, 3);
+        Assert.AreEqual(3, _scoreManager.CalculateScore(tiles));
+        Assert.AreEqual(6, _scoreManager.CalculateScore(tiles));
+    }
+
+    [Test]
     public void PrecisionStrike_SetsNextMatchMultiplierAfterTwoThreeMatches()
     {
         var precision = new PrecisionStrikePower();
@@ -80,6 +99,25 @@ public class PowerUpBehaviorTests
         int score = _scoreManager.CalculateScore(tiles);
 
         Assert.AreEqual(1, score, "3 base points should be halved to 1 (int division).");
+    }
+
+    [Test]
+    public void SidewaysThinking_DoublesScoreAndRemovesVerticalRule()
+    {
+        var power = new NoVerticalDoublePower();
+        AddPower(new BasePowerUp(1));
+        AddPower(power);
+        var rules = new List<MatchRule>
+        {
+            new(MatchType.Horizontal, 3),
+            new(MatchType.Vertical, 3)
+        };
+
+        power.ModifyMatchRules(rules);
+
+        Assert.AreEqual(0, rules.FindAll(rule => rule.type == MatchType.Vertical).Count);
+        Assert.AreEqual(1, rules.FindAll(rule => rule.type == MatchType.Horizontal).Count);
+        Assert.AreEqual(6, _scoreManager.CalculateScore(MakeTiles(ItemType.Bear, 3)));
     }
 
     private List<Tile> MakeTiles(ItemType type, int count)

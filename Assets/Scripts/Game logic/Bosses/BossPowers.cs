@@ -15,7 +15,7 @@ public class HalfPointsForFirstHalfOfLevel : BossPowers
     public HalfPointsForFirstHalfOfLevel()
     {
         Name = "Slow Down Buddy";
-        PowerUpDescription = $"You receive half points for the first 30 seconds";
+        PowerUpDescription = "Half points during the first half of this round.";
     }
     public override void Apply(GameState state){}
 
@@ -31,14 +31,10 @@ public class HalfPointsForFirstHalfOfLevel : BossPowers
 
     public override int ModifyAndReturnScore(List<Tile> tiles, int score)
     {
-        if(TimeProvider.TimeRemaining >= 30)
+        if(TimeProvider.TimeRemaining >= (GameState.Instance?.CurrentLevel?.GetTotalTime ?? 60) / 2f)
         {
-            Debug.Log($"Time remaining: {TimeProvider.TimeRemaining}, returning {score / 2}");
-
             return (score / 2);
         }
-        Debug.Log($"Time remaining: {TimeProvider.TimeRemaining}, Not modifying");
-
         return score;
     }
 }
@@ -50,7 +46,7 @@ public class FirstItemsGivesNoPoints : BossPowers
     public FirstItemsGivesNoPoints()
     {
         Name = "First In None Out";
-        PowerUpDescription = $"Your first match type gives no points for the remaining rounds";
+        PowerUpDescription = "Your first player-created match selects an animal. That animal scores no points while this boss is active.";
     }
     public override void Apply(GameState state) {}
     
@@ -61,19 +57,16 @@ public class FirstItemsGivesNoPoints : BossPowers
 
     public override string GetCurrentPowerDescription()
     {
-        return "";
+        return selectedItems.Count == 0 ? PowerUpDescription : $"Blocked animal: {string.Join(", ", selectedItems)}";
     }
 
     public override bool IsScoreValid(List<Tile> tiles)
     {
-        Debug.Log($"You matched {tiles.First()._item.ItemType}");
-
         if (selectedItems.Count == 0 && MatchInfo.wasUserInitiatedMatch())
         {
             foreach (ItemType item in tiles.Select(i => i._item.ItemType).Distinct())
             {
                 selectedItems.Add(item);
-                Debug.Log($"Adding Type {item}");
             }
             return false;
         }
@@ -81,11 +74,8 @@ public class FirstItemsGivesNoPoints : BossPowers
 
         foreach (ItemType item in tiles.Select(i => i._item.ItemType).Distinct())
         {
-            Debug.Log($"Checking {item}");
-
             if ((selectedItems).Contains(item))
             {
-                Debug.Log($"Invalidated due to {item}");
                 return false;
             }
         }

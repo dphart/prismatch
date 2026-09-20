@@ -5,6 +5,6 @@ public class NewGameButton : MonoBehaviour
 {
     public void PlayGame()
     {
-        SceneManager.LoadSceneAsync(2);
+        SceneManager.LoadSceneAsync("Level Select");
     }
 }

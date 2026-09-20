@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b51302da94e4f2d9635f7ebb16390fc, type: 3}
+  m_Name: Level1
+  m_EditorClassIdentifier:
+  width: 7
+  height: 7
+  rounds: 10
+  seconds: 60
+  baseTarget: 400
+  targetGrowth: 1.35
+  itemTypes: 7
+  bossesPersist: 0
+  description: Swap any two animals. Clear connected groups of 3+ and beat all 10 targets.
+  allowedPowerNames: []
+  bosses:
+  - round: 5
+    rule: 0
+  - round: 10
+    rule: 1
+  matchRules:
+  - type: 2
+    minimumLength: 3

@@ -6,6 +6,10 @@
 [Ll]ogs/
 UserSettings/
 MemoryCaptures/
+.utmp/
+.verification-project/
+.codex-backups/
+Assets/Resources/PerformanceTestRun*.json*
 
 # VS / JetBrains
 .vscode/
@@ -13,6 +17,7 @@ MemoryCaptures/
 *.csproj
 *.unityproj
 *.sln
+*.slnx
 *.suo
 *.tmp
 *.user
@@ -28,4 +33,3 @@ Thumbs.db
 *.apk
 *.unitypackage
 *.vs/
-

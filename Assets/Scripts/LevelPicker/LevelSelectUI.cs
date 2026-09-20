@@ -46,7 +46,8 @@ public class LevelSelectUI : MonoBehaviour
 
         // ✅ Update UI text
         levelText.text = $"Level {level.GetLevelNumber}";
-        descriptionText.text = $"Incomplete";
+        descriptionText.text = ProgressStore.IsCompleted(levelNumber)
+            ? $"Completed · Best run: {ProgressStore.BestScore(levelNumber):N0}" : "Ready to play";
         roundsText.text = $"{level.GetLevelDescription()}";
 
         // ✅ Toggle buttons visibility
@@ -82,7 +83,7 @@ public class LevelSelectUI : MonoBehaviour
         }
 
         // ✅ Assign the selected level
-        GameState.Instance.CurrentLevel = LevelLibrary.GetLevel(currentLevelNumber);
+        GameState.Instance.CurrentLevel = LevelLibrary.GetLevel(currentLevelNumber).CloneNew();
 
         // ✅ Load the gameplay scene
         SceneManager.LoadScene("prismatch");

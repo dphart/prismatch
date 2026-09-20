@@ -22,5 +22,8 @@ public interface LevelConfig
 
     public LevelConfig CloneNew();
 
+    public bool BossPowersPersist { get; }
+
+    public List<MatchRule> GetMatchRules(int round);
 
 }
