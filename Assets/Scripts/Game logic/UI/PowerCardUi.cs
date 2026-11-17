@@ -20,8 +20,9 @@ public class PowerCardUI : MonoBehaviour
 
         //nameText.text = powerUp.Name;
         descriptionText.text = powerUp.PowerUpDescription;
-        icon.sprite = powerUp.Icon;
-        icon.gameObject.SetActive(powerUp.Icon != null);
+        PowerUpIconLibrary.Apply(icon, powerUp);
+        var outline=GetComponent<Outline>()??gameObject.AddComponent<Outline>();
+        outline.effectColor=PrismatchTheme.TierColor(powerUp.Rarity);outline.effectDistance=new Vector2(3,-3);
 
         selectButton.onClick.RemoveAllListeners();
         selectButton.onClick.AddListener(OnSelect);

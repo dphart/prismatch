@@ -1,0 +1,33 @@
+'use strict';
+const assert=require('node:assert/strict'),fs=require('node:fs');
+const M=require('./model.js'),R=require('./round-offers.js'),S=require('./shared-schema.cjs');
+const d=JSON.parse(fs.readFileSync('Assets/Resources/Content/prismatch.json','utf8'));
+const adapted=d.powers.filter(p=>p.blockDescriptionTemplate);
+assert(adapted.length>=83);
+assert(d.powers.filter(p=>p.goals==='Both').length>=169);
+for(const p of d.powers.filter(p=>p.goals!=='Both'))assert(p.goalReview?.status==='needs-design'&&p.goalReview.reason,p.name);
+for(const p of adapted){
+ assert.equal(p.goals,'Both');
+ assert.equal(p.levelId,undefined,'Shared rewards do not require a level copy.');
+ assert(!/base points|multiplier|\d+x points/.test(p.blockDescriptionTemplate),p.name);
+ assert(M.qualities(p).has('points'));assert(M.qualities(p).has('blocks'));
+ assert(M.qualities(p).has('credits')||M.qualities(p).has('clearing'));
+}
+const duck=d.powers.find(p=>p.type==='IconTypeGivesMulti'&&p.name.startsWith('Duck'));
+const block={...d.levels.find(l=>l.goal==='BlocksCleared'),powerOverrides:{}};
+const slot={mode:'powers',count:1,powerIds:[duck.id]};
+assert(R.candidates(slot,2,block,d.powers).some(p=>p.id===duck.id));
+assert(R.candidates(slot,2,{...block,goal:'Score'},d.powers).some(p=>p.id===duck.id));
+const query={...block,starters:[],rewards:[],roundDrafts:[{round:2,label:'Clearing',slots:[{query:'all=Clearing;any=None;none=None',count:1}]}]};
+assert(R.inherited(query,2,d.powers).slots[0].powerIds.includes(duck.id));
+const next=structuredClone(d),level=next.levels.find(l=>l.id===block.id);
+level.roundOffers=[{round:2,label:'Shared animal power',slots:[slot]}];
+S.validate(next,d);
+const illegal=structuredClone(d);illegal.powers.find(p=>p.id===duck.id).blockDescriptionTemplate='Different mechanic';
+assert.throws(()=>S.validate(illegal,d),/behavior requires code/);
+const collector=d.powers.find(p=>p.name==='Duck Collector');
+assert.equal(collector.goals,'Both');assert(collector.pointDescriptionTemplate.includes('4 base points'));
+assert(R.candidates({mode:'powers',powerIds:[collector.id]},2,{...block,goal:'Score'},d.powers).some(p=>p.id===collector.id));
+const changedTemplate=structuredClone(d);changedTemplate.powers.find(p=>p.id===collector.id).pointDescriptionTemplate='Different reward';
+assert.throws(()=>S.validate(changedTemplate,d),/behavior requires code/);
+console.log('PASS Both-goal rewards, goal restrictions with review reasons, goal-specific wording, filters and immutable native templates.');

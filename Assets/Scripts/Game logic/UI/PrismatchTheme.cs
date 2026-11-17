@@ -16,6 +16,11 @@ public static class PrismatchTheme
     public static readonly Color Cream = Hex("FFF7E8");
     public static readonly Color Mist = Hex("AFC7E8");
     public static readonly Color Card = Hex("F7F3EA");
+    public static Color TierColor(PowerTier tier) => tier switch {
+        PowerTier.Rare => Hex("A56EFF"),
+        PowerTier.Legendary => Hex("FFB52E"),
+        _ => Green
+    };
 
     private static Sprite roundedSprite;
 
@@ -77,62 +82,48 @@ public static class PrismatchTheme
         _ => Sky
     };
 
-    public static void ApplyBackdrop(RectTransform canvas)
+    public static void ApplyBackdrop(RectTransform canvas, HabitatStyle? habitat = null, bool boss = false)
     {
-        if (canvas == null || canvas.Find("PrismatchBackdrop") != null) return;
-        var go = new GameObject("PrismatchBackdrop", typeof(RectTransform), typeof(Image), typeof(UiVerticalGradient));
-        go.transform.SetParent(canvas, false);
-        go.transform.SetAsFirstSibling();
+        if (canvas == null) return;
+        var existing = canvas.Find("PrismatchBackdrop");
+        var go = existing != null ? existing.gameObject : new GameObject("PrismatchBackdrop", typeof(RectTransform), typeof(Image), typeof(UiVerticalGradient));
+        if (existing == null) go.transform.SetParent(canvas, false);
+        if (go.transform.GetSiblingIndex() != 0) go.transform.SetAsFirstSibling();
         var rect = (RectTransform)go.transform;
         rect.anchorMin = Vector2.zero; rect.anchorMax = Vector2.one;
         rect.offsetMin = rect.offsetMax = Vector2.zero;
-        go.GetComponent<Image>().color = Color.white;
-        var gradient = go.GetComponent<UiVerticalGradient>();
-        gradient.top = RaisedNavy; gradient.bottom = Midnight;
-        foreach (var data in new[]
+        var image = go.GetComponent<Image>();
+        image.color = Color.white; image.raycastTarget = false;
+        var gradient = go.GetComponent<UiVerticalGradient>() ?? go.AddComponent<UiVerticalGradient>();
+        gradient.top = habitat.HasValue ? HabitatArtwork.Colors(habitat.Value).Top : RaisedNavy;
+        gradient.bottom = habitat.HasValue ? HabitatArtwork.Colors(habitat.Value).Bottom : Midnight;
+        if (boss)
         {
-            (new Vector2(-.08f,.88f), new Vector2(210,110), 42f),
-            (new Vector2(1.06f,.72f), new Vector2(190,100), -38f),
-            (new Vector2(-.05f,.12f), new Vector2(180,95), -35f),
-            (new Vector2(1.05f,.08f), new Vector2(220,110), 38f)
-        })
+            gradient.top = Color.Lerp(gradient.top, Midnight, .2f);
+            gradient.bottom = Color.Lerp(gradient.bottom, Midnight, .15f);
+        }
+        image.SetVerticesDirty();
+        foreach (Transform child in rect)
+            if (child.name == "BackdropShape") child.gameObject.SetActive(!habitat.HasValue);
+        var scenery = rect.Find("HabitatScenery");
+        if (habitat.HasValue && scenery == null)
         {
-            var shape = new GameObject("BackdropShape", typeof(RectTransform), typeof(Image));
-            shape.transform.SetParent(rect, false);
-            var shapeRect = (RectTransform)shape.transform;
-            shapeRect.anchorMin = shapeRect.anchorMax = data.Item1;
-            shapeRect.sizeDelta = data.Item2;
-            shapeRect.localEulerAngles = new Vector3(0, 0, data.Item3);
-            Round(shape.GetComponent<Image>(), new Color(Sky.r, Sky.g, Sky.b, .07f));
-            shape.GetComponent<Image>().raycastTarget = false;
+            scenery = new GameObject("HabitatScenery", typeof(RectTransform), typeof(HabitatScenery)).transform;
+            scenery.SetParent(rect, false);
+            var sceneryRect = (RectTransform)scenery;
+            sceneryRect.anchorMin = Vector2.zero; sceneryRect.anchorMax = Vector2.one;
+            sceneryRect.offsetMin = sceneryRect.offsetMax = Vector2.zero;
+        }
+        if (scenery != null)
+        {
+            scenery.gameObject.SetActive(habitat.HasValue);
+            if (habitat.HasValue) scenery.GetComponent<HabitatScenery>().SetHabitat(habitat.Value);
         }
     }
-
     private static Color Hex(string value)
     {
         ColorUtility.TryParseHtmlString("#" + value, out var color);
         return color;
-    }
-}
-
-public class UiVerticalGradient : BaseMeshEffect
-{
-    public Color top = Color.white;
-    public Color bottom = Color.black;
-
-    public override void ModifyMesh(VertexHelper helper)
-    {
-        if (!IsActive()) return;
-        var vertex = new UIVertex();
-        var rect = graphic.rectTransform.rect;
-        for (int i = 0; i < helper.currentVertCount; i++)
-        {
-            helper.PopulateUIVertex(ref vertex, i);
-            float t = Mathf.InverseLerp(rect.yMin, rect.yMax, vertex.position.y);
-            Color baseColor = vertex.color;
-            vertex.color = baseColor * Color.Lerp(bottom, top, t);
-            helper.SetUIVertex(vertex, i);
-        }
     }
 }
 

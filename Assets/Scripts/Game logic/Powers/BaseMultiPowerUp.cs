@@ -2,6 +2,9 @@ using System.Collections.Generic;
 
 public class BaseMultiPowerUp : PowerUp
 {
+    public override bool HasConditionalTrigger => false;
+    public override bool OpeningOnly => true;
+    public override PowerStatEffects StatEffects => PowerStatEffects.Both;
     private int pointsPerTile;
     private int baseMulti;
 
@@ -11,9 +14,12 @@ public class BaseMultiPowerUp : PowerUp
         pointsPerTile = points;
         this.baseMulti = baseMulti;
 
-        PowerUpDescription = $"+{pointsPerTile} points per tile and +{baseMulti} multiplier (×{1 + baseMulti} alone).";
+        PowerUpDescription = $"All matches gain {pointsPerTile} base points per tile and {baseMulti} multiplier.";
     }
 
+    public override float FlatBasePerTile => pointsPerTile;
+    public override float FlatMultiplierBonus => baseMulti;
+    public override string ConditionalStatDescription => "";
     public override string GetCurrentPowerDescription() => PowerUpDescription;
 
     public override int AdditiveBaseMod(List<Tile> tiles) => tiles.Count * pointsPerTile;
@@ -24,5 +30,5 @@ public class BaseMultiPowerUp : PowerUp
     }
     public override void Apply(GameState state) { }
 
-    public override PowerUp Clone() => new BaseMultiPowerUp(pointsPerTile, baseMulti);
+    public override PowerUp Clone() => SharedClone(new BaseMultiPowerUp(pointsPerTile, baseMulti));
 }

@@ -2,17 +2,19 @@ using System.Collections.Generic;
 
 public class TwinShotPower : PowerUp
 {
+    public override PowerStatEffects StatEffects => PowerStatEffects.Multiplier;
+    public override string MultiplierCondition => GetCurrentPowerDescription();
     private int multi = 1;
 
     public TwinShotPower()
     {
         Name = "Twin Shot";
-        PowerUpDescription = "Match 4 tiles, and your next match counts twice for 2x";
+        PowerUpDescription = "Matches that are exactly 4 give your next match double points.";
     }
 
     public override string GetCurrentPowerDescription()
     {
-        return "Twin Shot ready: next match counts double for combo bonuses!";
+        return PowerUpDescription;
     }
 
     public override int NextMatchMulti(List<Tile> tiles)
@@ -23,5 +25,5 @@ public class TwinShotPower : PowerUp
     }
 
     public override void Apply(GameState state) { }
-    public override PowerUp Clone() => new TwinShotPower();
+    public override PowerUp Clone() => SharedClone(new TwinShotPower());
 }

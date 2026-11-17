@@ -31,4 +31,4 @@ MonoBehaviour:
     rule: 1
   matchRules:
   - type: 2
-    minimumLength: 3
+    minimumLength: 4

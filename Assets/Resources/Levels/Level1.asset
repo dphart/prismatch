@@ -20,7 +20,7 @@ MonoBehaviour:
   targetGrowth: 1.35
   itemTypes: 7
   bossesPersist: 0
-  description: Swap any two animals. Clear connected groups of 3+ and beat all 10 targets.
+  description: Swap any two animals. Clear connected groups of 4+ and beat all 10 targets.
   allowedPowerNames: []
   bosses:
   - round: 5
@@ -29,4 +29,4 @@ MonoBehaviour:
     rule: 1
   matchRules:
   - type: 2
-    minimumLength: 3
+    minimumLength: 4

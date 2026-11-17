@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class PrecisionStrikePower : PowerUp
 {
+    public override PowerStatEffects StatEffects => PowerStatEffects.Multiplier;
+    public override string MultiplierCondition => GetCurrentPowerDescription();
     private bool streakActive = false;
     private int streakCount = 0;
     private int multi = 1;
@@ -10,13 +12,13 @@ public class PrecisionStrikePower : PowerUp
     public PrecisionStrikePower()
     {
         Name = "Precision Strike";
-        PowerUpDescription = "Match exactly 3 twice to activate x4. Keeps working until you match a different number.";
+        PowerUpDescription = "Match exactly 3 twice in a row to give your next match 4x points. Keep matching 3 to earn it again.";
     }
 
     public override string GetCurrentPowerDescription()
     {
         return streakActive
-            ? "Precision Strike active: matching 3 tiles keeps x4 going!"
+            ? PowerUpDescription + " Active."
             : PowerUpDescription;
     }
 
@@ -45,5 +47,6 @@ public class PrecisionStrikePower : PowerUp
     }
 
     public override void Apply(GameState state) { }
-    public override PowerUp Clone() => new PrecisionStrikePower();
+    public override bool CanUseWithMatchRules(IReadOnlyList<MatchRule> rules) => CanMatchExactly(rules, 3);
+    public override PowerUp Clone() => SharedClone(new PrecisionStrikePower());
 }

@@ -1,0 +1,63 @@
+[
+  {
+    "name": "Bear",
+    "color": "vivid orange #F28C28",
+    "source": "C:\\Users\\dphar\\.codex\\generated_images\\01a0bf80-6f86-7161-bddb-49cb672fef16\\exec-aa60e619-4a90-4b55-824d-42aed3ec8b07.png",
+    "prompt": "Use case: precise-object-edit. Edit target: attached Bear game sprite. Recolor and cleanly restyle this single Bear face into a coherent flat cartoon mobile match-game icon, dominant primary color vivid orange #F28C28. Keep the recognizable species, expression, large white-rimmed dark eyes, original silhouette and simple flat vector-like style. Main head/body color must occupy most of the visible icon, not just a background badge. Keep beak/tusks/muzzle natural light accents as appropriate. No brown dominant areas. Crisp bold shapes legible at 40 pixels. One face centered with 8 percent safe padding on each side, all ears/horns/antlers included. Square image. Actual transparent alpha background, no tile or frame, no text, no checkerboard, no shadow outside silhouette. Preserve identity of the original. This is a production Unity sprite; avoid texture, gradients, realism and added ornament."
+  },
+  {
+    "name": "Chicken",
+    "color": "vivid crimson red #E74747",
+    "source": "C:\\Users\\dphar\\.codex\\generated_images\\01a0bf80-6f86-7161-bddb-49cb672fef16\\exec-038ac4b5-a683-4b0e-b139-c67ab0121a41.png",
+    "prompt": "Use case: precise-object-edit. Edit target: attached Chicken game sprite. Recolor and cleanly restyle this single Chicken face into a coherent flat cartoon mobile match-game icon, dominant primary color vivid crimson red #E74747. Keep the recognizable species, expression, large white-rimmed dark eyes, original silhouette and simple flat vector-like style. Main head/body color must occupy most of the visible icon, not just a background badge. Keep beak/tusks/muzzle natural light accents as appropriate. No brown dominant areas. Crisp bold shapes legible at 40 pixels. One face centered with 8 percent safe padding on each side, all ears/horns/antlers included. Square image. Actual transparent alpha background, no tile or frame, no text, no checkerboard, no shadow outside silhouette. Preserve identity of the original. This is a production Unity sprite; avoid texture, gradients, realism and added ornament."
+  },
+  {
+    "name": "Duck",
+    "color": "bright emerald green #2CCB6F",
+    "source": "Assets/Sprites/duck.png",
+    "prompt": null,
+    "note": "User-authorized deterministic pixel recolor: green-dominant pixels set to solid #2CCB6F, preserving original alpha, eyes, bill and white patch. No generated replacement used."
+  },
+  {
+    "name": "Elephant",
+    "color": "deep teal #168D83",
+    "source": "C:\\Users\\dphar\\.codex\\generated_images\\01a0bf80-6f86-7161-bddb-49cb672fef16\\exec-c11750fa-fa83-4b44-a800-8224b6fee274.png",
+    "prompt": "Use case: precise-object-edit. Edit target: attached Elephant game sprite. Recolor and cleanly restyle this single Elephant face into a coherent flat cartoon mobile match-game icon, dominant primary color deep teal #168D83. Keep the recognizable species, expression, large white-rimmed dark eyes, original silhouette and simple flat vector-like style. Main head/body color must occupy most of the visible icon, not just a background badge. Keep beak/tusks/muzzle natural light accents as appropriate. No brown dominant areas. Crisp bold shapes legible at 40 pixels. One face centered with 8 percent safe padding on each side, all ears/horns/antlers included. Square image. Actual transparent alpha background, no tile or frame, no text, no checkerboard, no shadow outside silhouette. Preserve identity of the original. This is a production Unity sprite; avoid texture, gradients, realism and added ornament."
+  },
+  {
+    "name": "Giraffe",
+    "color": "bright golden yellow #F3D522",
+    "source": "C:\\Users\\dphar\\.codex\\generated_images\\01a0bf80-6f86-7161-bddb-49cb672fef16\\exec-0e731935-843b-4eaf-b2a4-7d2fbfd3ec72.png",
+    "prompt": "Use case: precise-object-edit. Edit target: attached Giraffe game sprite. Recolor and cleanly restyle this single Giraffe face into a coherent flat cartoon mobile match-game icon, dominant primary color bright golden yellow #F3D522. Keep the recognizable species, expression, large white-rimmed dark eyes, original silhouette and simple flat vector-like style. Main head/body color must occupy most of the visible icon, not just a background badge. Keep beak/tusks/muzzle natural light accents as appropriate. No brown dominant areas. Crisp bold shapes legible at 40 pixels. One face centered with 8 percent safe padding on each side, all ears/horns/antlers included. Square image. Actual transparent alpha background, no tile or frame, no text, no checkerboard, no shadow outside silhouette. Preserve identity of the original. This is a production Unity sprite; avoid texture, gradients, realism and added ornament."
+  },
+  {
+    "name": "Hippo",
+    "color": "royal blue #397CDD",
+    "source": "C:\\Users\\dphar\\.codex\\generated_images\\01a0bf80-6f86-7161-bddb-49cb672fef16\\exec-bb063d8e-eb62-4956-8876-91cf78541c12.png",
+    "prompt": "Use case: precise-object-edit. Edit target: attached Hippo game sprite. Recolor and cleanly restyle this single Hippo face into a coherent flat cartoon mobile match-game icon, dominant primary color royal blue #397CDD. Keep the recognizable species, expression, large white-rimmed dark eyes, original silhouette and simple flat vector-like style. Main head/body color must occupy most of the visible icon, not just a background badge. Keep beak/tusks/muzzle natural light accents as appropriate. No brown dominant areas. Crisp bold shapes legible at 40 pixels. One face centered with 8 percent safe padding on each side, all ears/horns/antlers included. Square image. Actual transparent alpha background, no tile or frame, no text, no checkerboard, no shadow outside silhouette. Preserve identity of the original. This is a production Unity sprite; avoid texture, gradients, realism and added ornament."
+  },
+  {
+    "name": "Moose",
+    "color": "vivid magenta pink #DA4DA1",
+    "source": "C:\\Users\\dphar\\.codex\\generated_images\\01a0bf80-6f86-7161-bddb-49cb672fef16\\exec-c0a6b407-6762-4d48-a3fe-8fdb023e9c83.png",
+    "prompt": "Use case: precise-object-edit. Edit target: attached Moose game sprite. Recolor and cleanly restyle this single Moose face into a coherent flat cartoon mobile match-game icon, dominant primary color vivid magenta pink #DA4DA1. Keep the recognizable species, expression, large white-rimmed dark eyes, original silhouette and simple flat vector-like style. Main head/body color must occupy most of the visible icon, not just a background badge. Keep beak/tusks/muzzle natural light accents as appropriate. No brown dominant areas. Crisp bold shapes legible at 40 pixels. One face centered with 8 percent safe padding on each side, all ears/horns/antlers included. Square image. Actual transparent alpha background, no tile or frame, no text, no checkerboard, no shadow outside silhouette. Preserve identity of the original. This is a production Unity sprite; avoid texture, gradients, realism and added ornament."
+  },
+  {
+    "name": "Panda",
+    "color": "ivory white #FFF4DC with charcoal ears and eye patches",
+    "source": "C:\\Users\\dphar\\.codex\\generated_images\\01a0bf80-6f86-7161-bddb-49cb672fef16\\exec-f50252da-3514-4000-b6e2-0c5912af8880.png",
+    "prompt": "Use case: precise-object-edit. Edit target: attached Panda game sprite. Recolor and cleanly restyle this single Panda face into a coherent flat cartoon mobile match-game icon, dominant primary color ivory white #FFF4DC with charcoal ears and eye patches. Keep the recognizable species, expression, large white-rimmed dark eyes, original silhouette and simple flat vector-like style. Main head/body color must occupy most of the visible icon, not just a background badge. Keep beak/tusks/muzzle natural light accents as appropriate. No brown dominant areas. Crisp bold shapes legible at 40 pixels. One face centered with 8 percent safe padding on each side, all ears/horns/antlers included. Square image. Actual transparent alpha background, no tile or frame, no text, no checkerboard, no shadow outside silhouette. Preserve identity of the original. This is a production Unity sprite; avoid texture, gradients, realism and added ornament."
+  },
+  {
+    "name": "Sloth",
+    "color": "rich violet purple #9254D8",
+    "source": "C:\\Users\\dphar\\.codex\\generated_images\\01a0bf80-6f86-7161-bddb-49cb672fef16\\exec-8884bd19-95e6-441e-8f0f-4a48a60979f7.png",
+    "prompt": "Use case: precise-object-edit. Edit target: attached Sloth game sprite. Recolor and cleanly restyle this single Sloth face into a coherent flat cartoon mobile match-game icon, dominant primary color rich violet purple #9254D8. Keep the recognizable species, expression, large white-rimmed dark eyes, original silhouette and simple flat vector-like style. Main head/body color must occupy most of the visible icon, not just a background badge. Keep beak/tusks/muzzle natural light accents as appropriate. No brown dominant areas. Crisp bold shapes legible at 40 pixels. One face centered with 8 percent safe padding on each side, all ears/horns/antlers included. Square image. Actual transparent alpha background, no tile or frame, no text, no checkerboard, no shadow outside silhouette. Preserve identity of the original. This is a production Unity sprite; avoid texture, gradients, realism and added ornament."
+  },
+  {
+    "name": "Walrus",
+    "color": "bright cyan turquoise #35C9E8",
+    "source": "C:\\Users\\dphar\\.codex\\generated_images\\01a0bf80-6f86-7161-bddb-49cb672fef16\\exec-f52145fa-4c9f-4df5-b3b7-9bc8ebc5b750.png",
+    "prompt": "Use case: precise-object-edit. Edit target: attached Walrus game sprite. Recolor and cleanly restyle this single Walrus face into a coherent flat cartoon mobile match-game icon, dominant primary color bright cyan turquoise #35C9E8. Keep the recognizable species, expression, large white-rimmed dark eyes, original silhouette and simple flat vector-like style. Main head/body color must occupy most of the visible icon, not just a background badge. Keep beak/tusks/muzzle natural light accents as appropriate. No brown dominant areas. Crisp bold shapes legible at 40 pixels. One face centered with 8 percent safe padding on each side, all ears/horns/antlers included. Square image. Actual transparent alpha background, no tile or frame, no text, no checkerboard, no shadow outside silhouette. Preserve identity of the original. This is a production Unity sprite; avoid texture, gradients, realism and added ornament."
+  }
+]

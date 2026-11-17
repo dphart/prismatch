@@ -1,0 +1,31 @@
+{
+  "schema": "prismatch-level-scaling",
+  "version": 1,
+  "levels": [
+    {
+      "id": "level-15",
+      "target": 30,
+      "growth": 50
+    },
+    {
+      "id": "level-16",
+      "target": 36,
+      "growth": 45
+    },
+    {
+      "id": "level-17",
+      "target": 36,
+      "growth": 50
+    },
+    {
+      "id": "level-19",
+      "target": 420,
+      "growth": 65
+    },
+    {
+      "id": "level-21",
+      "target": 36,
+      "growth": 22
+    }
+  ]
+}

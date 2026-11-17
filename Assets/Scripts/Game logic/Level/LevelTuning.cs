@@ -19,12 +19,12 @@ public sealed class LevelTuning : ScriptableObject
     [Min(1)] public float targetGrowth = 1.35f;
     [Range(3, 7)] public int itemTypes = 7;
     public bool bossesPersist;
-    [TextArea] public string description = "Swap any two animals. Clear connected groups of 3+ and beat all 10 targets.";
+    [TextArea] public string description = "Swap any two animals. Clear connected groups of 4+ and beat all 10 targets.";
     [Tooltip("Empty allows all powers. Otherwise enter their display names.")]
     public string[] allowedPowerNames = Array.Empty<string>();
     public List<BossSchedule> bosses = new();
     [Tooltip("A match may satisfy any enabled rule. Overlapping matches clear as one group.")]
-    public List<MatchRule> matchRules = new() { new MatchRule(MatchType.Snake, 3) };
+    public List<MatchRule> matchRules = new() { new MatchRule(MatchType.Snake, 4) };
     private static readonly Dictionary<int, LevelTuning> cache = new();
 
     public int Target(int round) => (int)Math.Min(int.MaxValue,

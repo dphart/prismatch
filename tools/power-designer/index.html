@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Prismatch · Design Studio</title><link rel="stylesheet" href="studio.css"></head>
+<body>
+<aside class="rail">
+ <div class="brand"><span class="brand-mark">✦</span><div>PRISMATCH<small>DESIGN STUDIO</small></div></div>
+ <div class="rail-label">WORKSPACE</div>
+ <a class="button secondary" href="card-workshop.html">Card layout &amp; artwork</a><nav aria-label="Workspace"><button data-tab="powers" class="nav active">✦ <span>Power library</span><b id="power-count"></b></button><button data-tab="levels" class="nav">▦ <span>Level builder</span><b id="level-count"></b></button><button data-tab="sandbox" class="nav">↗ <span>Scoring sandbox</span></button></nav>
+ <div class="rail-note"><span class="dot"></span> Local design workspace<p>Explore the live catalog. Build your own rules. Export when you're ready.</p><strong>Designs do not change the Unity game.</strong></div>
+ <div class="rail-bottom"><button id="export" class="button secondary">↓ Export workspace</button><button id="import" class="button quiet">↑ Import JSON</button><input id="import-file" type="file" accept=".json,application/json" hidden><small id="snapshot"></small></div>
+</aside>
+<main>
+ <header><div><div class="eyebrow" id="eyebrow">THE BUILD STARTS HERE</div><h1 id="page-title">Power library</h1><p id="page-subtitle">Find the condition. Shape the payoff.</p></div><button id="new-item" class="button primary">+ Create power</button></header>
+ <section class="toolbar" id="toolbar"><input id="search" type="search" placeholder="Search names, conditions, animals…" aria-label="Search catalog"><button id="filter-toggle" class="button secondary" aria-expanded="false" aria-controls="power-filters">Filters <span id="filter-badge"></span></button><label id="power-view-control" class="power-view-control">View <select id="power-view" aria-label="Power library view"><option value="condensed">Condensed</option><option value="all">All powers</option></select></label><span id="result-count"></span></section>
+ <section id="power-filters" class="filter-panel" hidden aria-label="Power filters"><div class="filter-heading"><div><h3>Find your powers</h3><p>Click a quality to include it. Click again to exclude it. Once more clears it.</p></div><button id="clear-filters" class="button quiet">Clear filters</button></div><label class="filter-mode">Show powers that match <select id="include-mode" aria-label="Match included qualities"><option value="all">all included qualities</option><option value="any">any included quality</option></select></label><div id="filter-groups"></div><p class="hint">Excluded qualities are always hidden. Text search also applies.</p></section>
+ <div id="active-filters" class="active-filters" hidden aria-label="Active power filters"></div>
+ <div id="content"></div>
+ <div id="status" role="status" aria-live="polite"></div>
+</main>
+<dialog id="editor"><div class="dialog-head"><div><div class="eyebrow" id="editor-kicker">POWER WORKSHOP</div><h2 id="editor-title">Create a power</h2></div><button id="close-editor" class="icon-button" aria-label="Close editor">×</button></div><div id="editor-body"></div></dialog>
+<script src="catalog.js"></script><script src="model.js"></script><script src="round-offers.js"></script><script src="power-links.js"></script><script src="power-icons.js"></script><script src="power-symbols.js"></script><script src="studio.js"></script><script src="scaling-import.js"></script><script src="shared.js"></script><script src="round-editor.js"></script>
+</body></html>

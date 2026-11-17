@@ -1,0 +1,10 @@
+const assert=require('node:assert/strict'),fs=require('node:fs');
+const M=require('./model.js'),S=require('./shared-schema.cjs');
+const d=JSON.parse(fs.readFileSync('Assets/Resources/Content/prismatch.json','utf8'));
+const l=d.levels.find(l=>l.mechanic==='GoldenRescue');
+assert.equal(l.number,30);assert.equal(l.bossStyle,'CageWarden');
+assert.equal(M.bossCompatibility('CageWarden',l),'');
+assert.ok(M.bossCompatibility('CageWarden',{...l,mechanic:'AnimalRescue'}));
+assert.ok(M.bossCompatibility('CageWarden',{...l,goal:'Score'}));
+S.validate(structuredClone(d),d);
+console.log('Golden Rescue content and editor validation passed.');

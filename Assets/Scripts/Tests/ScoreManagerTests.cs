@@ -51,6 +51,26 @@ public class ScoreManagerTests
         }
     }
 
+    private sealed class ActivationCountingPower : PowerUp
+    {
+        public int Evaluations;
+        public ActivationCountingPower() { Name="Activation test"; }
+        public override int AdditiveBaseMod(List<Tile> tiles) { Evaluations++;return 10; }
+        public override void Apply(GameState state) { }
+        public override string GetCurrentPowerDescription()=>"Conditional test";
+        public override PowerUp Clone()=>new ActivationCountingPower();
+    }
+    [Test]
+    public void ConditionalActivationUsesTheSingleScoringEvaluation()
+    {
+        var power=new ActivationCountingPower();_powerManager.ActivePowers().Add(power);
+        int score=_scoreManager.CalculateScore(new List<Tile>{CreateTestTile()});
+        Assert.That(score,Is.EqualTo(10));Assert.That(power.Evaluations,Is.EqualTo(1));
+        Assert.That(_scoreManager.LastResult.Activations.Count,Is.EqualTo(1));
+        Assert.That(_scoreManager.LastResult.Activations[0].Power,Is.SameAs(power));
+        Assert.That(_scoreManager.LastResult.Activations[0].Effect,Does.Contain("+10 base"));
+    }
+
     private Tile CreateTestTile()
     {
         var go = new GameObject("TestTile");
@@ -59,6 +79,41 @@ public class ScoreManagerTests
         var item = ScriptableObject.CreateInstance<Item>();
         tile.item = item;
         return tile;
+    }
+
+    [Test]
+    public void SweepPointsDoNotAdvanceAnimalPowersOrEnlargeTheMatch()
+    {
+        var sweep = new BlockClearPower(BlockClearStyle.Neighbor);
+        var bearMastery = new AnimalMasteryPower(ItemType.Bear, false);
+        _powerManager.ActivePowers().AddRange(new PowerUp[] { sweep, bearMastery,
+            new IconTypeGivesBase(ItemType.Bear, 20), new HighStakesPower() });
+        var matched = new List<Tile>();
+        for (int i = 0; i < 4; i++)
+        {
+            var tile = CreateTestTile();
+            tile.item.ItemType = ItemType.Duck;
+            matched.Add(tile);
+        }
+        int score = _scoreManager.CalculateScore(matched, new Dictionary<PowerUp, int> { { sweep, 8 } });
+        Assert.That(score, Is.EqualTo(8), "Two extra clears supply their sweep points, without animal or 5+ bonuses.");
+        Assert.That(bearMastery.Progress, Is.Zero);
+        Assert.That(_powerManager.AnimalHistory.Count(ItemType.Bear), Is.Zero);
+        Assert.That(_powerManager.AnimalHistory.Count(ItemType.Duck), Is.EqualTo(4));
+    }
+
+    [Test]
+    public void SweepRewardsBelongToTheirMatchAndObeyChainReactionAndGoal()
+    {
+        var sweep=new BlockClearPower(BlockClearStyle.Neighbor);
+        _powerManager.ActivePowers().Add(sweep);
+        var tiles=new List<Tile>{CreateTestTile()};
+        var rewards=new Dictionary<PowerUp,int>{{sweep,8}};
+        Assert.That(_scoreManager.CalculateScore(tiles,rewards),Is.EqualTo(8));
+        _scoreManager.LevelBonus=LevelBonus.ChainReaction;
+        Assert.That(_scoreManager.CalculateScore(tiles,rewards),Is.Zero,"Initial matches cannot bypass the level's zero-point rule.");
+        _scoreManager.RewardGoal=GoalType.BlocksCleared;
+        Assert.That(_scoreManager.CalculateScore(tiles,rewards),Is.Zero,"Points reward must not leak into blocks.");
     }
 
     [Test]

@@ -2,19 +2,21 @@ using System.Collections.Generic;
 
 public class JackpotFivePower : PowerUp
 {
+    public override PowerStatEffects StatEffects => PowerStatEffects.Multiplier;
+    public override string MultiplierCondition => GetCurrentPowerDescription();
     private bool streakActive = false;
     private int multi = 1;
 
     public JackpotFivePower()
     {
         Name = "Jackpot Five";
-        PowerUpDescription = "Match 5 or more tiles to trigger x5. Keeps working until you match fewer than 5.";
+        PowerUpDescription = "Matches of 5 or more give your next match 5x points.";
     }
 
     public override string GetCurrentPowerDescription()
     {
         return streakActive
-            ? "Jackpot Five active: keep hitting 5+ for x5!"
+            ? PowerUpDescription + " Active."
             : PowerUpDescription;
     }
 
@@ -37,5 +39,5 @@ public class JackpotFivePower : PowerUp
     }
 
     public override void Apply(GameState state) { }
-    public override PowerUp Clone() => new JackpotFivePower();
+    public override PowerUp Clone() => SharedClone(new JackpotFivePower());
 }

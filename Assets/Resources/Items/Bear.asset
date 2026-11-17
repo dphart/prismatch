@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb8ed6e1fe61c594aa7253ddffef29f1, type: 3}
   m_Name: Bear
   m_EditorClassIdentifier: 
-  sprite: {fileID: 7935234321397735378, guid: 64215f32d8b946343af3b5c9890bd8a9, type: 3}
+  sprite: {fileID: 21300000, guid: dac38bc67e7f4214b8dd13c94e88c4eb, type: 3}
   ItemType: 0

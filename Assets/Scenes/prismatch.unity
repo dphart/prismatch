@@ -140,6 +140,8 @@ GameObject:
   - component: {fileID: 74653957}
   - component: {fileID: 74653956}
   - component: {fileID: 74653955}
+  - component: {fileID: 74653960}
+  - component: {fileID: 74653961}
   m_Layer: 5
   m_Name: Boss Icon
   m_TagString: Untagged
@@ -265,7 +267,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 897158734}
+  m_Sprite: {fileID: 327973489}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -315,6 +317,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 1949577829}
+  m_Name: 
+  m_EditorClassIdentifier: GameAssembly::PowerCardFeedback
+--- !u!114 &74653960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 74653951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1211732543}
+  m_Name: 
+  m_EditorClassIdentifier: GameAssembly::PowerCardFeedback
+--- !u!114 &74653961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 74653951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 218453373}
   m_Name: 
   m_EditorClassIdentifier: GameAssembly::PowerCardFeedback
 --- !u!1 &75539749
@@ -1137,6 +1163,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 211299805}
   m_CullTransparentMesh: 1
+--- !u!115 &218453373
+MonoScript:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  serializedVersion: 7
+  m_DefaultReferences: {}
+  m_Icon: {fileID: 0}
+  m_Type: 0
+  m_ExecutionOrder: 0
+  m_ClassName: PowerCardFeedback
+  m_Namespace: 
+  m_AssemblyName: GameAssembly
 --- !u!1 &223558125
 GameObject:
   m_ObjectHideFlags: 0
@@ -1365,6 +1406,8 @@ GameObject:
   - component: {fileID: 300885142}
   - component: {fileID: 300885146}
   - component: {fileID: 300885145}
+  - component: {fileID: 300885147}
+  - component: {fileID: 300885148}
   m_Layer: 5
   m_Name: Pause
   m_TagString: Untagged
@@ -1512,6 +1555,30 @@ MonoBehaviour:
   m_Script: {fileID: 1949577829}
   m_Name: 
   m_EditorClassIdentifier: GameAssembly::PowerCardFeedback
+--- !u!114 &300885147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 300885140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1211732543}
+  m_Name: 
+  m_EditorClassIdentifier: GameAssembly::PowerCardFeedback
+--- !u!114 &300885148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 300885140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 218453373}
+  m_Name: 
+  m_EditorClassIdentifier: GameAssembly::PowerCardFeedback
 --- !u!115 &327671466
 MonoScript:
   m_ObjectHideFlags: 0
@@ -1527,6 +1594,226 @@ MonoScript:
   m_ClassName: UiVerticalGradient
   m_Namespace: 
   m_AssemblyName: GameAssembly
+--- !u!213 &327973489
+Sprite:
+  serializedVersion: 2
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: RuntimeRoundedRectangle
+  m_Rect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 64
+    height: 64
+  m_Offset: {x: 0, y: 0}
+  m_Border: {x: 16, y: 16, z: 16, w: 16}
+  m_PixelsToUnits: 100
+  m_Pivot: {x: 0.5, y: 0.5}
+  m_Extrude: 0
+  m_PackingTag: 
+  m_RenderDataKey:
+    00000000000000000000000000000000: 0
+  m_AtlasTags: []
+  m_SpriteAtlas: {fileID: 0}
+  m_RD:
+    serializedVersion: 4
+    texture: {fileID: 0}
+    alphaTexture: {fileID: 0}
+    secondaryTextures: []
+    m_SubMeshes:
+    - serializedVersion: 2
+      firstByte: 0
+      indexCount: 6
+      topology: 0
+      baseVertex: 0
+      firstVertex: 0
+      vertexCount: 4
+      localAABB:
+        m_Center: {x: 0, y: 0, z: 0}
+        m_Extent: {x: 0, y: 0, z: 0}
+    m_IndexBuffer: 000001000200020001000300y
+    m_VertexData:
+      serializedVersion: 3
+      m_VertexCount: 4
+      m_Channels:
+      - stream: 0
+        offset: 0
+        format: 0
+        dimension: 3
+      - stream: 0
+        offset: 0
+        format: 0
+        dimension: 0
+      - stream: 0
+        offset: 0
+        format: 0
+        dimension: 0
+      - stream: 0
+        offset: 0
+        format: 0
+        dimension: 0
+      - stream: 1
+        offset: 0
+        format: 0
+        dimension: 2
+      - stream: 0
+        offset: 0
+        format: 0
+        dimension: 0
+      - stream: 0
+        offset: 0
+        format: 0
+        dimension: 0
+      - stream: 0
+        offset: 0
+        format: 0
+        dimension: 0
+      - stream: 0
+        offset: 0
+        format: 0
+        dimension: 0
+      - stream: 0
+        offset: 0
+        format: 0
+        dimension: 0
+      - stream: 0
+        offset: 0
+        format: 0
+        dimension: 0
+      - stream: 0
+        offset: 0
+        format: 0
+        dimension: 0
+      - stream: 0
+        offset: 0
+        format: 0
+        dimension: 0
+      - stream: 0
+        offset: 0
+        format: 0
+        dimension: 0
+      m_DataSize: 80
+      _typelessdata: 0ad7a3be0ad7a33e000000000ad7a33e0ad7a33e000000000ad7a3be0ad7a3be000000000ad7a33e0ad7a3be000000000000000000000000000000000000000000000000000000000000000000000000
+    m_Bindpose: []
+    m_BlendShapes:
+      vertices: []
+      shapes: []
+      channels: []
+      fullWeights: []
+    textureRect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 64
+      height: 64
+    textureRectOffset: {x: 0, y: 0}
+    atlasRectOffset: {x: -1, y: -1}
+    settingsRaw: 3072
+    uvTransform: {x: 100, y: 32, z: 100, w: 32}
+    downscaleMultiplier: 1
+  m_AtlasRD:
+    serializedVersion: 4
+    texture: {fileID: 0}
+    alphaTexture: {fileID: 0}
+    secondaryTextures: []
+    m_SubMeshes:
+    - serializedVersion: 2
+      firstByte: 0
+      indexCount: 6
+      topology: 0
+      baseVertex: 0
+      firstVertex: 0
+      vertexCount: 4
+      localAABB:
+        m_Center: {x: 0, y: 0, z: 0}
+        m_Extent: {x: 0, y: 0, z: 0}
+    m_IndexBuffer: 000001000200020001000300y
+    m_VertexData:
+      serializedVersion: 3
+      m_VertexCount: 4
+      m_Channels:
+      - stream: 0
+        offset: 0
+        format: 0
+        dimension: 3
+      - stream: 0
+        offset: 0
+        format: 0
+        dimension: 0
+      - stream: 0
+        offset: 0
+        format: 0
+        dimension: 0
+      - stream: 0
+        offset: 0
+        format: 0
+        dimension: 0
+      - stream: 1
+        offset: 0
+        format: 0
+        dimension: 2
+      - stream: 0
+        offset: 0
+        format: 0
+        dimension: 0
+      - stream: 0
+        offset: 0
+        format: 0
+        dimension: 0
+      - stream: 0
+        offset: 0
+        format: 0
+        dimension: 0
+      - stream: 0
+        offset: 0
+        format: 0
+        dimension: 0
+      - stream: 0
+        offset: 0
+        format: 0
+        dimension: 0
+      - stream: 0
+        offset: 0
+        format: 0
+        dimension: 0
+      - stream: 0
+        offset: 0
+        format: 0
+        dimension: 0
+      - stream: 0
+        offset: 0
+        format: 0
+        dimension: 0
+      - stream: 0
+        offset: 0
+        format: 0
+        dimension: 0
+      m_DataSize: 80
+      _typelessdata: 0ad7a3be0ad7a33e000000000ad7a33e0ad7a33e000000000ad7a3be0ad7a3be000000000ad7a33e0ad7a3be000000000000000000000000000000000000000000000000000000000000000000000000
+    m_Bindpose: []
+    m_BlendShapes:
+      vertices: []
+      shapes: []
+      channels: []
+      fullWeights: []
+    textureRect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 64
+      height: 64
+    textureRectOffset: {x: 0, y: 0}
+    atlasRectOffset: {x: -1, y: -1}
+    settingsRaw: 3072
+    uvTransform: {x: 100, y: 32, z: 100, w: 32}
+    downscaleMultiplier: 1
+  m_PhysicsShape: []
+  m_Bones: []
+  m_ScriptableObjects: []
+  m_SpriteID: 
 --- !u!1 &347691924
 GameObject:
   m_ObjectHideFlags: 0
@@ -2525,6 +2812,8 @@ GameObject:
   - component: {fileID: 551195107}
   - component: {fileID: 551195106}
   - component: {fileID: 551195105}
+  - component: {fileID: 551195110}
+  - component: {fileID: 551195111}
   m_Layer: 5
   m_Name: ShuffleBoardButton
   m_TagString: Untagged
@@ -2643,7 +2932,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 897158734}
+  m_Sprite: {fileID: 327973489}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2693,6 +2982,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 1949577829}
+  m_Name: 
+  m_EditorClassIdentifier: GameAssembly::PowerCardFeedback
+--- !u!114 &551195110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 551195101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1211732543}
+  m_Name: 
+  m_EditorClassIdentifier: GameAssembly::PowerCardFeedback
+--- !u!114 &551195111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 551195101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 218453373}
   m_Name: 
   m_EditorClassIdentifier: GameAssembly::PowerCardFeedback
 --- !u!1 &562666849
@@ -3487,7 +3800,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 897158734}
+  m_Sprite: {fileID: 327973489}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3602,7 +3915,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 897158734}
+  m_Sprite: {fileID: 327973489}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4610,6 +4923,8 @@ GameObject:
   - component: {fileID: 1077990247}
   - component: {fileID: 1077990246}
   - component: {fileID: 1077990245}
+  - component: {fileID: 1077990248}
+  - component: {fileID: 1077990249}
   m_Layer: 5
   m_Name: Settings
   m_TagString: Untagged
@@ -4713,7 +5028,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 897158734}
+  m_Sprite: {fileID: 327973489}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4768,6 +5083,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 1949577829}
+  m_Name: 
+  m_EditorClassIdentifier: GameAssembly::PowerCardFeedback
+--- !u!114 &1077990248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1077990240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1211732543}
+  m_Name: 
+  m_EditorClassIdentifier: GameAssembly::PowerCardFeedback
+--- !u!114 &1077990249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1077990240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 218453373}
   m_Name: 
   m_EditorClassIdentifier: GameAssembly::PowerCardFeedback
 --- !u!1 &1185772988
@@ -4830,7 +5169,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 897158734}
+  m_Sprite: {fileID: 327973489}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5097,6 +5436,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1203873597}
   m_CullTransparentMesh: 1
+--- !u!115 &1211732543
+MonoScript:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  serializedVersion: 7
+  m_DefaultReferences: {}
+  m_Icon: {fileID: 0}
+  m_Type: 0
+  m_ExecutionOrder: 0
+  m_ClassName: PowerCardFeedback
+  m_Namespace: 
+  m_AssemblyName: GameAssembly
 --- !u!1 &1362834573
 GameObject:
   m_ObjectHideFlags: 0
@@ -5672,6 +6026,7 @@ GameObject:
   - component: {fileID: 1451276496}
   - component: {fileID: 1451276495}
   - component: {fileID: 1451276494}
+  - component: {fileID: 1451276499}
   m_Layer: 5
   m_Name: Powerups
   m_TagString: Untagged
@@ -5791,7 +6146,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 897158734}
+  m_Sprite: {fileID: 327973489}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5841,6 +6196,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 1949577829}
+  m_Name: 
+  m_EditorClassIdentifier: GameAssembly::PowerCardFeedback
+--- !u!114 &1451276499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1451276491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1211732543}
   m_Name: 
   m_EditorClassIdentifier: GameAssembly::PowerCardFeedback
 --- !u!1 &1455782518
@@ -7047,14 +7414,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.55}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 8055788392956435261, guid: 0a4e99772aeaf484fa4435401793f0a1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 84f18794a19e47c7abb7d65de12a821b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

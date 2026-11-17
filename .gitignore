@@ -9,6 +9,9 @@ MemoryCaptures/
 .utmp/
 .verification-project/
 .codex-backups/
+tmp/
+outputs/
+WebBuild/
 Assets/Resources/PerformanceTestRun*.json*
 
 # VS / JetBrains

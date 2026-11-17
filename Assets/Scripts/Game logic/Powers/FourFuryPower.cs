@@ -2,19 +2,21 @@ using System.Collections.Generic;
 
 public class FourFuryPower : PowerUp
 {
+    public override PowerStatEffects StatEffects => PowerStatEffects.Multiplier;
+    public override string MultiplierCondition => GetCurrentPowerDescription();
     private bool streakActive = false;
     private int multi = 1;
 
     public FourFuryPower()
     {
         Name = "Four Fury";
-        PowerUpDescription = "Match 4 tiles to trigger x3 on your next match. Keeps working until you match a different number.";
+        PowerUpDescription = "Matches that are exactly 4 give your next match 3x points.";
     }
 
     public override string GetCurrentPowerDescription()
     {
         return streakActive
-            ? "Four Fury active: matching 4 tiles keeps x3 going!"
+            ? PowerUpDescription + " Active."
             : PowerUpDescription;
     }
 
@@ -37,5 +39,5 @@ public class FourFuryPower : PowerUp
     }
 
     public override void Apply(GameState state) { }
-    public override PowerUp Clone() => new FourFuryPower();
+    public override PowerUp Clone() => SharedClone(new FourFuryPower());
 }

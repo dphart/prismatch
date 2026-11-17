@@ -2,6 +2,8 @@ using System.Collections.Generic;
 
 public class SnowballPower : PowerUp
 {
+    public override PowerStatEffects StatEffects => PowerStatEffects.Multiplier;
+    public override string MultiplierCondition => GetCurrentPowerDescription();
     private int matchCount = 0;
     private int baseMultiIncrease = 1;
     private int perXMatches = 10;
@@ -9,11 +11,12 @@ public class SnowballPower : PowerUp
     public SnowballPower()
     {
         Name = "Snowball";
-        PowerUpDescription = $"+{baseMultiIncrease} multiplier per {perXMatches} matches.";
+        PowerUpDescription = $"Every {perXMatches} matches: +{baseMultiIncrease} permanent multi.";
     }
 
+    public override float FlatMultiplierBonus => (matchCount / perXMatches) * baseMultiIncrease;
     public override string GetCurrentPowerDescription() =>
-        $"{PowerUpDescription} Current bonus: +{(matchCount / perXMatches) * baseMultiIncrease} Multi from {matchCount} matches.";
+        $"{PowerUpDescription} Earned: +{(matchCount / perXMatches) * baseMultiIncrease} multi. Progress: {matchCount % perXMatches}/{perXMatches}.";
 
     public override int AdditiveMultiplierMod(List<Tile> tiles)
     {
@@ -22,5 +25,5 @@ public class SnowballPower : PowerUp
     }
 
     public override void Apply(GameState state) { }
-    public override PowerUp Clone() => new SnowballPower();
+    public override PowerUp Clone() => SharedClone(new SnowballPower());
 }

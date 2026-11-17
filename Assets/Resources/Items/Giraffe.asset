@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb8ed6e1fe61c594aa7253ddffef29f1, type: 3}
   m_Name: Giraffe
   m_EditorClassIdentifier: 
-  sprite: {fileID: 5604796196903453309, guid: 4e1847b89ca18534ab6f558f214964dc, type: 3}
+  sprite: {fileID: 21300000, guid: 9412dadb5c5e4085b99691d1b591e565, type: 3}
   ItemType: 5

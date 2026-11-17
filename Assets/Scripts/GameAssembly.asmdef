@@ -5,7 +5,10 @@
         "Unity.TextMeshPro",
         "Unity.InputSystem",
         "Unity.UGUI",
-        "DOTweenMain"
+        "DOTweenMain",
+        "Unity.Services.Analytics",
+        "Unity.Services.Core",
+        "Unity.Services.Core.Environments"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

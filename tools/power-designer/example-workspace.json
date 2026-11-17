@@ -1,0 +1,61 @@
+{
+  "schema": "prismatch-design-workspace",
+  "version": 1,
+  "catalogSnapshot": "2026-10-20T17:22:19.2636692+00:00",
+  "exportedAt": "2026-10-20T17:23:00.580Z",
+  "powers": [
+    {
+      "id": "custom-power-d318cac1-37bb-448f-9e20-266551235b82",
+      "source": "custom",
+      "name": "Exact Four · example",
+      "notes": "Example design: a four-tile match gets +3 base per tile. Edit or delete this example.",
+      "openingOnly": false,
+      "goals": "Points",
+      "trigger": "exact",
+      "animal": "Any",
+      "length": 4,
+      "sequence": "4,5,6",
+      "reward": "base",
+      "value": 3,
+      "unit": "tile",
+      "permanent": false,
+      "threshold": 3,
+      "consecutive": false
+    }
+  ],
+  "levels": [
+    {
+      "id": "custom-level-5cbb059c-fefe-4dd7-a2af-4bb74048d8b3",
+      "source": "custom",
+      "name": "Garden remix · example",
+      "width": 6,
+      "height": 7,
+      "rounds": 7,
+      "target": 400,
+      "growth": 75,
+      "seconds": 75,
+      "moves": 20,
+      "minimum": 4,
+      "basePerTile": 4,
+      "mode": "Timed",
+      "goal": "Score",
+      "gravity": "South",
+      "habitat": "Garden",
+      "mechanic": "GardenPlots",
+      "mechanicNotes": "LEVEL BONUS: Match a 2x2 square to plant its spaces. Later matches score 2x on planted spaces, until the round ends.",
+      "bossName": "Overgrowth",
+      "bossRule": "Matches entirely outside planted spaces score 50% less.",
+      "starters": [
+        "game-3b0c78a266b39b4f",
+        "game-1f95360c7f1aa51a",
+        "game-27a491e285cfebf2"
+      ],
+      "rewards": [
+        "custom-power-d318cac1-37bb-448f-9e20-266551235b82",
+        "game-671f51b42a673d7e",
+        "game-da5374f4852af79e"
+      ],
+      "draftNotes": "Shared game catalog; inspect roundDrafts for exact slot queries."
+    }
+  ]
+}

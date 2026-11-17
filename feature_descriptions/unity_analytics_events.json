@@ -1,0 +1,324 @@
+{
+  "note": "Schema reference for Unity Dashboard Event Manager; not a bulk-import API payload.",
+  "events": [
+    {
+      "name": "pm_power_picked",
+      "parameters": [
+        {
+          "name": "pm_run_id",
+          "type": "String"
+        },
+        {
+          "name": "pm_level_name",
+          "type": "String"
+        },
+        {
+          "name": "pm_level_number",
+          "type": "Integer"
+        },
+        {
+          "name": "pm_goal",
+          "type": "String"
+        },
+        {
+          "name": "pm_mode",
+          "type": "String"
+        },
+        {
+          "name": "pm_habitat",
+          "type": "String"
+        },
+        {
+          "name": "pm_revision",
+          "type": "String"
+        },
+        {
+          "name": "pm_round_number",
+          "type": "Integer"
+        },
+        {
+          "name": "pm_attempt",
+          "type": "Integer"
+        },
+        {
+          "name": "pm_pick_order",
+          "type": "Integer"
+        },
+        {
+          "name": "pm_power_name",
+          "type": "String"
+        },
+        {
+          "name": "pm_power_tags",
+          "type": "String"
+        },
+        {
+          "name": "pm_build",
+          "type": "String"
+        }
+      ]
+    },
+    {
+      "name": "pm_round_finished",
+      "parameters": [
+        {
+          "name": "pm_run_id",
+          "type": "String"
+        },
+        {
+          "name": "pm_level_name",
+          "type": "String"
+        },
+        {
+          "name": "pm_level_number",
+          "type": "Integer"
+        },
+        {
+          "name": "pm_goal",
+          "type": "String"
+        },
+        {
+          "name": "pm_mode",
+          "type": "String"
+        },
+        {
+          "name": "pm_habitat",
+          "type": "String"
+        },
+        {
+          "name": "pm_revision",
+          "type": "String"
+        },
+        {
+          "name": "pm_round_number",
+          "type": "Integer"
+        },
+        {
+          "name": "pm_attempt",
+          "type": "Integer"
+        },
+        {
+          "name": "pm_outcome",
+          "type": "String"
+        },
+        {
+          "name": "pm_plays",
+          "type": "Integer"
+        },
+        {
+          "name": "pm_successful_plays",
+          "type": "Integer"
+        },
+        {
+          "name": "pm_points",
+          "type": "Integer"
+        },
+        {
+          "name": "pm_goal_credit",
+          "type": "Integer"
+        },
+        {
+          "name": "pm_points_per_play",
+          "type": "Float"
+        },
+        {
+          "name": "pm_credit_per_play",
+          "type": "Float"
+        },
+        {
+          "name": "pm_duration_seconds",
+          "type": "Float"
+        },
+        {
+          "name": "pm_cascade_groups",
+          "type": "Integer"
+        },
+        {
+          "name": "pm_shuffles",
+          "type": "Integer"
+        },
+        {
+          "name": "pm_target",
+          "type": "Integer"
+        },
+        {
+          "name": "pm_objective",
+          "type": "String"
+        },
+        {
+          "name": "pm_rules",
+          "type": "String"
+        },
+        {
+          "name": "pm_bosses",
+          "type": "String"
+        },
+        {
+          "name": "pm_board_width",
+          "type": "Integer"
+        },
+        {
+          "name": "pm_board_height",
+          "type": "Integer"
+        },
+        {
+          "name": "pm_seconds_budget",
+          "type": "Integer"
+        },
+        {
+          "name": "pm_moves_budget",
+          "type": "Integer"
+        },
+        {
+          "name": "pm_growth_percent",
+          "type": "Integer"
+        },
+        {
+          "name": "pm_gravity",
+          "type": "String"
+        },
+        {
+          "name": "pm_build",
+          "type": "String"
+        }
+      ]
+    },
+    {
+      "name": "pm_power_round",
+      "parameters": [
+        {
+          "name": "pm_run_id",
+          "type": "String"
+        },
+        {
+          "name": "pm_level_name",
+          "type": "String"
+        },
+        {
+          "name": "pm_level_number",
+          "type": "Integer"
+        },
+        {
+          "name": "pm_goal",
+          "type": "String"
+        },
+        {
+          "name": "pm_mode",
+          "type": "String"
+        },
+        {
+          "name": "pm_habitat",
+          "type": "String"
+        },
+        {
+          "name": "pm_revision",
+          "type": "String"
+        },
+        {
+          "name": "pm_round_number",
+          "type": "Integer"
+        },
+        {
+          "name": "pm_attempt",
+          "type": "Integer"
+        },
+        {
+          "name": "pm_outcome",
+          "type": "String"
+        },
+        {
+          "name": "pm_plays",
+          "type": "Integer"
+        },
+        {
+          "name": "pm_successful_plays",
+          "type": "Integer"
+        },
+        {
+          "name": "pm_points",
+          "type": "Integer"
+        },
+        {
+          "name": "pm_goal_credit",
+          "type": "Integer"
+        },
+        {
+          "name": "pm_points_per_play",
+          "type": "Float"
+        },
+        {
+          "name": "pm_credit_per_play",
+          "type": "Float"
+        },
+        {
+          "name": "pm_duration_seconds",
+          "type": "Float"
+        },
+        {
+          "name": "pm_cascade_groups",
+          "type": "Integer"
+        },
+        {
+          "name": "pm_shuffles",
+          "type": "Integer"
+        },
+        {
+          "name": "pm_target",
+          "type": "Integer"
+        },
+        {
+          "name": "pm_objective",
+          "type": "String"
+        },
+        {
+          "name": "pm_rules",
+          "type": "String"
+        },
+        {
+          "name": "pm_bosses",
+          "type": "String"
+        },
+        {
+          "name": "pm_board_width",
+          "type": "Integer"
+        },
+        {
+          "name": "pm_board_height",
+          "type": "Integer"
+        },
+        {
+          "name": "pm_seconds_budget",
+          "type": "Integer"
+        },
+        {
+          "name": "pm_moves_budget",
+          "type": "Integer"
+        },
+        {
+          "name": "pm_growth_percent",
+          "type": "Integer"
+        },
+        {
+          "name": "pm_gravity",
+          "type": "String"
+        },
+        {
+          "name": "pm_build",
+          "type": "String"
+        },
+        {
+          "name": "pm_power_name",
+          "type": "String"
+        },
+        {
+          "name": "pm_copies",
+          "type": "Integer"
+        },
+        {
+          "name": "pm_first_pick_order",
+          "type": "Integer"
+        }
+      ]
+    }
+  ]
+}

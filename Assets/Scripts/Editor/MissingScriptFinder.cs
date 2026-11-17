@@ -1,4 +1,4 @@
-﻿#if UNITY_EDITOR
+#if UNITY_EDITOR
 using UnityEditor;
 using UnityEngine;
 
@@ -10,7 +10,7 @@ public class MissingScriptFinder
         Debug.Log("🔍 Running script...");
         int missingCount = 0;
 
-        GameObject[] allObjects = Object.FindObjectsByType<GameObject>(FindObjectsSortMode.None);
+        GameObject[] allObjects = Object.FindObjectsByType<GameObject>();
         foreach (GameObject go in allObjects)
         {
             Component[] components = go.GetComponents<Component>();

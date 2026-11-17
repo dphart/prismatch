@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb8ed6e1fe61c594aa7253ddffef29f1, type: 3}
   m_Name: Sloth
   m_EditorClassIdentifier: 
-  sprite: {fileID: -8480703472052858898, guid: a7eadb5eabcbead468952ff2efe18bb6, type: 3}
+  sprite: {fileID: 21300000, guid: f8d3cd7e20d34f92b04b8159bd4c278e, type: 3}
   ItemType: 1

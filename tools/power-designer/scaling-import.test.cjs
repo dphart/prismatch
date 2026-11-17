@@ -1,0 +1,10 @@
+const assert=require('node:assert/strict'),fs=require('fs'),S=require('./scaling-import');
+const d=JSON.parse(fs.readFileSync('Assets/Resources/Content/prismatch.json','utf8')),original=structuredClone(d);
+const patch={schema:'prismatch-level-scaling',version:1,levels:[{id:'level-12',target:120,growth:15}]};
+const next=S.apply(d,patch);assert.deepEqual(d,original);
+assert.equal(next.levels[11].target,120);assert.equal(next.levels[11].growth,15);
+const expected=structuredClone(d);expected.levels[11].target=120;expected.levels[11].growth=15;assert.deepEqual(next,expected);
+for(const change of [{id:'missing',target:1,growth:0},{id:'level-12',target:0,growth:10},{id:'level-12',target:1,growth:1001},{id:'level-12',target:1.5,growth:10}])assert.throws(()=>S.apply(d,{...patch,levels:[change]}));
+assert.throws(()=>S.apply(d,{...patch,levels:[...patch.levels,...patch.levels]}));
+require('./shared-schema.cjs').validate(next,d);
+console.log('PASS Portable scaling changes validate, preserve other settings, and reject invalid imports.');

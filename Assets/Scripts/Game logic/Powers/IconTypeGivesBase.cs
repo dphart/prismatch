@@ -3,12 +3,15 @@ using System.Linq;
 
 public class IconTypeGivesBase : IconBonusPower
 {
+    public override PowerStatEffects StatEffects => PowerStatEffects.Base;
+    public override string BaseCondition => GetCurrentPowerDescription();
     private int BasePoints;
+    public int BonusPerTile => BasePoints;
 
     public IconTypeGivesBase(ItemType type, int basePoints)
     {
         Name = $"++{type}++";
-        PowerUpDescription = $"Get {basePoints} per tile for matching {type}s";
+        PowerUpDescription = $"{type} matches: +{basePoints} base points per tile.";
         BasePoints = basePoints;
         ItemType = type;
     }
@@ -28,5 +31,5 @@ public class IconTypeGivesBase : IconBonusPower
     }
 
     public override void Apply(GameState state) { }
-    public override PowerUp Clone() => new IconTypeGivesBase(ItemType, BasePoints);
+    public override PowerUp Clone() => SharedClone(new IconTypeGivesBase(ItemType, BasePoints));
 }

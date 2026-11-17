@@ -122,7 +122,7 @@ public class BossPowerDisplayUI : MonoBehaviour
 
                     powers.Add(new BossPowerInfo
                     {
-                        power = power,
+                        power = controller.PowerManager.ActiveBossPowers().Find(active => active.Name == power.Name) ?? power,
                         activeRound = round
                     });
                     

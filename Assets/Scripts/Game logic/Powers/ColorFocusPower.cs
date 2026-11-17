@@ -3,12 +3,14 @@ using System.Linq;
 
 public class ColorFocusPower : PowerUp
 {
+    public override PowerStatEffects StatEffects => PowerStatEffects.Multiplier;
+    public override string MultiplierCondition => GetCurrentPowerDescription();
     private ItemType? lastMatchType;
 
     public ColorFocusPower()
     {
         Name = "Color Focus";
-        PowerUpDescription = "×2 on a player-created match of the same animal as your previous player-created match. Cascades do not change the animal.";
+        PowerUpDescription = "Matching the same animal twice in a row doubles the second match. Only matches you make count.";
     }
 
     public override string GetCurrentPowerDescription()
@@ -29,5 +31,5 @@ public class ColorFocusPower : PowerUp
     }
 
     public override void Apply(GameState state) { }
-    public override PowerUp Clone() => new ColorFocusPower();
+    public override PowerUp Clone() => SharedClone(new ColorFocusPower());
 }

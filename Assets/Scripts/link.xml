@@ -1,0 +1,16 @@
+<linker>
+  <assembly fullname="GameAssembly">
+    <type fullname="MatchFoundationPower" preserve="fields" />
+    <type fullname="BlockMatchFoundationPower" preserve="fields" />
+    <type fullname="FourExactlyPower" preserve="fields" />
+    <type fullname="BaseForExactlyThree" preserve="fields" />
+    <type fullname="HighStakesPower" preserve="fields" />
+    <type fullname="UnderdogPower" preserve="fields" />
+    <type fullname="StackedOddsPower" preserve="fields" />
+    <type fullname="ConsistencyIsKey" preserve="fields" />
+    <type fullname="IconTypeGivesMulti" preserve="fields" />
+    <type fullname="IconTypeGivesBase" preserve="fields" />
+    <type fullname="IconTypeStreakGivesBasePointsOrMulti" preserve="fields" />
+    <type fullname="BasePowerUp" preserve="fields" />
+  </assembly>
+</linker>

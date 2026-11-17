@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb8ed6e1fe61c594aa7253ddffef29f1, type: 3}
   m_Name: Walrus
   m_EditorClassIdentifier: 
-  sprite: {fileID: 7100313373612036279, guid: 6bafa671527dd4f4bbfa2b47faf79c9b, type: 3}
+  sprite: {fileID: 21300000, guid: 99de959ced0e44199cb2e73bfaae1fcf, type: 3}
   ItemType: 6

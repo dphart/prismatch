@@ -2,6 +2,8 @@ using System.Collections.Generic;
 
 public class ConsistencyIsKey : PowerUp
 {
+    public override PowerStatEffects StatEffects => PowerStatEffects.Multiplier;
+    public override string MultiplierCondition => GetCurrentPowerDescription();
     private int additiveMulti = 1;
     public int numberOfTilesPreviouslyMatched = 0;
     public int numberOfMatchesInARow = 0;
@@ -9,11 +11,11 @@ public class ConsistencyIsKey : PowerUp
     public ConsistencyIsKey()
     {
         Name = "Consistency Is Key";
-        PowerUpDescription = $"Each match of the same length as one previous gains a stacking +{additiveMulti} Multi.";
+        PowerUpDescription = $"Each match of the same size as your last adds {additiveMulti} multiplier. A different size resets this bonus.";
     }
 
     public override string GetCurrentPowerDescription() =>
-        $"Matches of same length add +{additiveMulti} Multi. Current streak: {numberOfMatchesInARow} in a row.";
+        $"{PowerUpDescription} Streak: {numberOfMatchesInARow}.";
 
     public override int AdditiveMultiplierMod(List<Tile> tiles)
     {
@@ -31,5 +33,5 @@ public class ConsistencyIsKey : PowerUp
     }
 
     public override void Apply(GameState state) { }
-    public override PowerUp Clone() => new ConsistencyIsKey();
+    public override PowerUp Clone() => SharedClone(new ConsistencyIsKey());
 }

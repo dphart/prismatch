@@ -1,0 +1,37 @@
+{
+  "schema": "prismatch-level-notes",
+  "version": 1,
+  "exportedAt": "2026-11-12T23:25:26.9876060Z",
+  "levels": [
+    {
+      "number": 3,
+      "name": "Lightning Lanes",
+      "notes": "boss should have negative effect not only positive. lets say each tile matched gives -1% points earned, and getting a lightning removes the negative effext "
+    },
+    {
+      "number": 4,
+      "name": "Size Matters",
+      "notes": "needs base power for playing how the level works. matching 4 shouldnt be a power, I don't think we actually need to adjust base points by much for each length"
+    },
+    {
+      "number": 5,
+      "name": "Clear Commitments",
+      "notes": "got some powers like elephant counts for others but elephant wasn't a possible animal. \n"
+    },
+    {
+      "number": 6,
+      "name": "Chain Reaction",
+      "notes": "needs better boss \n"
+    },
+    {
+      "number": 7,
+      "name": "Garden Plots",
+      "notes": "boss should be a negative. garden can be more points and can rethink starting powers to be more interesting "
+    },
+    {
+      "number": 8,
+      "name": "Alternating Current",
+      "notes": "need level power box to show which is active. boss needs to be a negative, should be only the active animal gets points\n"
+    }
+  ]
+}

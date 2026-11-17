@@ -8,7 +8,8 @@ public enum MatchType { Horizontal, Vertical, Snake }
 public sealed class MatchRule
 {
     public MatchType type = MatchType.Snake;
-    public int minimumLength = 3;
+    public int minimumLength = 4;
+    public static int DefaultMinimum(MatchType type) => 4;
 
     public MatchRule() { }
     public MatchRule(MatchType type, int minimumLength)
@@ -27,6 +28,6 @@ public sealed class MatchRule
             .GroupBy(rule => rule.type)
             .Select(group => new MatchRule(group.Key, group.Min(rule => Math.Max(2, rule.minimumLength))))
             .ToList();
-        return result.Count > 0 ? result : new List<MatchRule> { new(MatchType.Snake, 3) };
+        return result.Count > 0 ? result : new List<MatchRule> { new(MatchType.Snake, 4) };
     }
 }

@@ -9,6 +9,18 @@ public class PowerManager
     private readonly ItemInfoProvider _ItemInfoProvider;
     private readonly MatchInfo _MatchInfo;
 
+    public List<LevelCharacteristicPower> LevelPowers { get; } = new();
+    public void ConfigureLevelPowers(CampaignLevel level)
+    {
+        LevelPowers.Clear();
+        if(level == null)return;
+        if(level.Bonus != LevelBonus.None)LevelPowers.Add(new LevelCharacteristicPower(level.Bonus));
+        if(level.LightningLines)LevelPowers.Add(new LevelCharacteristicPower(LevelBonus.None,true));
+    }
+    public LevelCharacteristicPower Characteristic(LevelBonus bonus, bool lightning=false) =>
+        LevelPowers.FirstOrDefault(p=>p.Bonus==bonus&&p.Lightning==lightning);
+
+    public RoundAnimalHistory AnimalHistory { get; } = new();
     private readonly List<PowerUp> _activePowers = new();
     private readonly List<BossPowers> _activeBossPowers = new();
 
@@ -32,6 +44,8 @@ public class PowerManager
     public void RegisterPower(PowerUp power)
     {
         if (power == null) return;
+        power.ConfigureSharedContent();
+        power.AnimalHistory = AnimalHistory;
         power.ItemInfoProvider = _ItemInfoProvider;
         power.LevelInfoProvider = _LevelInfoProvider;
         power.TimeProvider = _timeProvider;
@@ -73,11 +87,13 @@ public class PowerManager
     // -------- Boss Powers (UI probably won’t show these, but could) --------
     public void RegisterBossPower(BossPowers power)
     {
+        power.AnimalHistory = AnimalHistory;
         power.ItemInfoProvider = _ItemInfoProvider;
         power.LevelInfoProvider = _LevelInfoProvider;
         power.TimeProvider = _timeProvider;
         power.MatchInfo = _MatchInfo ?? Board.Instance;
         _activeBossPowers.Add(power);
+        power.Apply(GameState.Instance);
     }
 
     public void ClearBossPowers()

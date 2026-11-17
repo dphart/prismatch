@@ -24,13 +24,25 @@ public class BossPowerCardUI : MonoBehaviour
     /// </summary>
     public void Setup(BossPowers bossPower, int activeRound, bool isCurrentlyActive)
     {
+        var portrait = transform.Find("Boss portrait")?.GetComponent<Image>();
+        if (portrait == null) {
+            portrait = new GameObject("Boss portrait", typeof(RectTransform), typeof(Image)).GetComponent<Image>();
+            portrait.transform.SetParent(transform, false);
+            portrait.rectTransform.anchorMin = portrait.rectTransform.anchorMax = new Vector2(1,1);
+            portrait.rectTransform.pivot = Vector2.one;
+            portrait.rectTransform.anchoredPosition = new Vector2(-16,-16);
+            portrait.rectTransform.sizeDelta = new Vector2(60,60);
+            var layout = portrait.gameObject.AddComponent<LayoutElement>(); layout.ignoreLayout = true;
+        }
+        PowerUpIconLibrary.Apply(portrait,bossPower);
+        if (nameText != null) nameText.margin = new Vector4(0,0,76,0);
         currentBossPower = bossPower;
         currentLevel = activeRound;
         isActive = isCurrentlyActive;
 
         // Set the text content
         nameText.text = bossPower.Name;
-        descriptionText.text = bossPower.PowerUpDescription;
+        descriptionText.text = bossPower.GetCurrentPowerDescription();
         levelText.text = activeRound.ToString();
         nameText.fontSize = 26f;
         descriptionText.fontSize = 19f;

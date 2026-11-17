@@ -1,0 +1,5 @@
+# Lightning rod artwork
+
+Generated with the built-in image-generation tool. Asset: Assets/Resources/UI/Generated/lightning-rod.png. Transparent RGBA, imported as a UI sprite with a 512px maximum. Shared by live rod tiles, lesson examples and the power icon; meters remain separate UI.
+
+Prompt: Create a production game sprite for Prismatch: one friendly chunky lightning rod object, centered front view, transparent background. Match the game's rounded, simple colorful cartoon graphics: soft glossy highlights, clean dark navy contours, sky-blue and cream metal body, warm orange/gold lightning-bolt-shaped finial, broad rounded foot and a compact coil/insulator collar. Strong instantly readable silhouette at 64 pixels. Object fills 85% of square canvas, no enclosing app-icon tile, no scenery, no text, no numbers, no charge dots, no face, no loose sparks outside silhouette. Keep details bold and minimal, not realistic or steampunk. The charge indicator will be added separately by game UI. Style reference: cheerful rounded animal icons with soft gradients and glossy blue/cream power icons.
